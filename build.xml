@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="TEALsim" default="compile" basedir=".">
+  <description>Builds, tests, and runs the project TEALsim.</description>
+
+<!--/========================================================================/
+
+    BASIC PROPERTIES SECTION
+
+    Set any relevant settings for the build script in this section
+  /=========================================================================/-->
+
+  <target name="-init-teal-settings">
+    <property name="project.title" value="TEALsim" />
+    <property name="version" value="v0.7" />
+
+    <property name="JavaMinVersion" value="1.6+" />
+
+    <property name="jar.keystore.file" location="${basedir}/resources/TEALKey" />
+    <property name="jar.alias" value="tealkey" />
+    <property name="jar.storepass" value="galileo" />
+
+    <property name="jar.dir" value="${build.dir}/jars" />
+    <property name="lib.dir" value="${basedir}/lib" />
+
+  <!-- this path will be used as codebase for the generated JNLP's to run on a public webserver -->
+   <property name="publish.web.url" value="http://web.mit.edu/viz/EM/simulations" />
+  <!-- this path will be used as codebase for the generated JNLP's to run locally -->
+    <property name="publish.local.url" value="./../jars" />
+
+
+  <!--
+    If you prefer clients to load the operating system native graphics libraries
+    from your own webserver, change the corresponding extension properties to
+    match your server DNS. This will cause the corresponding JNLP files to link
+    to your webserver instead of the official providers website -->
+    <property name="j3d-Extension" value="http://download.java.net/media/java3d/webstart/release/java3d-1.5-latest-joal.jnlp" />
+    <property name="lwjgl-Extension" value="http://lwjgl.org/jnlp/extension.php" />
+    <property name="jogl-Extension" value="http://download.java.net/media/jogl/builds/archive/jsr-231-webstart-current/jogl.jnlp" />
+  <!--
+  <property name="j3d-Extension" value="${publish.web.url}/j3d/j3d.jnlp" />
+  <property name="lwjgl-Extension" value="${publish.web.url}/lwjgl/lwjgl.jnlp" />
+  <property name="jogl-Extension" value="${publish.web.url}/jogl/jogl.jnlp" />
+  -->
+
+    <property name="GFXExtension" value="lib/gfx.jnlp" description="In which subfolder of the TEALsim distribution are the runtime libraries"/>
+
+  </target>
+  
+  <!--/========================================================================/
+
+    FILESET SECTION
+
+    Set the files to be included/excluded for particular packages
+  /=========================================================================/-->
+  <target name="-init-filesets" depends="init">
+    <fileset id="license" dir="${basedir}" excludes="${excludes}">
+      <include name="LICENSE.txt" />
+      <include name="README.txt" />
+      <include name="NOTICE.txt" />
+    </fileset>
+
+    <fileset id="resource.files" dir="resources" excludes="${excludes}">
+      <include name="help/**/*.*" />
+      <include name="models/**/*.*" />
+      <include name="icons/**/*.*" />
+    </fileset>
+
+    <fileset id="core.image.files" dir="resources" excludes="${excludes}">
+      <include name="icons/**/*.png" />
+    </fileset>
+
+    <fileset id="ilab.files" dir="${build.classes.dir}" excludes="${excludes}">
+      <include name="tealsim/physics/em/TeachSpinBase*.*" />
+      <include name="tealsim/physics/ilab/*.*" />
+    </fileset>
+
+    <fileset id="isocket.files" dir="${build.classes.dir}" excludes="${excludes}">
+      <include name="isocket/**" />
+      <exclude name="isocket/Test*.class" />
+    </fileset>
+
+    <fileset id="core.files" dir="${build.classes.dir}" excludes="${excludes}">
+      <include name="teal/**" />
+      <exclude name="teal/physics/*Particle*.class" />
+      <exclude name="teal/physics/em/Circuit.class" />
+      <exclude name="teal/physics/em/*Particle*.class" />
+      <exclude name="teal/plot/CircuitPotentialPlot.class" />
+      <exclude name="teal/visualization/processing/ColorCoding.class" />
+      <exclude name="teal/visualization/processing/Quantize.class" />
+      <exclude name="**/*.png" />
+    </fileset>
+
+    <fileset id="sim.files" dir="${build.classes.dir}" excludes="${excludes}">
+      <include name="tealsim/util/**" />
+      <include name="tealsim/TealSimApp*.*" />
+      <include name="tealsim/Java3DSImport*.*" />
+      <include name="tealsim/physics/em/**" />
+      <include name="tealsim/physics/mech/**" />
+      <include name="tealsim/physics/examples/**" />
+      <exclude name="tealsim/physics/em/Capacitor2.class" />
+      <exclude name="tealsim/physics/ilab/**" />
+    </fileset>
+
+    <fileset id="jnlp_em" dir="${basedir}/jnlp">
+      <include name="boxinduction.jnlp" />
+      <include name="capacitor.jnlp" />
+      <include name="chargebyinduction.jnlp" />
+      <include name="chargedmetalslab.jnlp" />
+      <include name="chargeinmagneticfield.jnlp" />
+      <include name="coulombslaw.jnlp" />
+      <include name="esforce.jnlp" />
+      <include name="emradiator.jnlp" />
+      <include name="videogame.jnlp" />
+      <include name="zoo.jnlp" />
+      <include name="exbdrift.jnlp" />
+      <include name="fallingcoil.jnlp" />
+      <include name="fallingmagnet.jnlp" />
+      <include name="faradayslaw.jnlp" />
+      <include name="faradayslawrotation.jnlp" />
+      <include name="floatingcoil.jnlp" />
+      <include name="mappingfields.jnlp" />
+      <include name="pcharges.jnlp" />
+      <include name="pentagon.jnlp" />
+      <include name="radiationcharge.jnlp" />
+      <include name="teachspin.jnlp" />
+      <include name="tealsimapp.jnlp" />
+      <include name="torqueondipb.jnlp" />
+      <include name="torqueondipe.jnlp" />
+      <include name="vandegraff.jnlp" />
+      <include name="wireandmagnet.jnlp" />
+      <include name="exploringpotential.jnlp" />
+    </fileset>
+
+    <fileset dir="${basedir}/jnlp" id="jnlp_examples">
+      <include name="*.jnlp" />
+    </fileset>
+
+    <fileset dir="${basedir}/jnlp" id="jnlp_mech">
+      <include name="celestial.jnlp" />
+      <include name="circularmotion.jnlp" />
+      <include name="galileosinclinedplane.jnlp" />
+      <include name="inclinedplane.jnlp" />
+      <include name="newtonscradle.jnlp" />
+      <include name="pendulum.jnlp" />
+      <include name="planets.jnlp" />
+      <include name="projectile.jnlp" />
+      <include name="rigidbar.jnlp" />
+      <include name="simplependulum.jnlp" />
+      <include name="simplependulumimpulse.jnlp" />
+      <include name="weightedpendulum.jnlp" />
+    </fileset>
+
+    <fileset dir="${basedir}/jnlp" id="jnlp_misc">
+      <include name="planetwaveapp.jnlp" />
+      <include name="seafloor.jnlp" />
+    </fileset>
+
+    <fileset dir="${basedir}/jnlp" id="jnlp_ilab">
+      <include name="ForceOnDipoleLV.jnlp" />
+    </fileset>
+  </target>
+
+  <!--/========================================================================/
+
+    MAIN TARGETS SECTION
+
+    Defines all targets which may be called by on their own
+  /=========================================================================/-->
+
+  <target name="help" description="Gives a quick overview across the most important build targets">
+    <echo>Among others the following interesting Ant targets are available:</echo>
+    <echo>(for the rest of the targets check out the 'build.xml' and 'nbproject/build-impl.xml' files)</echo>
+    <echo></echo>
+    <echo>ant [compile] - the default (build) target which will build the project; 'compile' can be ommited</echo>
+    <echo>ant clean     - cleans the build folder but doesn't touch any of the released packages</echo>
+    <echo>ant jar       - creates the projects various jar packages along with the corresponding JNLP files</echo>
+    <echo>ant dist      - creates a release package based on the current source code</echo>
+  </target>
+
+  <!-- overwrite the Netbeans clean target to delete the build classes directory only -->
+  <target name="-do-clean" description="Cleans up the build folder but NOT the released versions (folder)">
+    <delete dir="${build.dir}" />
+  </target>
+
+<!-- overwrite the Netbeans jar target to jar various packages -->
+  <target name="jar" depends="-init-filesets,compile,-pre-jar,-jar-all,-jar-core,-jar-ilab,-jar-sims,-post-jar,-init-libs,-init-jnlp" description="Build JAR." />
+
+  <target name="-jar-core" depends="compile">
+    <tealsim-jar destfile="TEALsim-core.jar" section="teal">
+      <content>
+        <fileset refid="license" />
+        <fileset refid="core.files" />
+        <fileset refid="core.image.files" />
+      </content>
+      <mf-parameters>
+        <attribute name="Class-Path" value="lib/"/>
+      </mf-parameters>
+    </tealsim-jar>
+  </target>
+
+  <target name="-jar-sims" depends="compile">
+    <tealsim-jar destfile="TEALsim-simulations.jar" section="tealsim">
+      <content>
+        <fileset refid="license" />
+        <fileset refid="sim.files" />
+        <fileset refid="resource.files" />
+      </content>
+      <mf-parameters>
+        <attribute name="Class-Path" value="lib/"/>
+      </mf-parameters>
+    </tealsim-jar>
+  </target>
+
+  <target name="-jar-all" depends="compile" description="Creates a single jar file containing all of the projects files">
+    <tealsim-jar destfile="TEALsim-all.jar" section="teal">
+      <content>
+        <fileset refid="license" />
+        <fileset refid="core.files" />
+        <fileset refid="sim.files" />
+        <fileset refid="isocket.files" />
+        <fileset refid="ilab.files" />
+        <fileset refid="resource.files" />
+      </content>
+      <mf-parameters>
+        <attribute name="Class-Path" value="lib/"/>
+      </mf-parameters>
+    </tealsim-jar>
+  </target>
+
+  <target name="-jar-ilab" depends="compile">
+    <tealsim-jar destfile="TEALsim-ilab.jar" section="teal">
+      <content>
+        <fileset refid="license" />
+        <fileset refid="core.files" />
+        <!--<fileset refid="images_core" />
+        <fileset dir="${build.dir}/classes">
+          <include name="isocket/*.*" />
+          <include name="tealsim/physics/em/TeachSpinBa*.*" />
+          <include name="tealsim/physics/ilab/TeachS*.*" />
+          <include name="tealsim/physics/ilab/Force*.*" />
+        </fileset>
+        <fileset dir="resources">
+          <exclude name="CVS/*.*" />
+          <include name="help/ForceOnDipoleLabVIEW.*" />
+          <include name="models/1_Coil_1.3DS" />
+          <include name="models/COILMAP3.JPG" />
+        </fileset>-->
+        <fileset refid="ilab.files" />
+        <fileset refid="resource.files" />
+      </content>
+<!--      <mf-parameters>
+        <attribute name="Main-Class" value="teal.app.ForceOnDipoleLVApp" />
+      </mf-parameters>-->
+    </tealsim-jar>
+  </target>
+
+  <target name="distribution" depends="jar,javadoc" description="Builds the whole project and creates all release packages and archives">
+    <echo>TARGET NOT PROPERLY TESTED YET!</echo>
+    <!--
+    <echo>Zipping the RELEASE distribution:</echo>
+    <zip destfile="${release.dir}/${project}-RELEASE-${version}-${build.version}.zip">
+      <zipfileset refid="license" prefix="${project}-${version}" />
+      <zipfileset dir="${build.dir}/jars" prefix="${project}-${version}/jars">
+        <include name="**" />
+        <exclude name="TEALsim-all.jar" />
+      </zipfileset>
+      <zipfileset dir="${build.dir}/jnlp" prefix="${project}-${version}/jnlp" />
+    </zip>
+
+    <echo>Zipping the SDK distribution:</echo>
+    <zip destfile="${release.dir}/${project}-SDK-${version}-${build.version}.zip">
+      <zipfileset refid="license" prefix="${project}-${version}" />
+      <zipfileset dir="${basedir}" includes="build*.xml" prefix="${project}-${version}" />
+
+      <zipfileset dir="${lib.dir}" includes="jreleaseinfo-1.3.0.jar" prefix="${project}-${version}/lib" />
+      <zipfileset refid="libs.fileset" prefix="${project}-${version}/lib" />
+
+      <zipfileset refid="core.files" prefix="${project}-${version}/src" />
+      <zipfileset refid="sim.files" prefix="${project}-${version}/src" />
+      <zipfileset refid="jnlp_examples" prefix="${project}-${version}/resources/jnlp" />
+      <zipfileset refid="resource.files" prefix="${project}-${version}/resources" />
+-->
+<!--        <exclude name="isocket" />
+        <exclude name="tealsim/physics/ilab" />
+        <include name="**/*.*" />-->
+<!--    </zip>
+
+    <echo>Jaring the BINARIES-ONLY distribution:</echo>
+
+    <echo>Zipping the SOURCE-ONLY distribution:</echo>
+    <zip destfile="${release.dir}/${project}-SOURCE-ONLY-${version}-${build.version}.zip">
+      <zipfileset refid="fileset.src.core.files" prefix="${project}-${version}/src" />
+      <zipfileset refid="fileset.src.sim.files" prefix="${project}-${version}/src" />
+      <zipfileset refid="fileset.src.isocket.files" prefix="${project}-${version}/src" />
+      <zipfileset refid="fileset.src.ilab.files" prefix="${project}-${version}/src" />
+    </zip>-->
+  </target>
+
+
+  <target name="javadoc">
+    <echo>TARGET NOT PROPERLY TESTED YET!</echo>
+    <!--
+    <echo>Generating the Javadoc documentation:</echo>
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc destdir="${javadoc.dir}" classpathref="libs.classpath" private="false" protected="true" version="false" author="true" includenosourcepackages="true" use="false" stylesheetfile="${basedir}/doc/javadoc.css" splitindex="true" windowtitle="${project.fullname} ${version} API" doctitle="${project.fullname} ${version}" bottom="Copyright (c) ${year} MIT TEAL/Studio Physics Project. All Rights Reserved.">
+      <packageset dir="${src.dir}" defaultexcludes="yes">
+        <exclude name="isocket" />
+        <exclude name="tealsim/physics/ilab" />
+      </packageset>
+      <group title="TEAL API" packages="teal.*" />
+      <group title="TEAL Simulations" packages="tealsim.*" />
+    </javadoc>
+
+    <echo>Zipping the JAVADOC distribution:</echo>
+    <zip destfile="${release.dir}/${project}-JAVADOC-${version}-${build.version}.zip">
+      <zipfileset dir="${javadoc.dir}" prefix="${project}-${version}/javadoc" />
+    </zip>-->
+  </target>
+
+  <!-- generate the documentation -->
+  <target name="javadocall">
+    <echo>TARGET NOT PROPERLY TESTED YET!</echo>
+    <!--	
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc destdir="${javadoc.dir}" classpathref="libs.classpath" private="false" protected="true" version="false" author="true" includenosourcepackages="true" use="false" stylesheetfile="${basedir}/doc/javadoc.css" splitindex="true" windowtitle="${project.fullname} ${version} API" doctitle="${project.fullname} ${version}" bottom="Copyright (c) ${year} MIT TEAL/Studio Physics Project. All Rights Reserved.">
+      <fileset dir="${src.dir}">
+        <include name="teal/**/*.java" />
+        <include name="teal**/*.html" />
+      </fileset>
+    </javadoc>-->
+  </target>
+
+  <target name="-init-jnlp" description="Copies the JNLP web start files to the build folder matching this build script's settings">
+    <pathconvert property="web.start.libraries" pathsep="${line.separator}">
+      <path path="${javac.classpath}"/>
+      <mapper>
+        <chainedmapper>
+          <flattenmapper/>
+          <globmapper from="*.jar" to="&lt;jar href=&quot;lib/*.jar&quot; download=&quot;lazy&quot;/&gt;"/>
+        </chainedmapper>
+      </mapper>
+    </pathconvert>
+    <!--<echo message="${web.start.libraries}"/>-->
+    <filter token="Libraries" value="${web.start.libraries}" />
+
+    <filter token="JavaMinVersion" value="${JavaMinVersion}" />
+    <filter token="GFXExtension" value="${GFXExtension}" />
+    
+    <!-- Create one directory with JNLP's for local use -->
+    <mkdir dir="${build.dir}/jnlp_local" />
+    <filter token="WebURL" value="${publish.local.url}" />
+    <copy todir="${build.dir}/jnlp_local" filtering="on">
+      <fileset refid="jnlp_em" />
+      <fileset refid="jnlp_examples" />
+      <fileset refid="jnlp_misc" />
+    </copy>
+    
+    <!-- Create another directory with JNLP's for web use -->
+    <mkdir dir="${build.dir}/jnlp_web" />
+    <filter token="WebURL" value="${publish.web.url}" />
+    <copy todir="${build.dir}/jnlp_web" filtering="on">
+      <fileset refid="jnlp_em" />
+      <fileset refid="jnlp_examples" />
+      <fileset refid="jnlp_misc" />
+    </copy>
+  </target>
+
+  <target name="-init-libs" depends="sign-jars" description="Copies all required runtime library files to the build folder">
+    <!--
+      Copy the gfx.jnlp to the lib folder, which will be used by the TEALsim to
+      load the proper native graphics libraries
+    -->
+    <mkdir dir="${jar.dir}/lib" />
+    <filter token="WebURL" value="codebase=&quot;${publish.web.url}&quot;" />
+    <filter token="J3D" value="${j3d-Extension}" />
+    <filter token="LWJGL" value="${lwjgl-Extension}" />
+    <filter token="JOGL" value="${jogl-Extension}" />
+
+    <copy todir="${jar.dir}/lib" filtering="on">
+      <fileset dir="${lib.dir}" includes="gfx.jnlp" />
+    </copy>
+
+
+    <!--
+      Copy the snapshots of all native libraries to the jars folder, which can
+      be used instead of the currently online available libraries fetched from
+      the official vendor websites
+    -->
+    <filter token="WebURL" value="${publish.web.url}" />
+    <copy todir="${jar.dir}/lib/j3d" filtering="on"> <!-- filtering ON! -->
+      <fileset dir="${lib.dir}/j3d/j3d-snapshot" includes="**/*.jnlp" />
+    </copy>
+    <copy todir="${jar.dir}/lib/j3d" filtering="off"> <!-- filtering OFF! -->
+      <fileset dir="${lib.dir}/j3d/j3d-snapshot" includes="**/*" excludes="**/*.jnlp" />
+    </copy>
+
+    <copy todir="${jar.dir}/lib/lwjgl" filtering="on">
+      <fileset dir="${lib.dir}/jme/lwjgl-snapshot" includes="**/*.jnlp" />
+    </copy>
+    <copy todir="${jar.dir}/lib/lwjgl" filtering="off">
+      <fileset dir="${lib.dir}/jme/lwjgl-snapshot" includes="**/*" excludes="**/*.jnlp" />
+    </copy>
+
+    <copy todir="${jar.dir}/lib/jogl" filtering="on">
+      <fileset dir="${lib.dir}/mtgame/jogl-snapshot" includes="**/*.jnlp" />
+    </copy>
+    <copy todir="${jar.dir}/lib/jogl" filtering="off">
+      <fileset dir="${lib.dir}/mtgame/jogl-snapshot" includes="**/*" excludes="**/*.jnlp" />
+    </copy>
+
+    <!--
+      Also copy the required Java runtime libraries to the lib folder
+    -->
+    <!-- convert the build scripts classpath to point to the selfsigned libraries -->
+    <pathconvert property="selfsigned.libraries" pathsep=";">
+      <path id="signed.path.test" path="${javac.classpath}"/>
+      <mapper>
+        <chainedmapper>
+          <flattenmapper/>
+          <globmapper from="*.jar" to="lib/!selfsigned/*.jar"/>
+        </chainedmapper>
+      </mapper>
+    </pathconvert>
+    <!--<echo message="${selfsigned.libraries}"/>-->
+
+    <!-- copy the self signed libraries to the jar folder -->
+    <copy todir="${jar.dir}/lib" flatten="true" filtering="off">
+      <path path="${selfsigned.libraries}"/>
+    </copy>
+  </target>
+
+  <target name="sign-jars" depends="init" description="Signs all libraries on the classpath and puts them in a temporary folder">
+    
+    <!-- we use the libraries set via Netbeans -->
+    <path id="nb.classpath" path="${javac.classpath}"/>
+    <!--<property name="myproperty" refid="nb.classpath"/>
+    <echo message="${myproperty}"/>-->
+
+    <!-- we convert our libraries path to a fileset, since jarsigner seems to have
+    an issue if you pass in a path -->
+    <pathtofileset name="nb.classpath.as.fileset" pathrefid="nb.classpath" dir="/"/>
+
+    <!-- self sign all of the libraries specified on the classpath and store them
+    in a separate folder; they will be used by the webstart files, otherwise
+    the application wouldn't boot -->
+    <mkdir dir="${basedir}/lib/!selfsigned" />
+    <signjar destdir="${basedir}/lib/!selfsigned" verbose="false" keystore="${jar.keystore.file}" alias="${jar.alias}" storepass="${jar.storepass}">
+      <fileset refid="nb.classpath.as.fileset"/>
+      <flattenmapper />
+    </signjar>
+  </target>
+
+
+<target name="-post-init" depends="-init-teal-settings">
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+      <classpath>
+        <pathelement location="${lib.dir}/ant-contrib-1.0b3.jar"/>
+      </classpath>
+    </taskdef>
+    
+    <macrodef name="tealsim-jar">
+      <attribute name="section" />
+      <attribute name="destfile" />
+      <attribute name="destdir" default="${jar.dir}"/>
+      <attribute name="sign" default="true" />
+    
+      <element name="content" optional="true" />
+      <element name="parameters" optional="true" />
+      <element name="mf-parameters" optional="true" />
+
+      <sequential>
+        <echo>Might have to JAR a new @{destfile} ...</echo>
+        <outofdate>
+          <sourcefiles>
+            <content />
+          </sourcefiles>
+    
+          <targetfiles path="@{destdir}/@{destfile}"/>
+          <sequential>
+            <echo>                          ... now JARing new @{destfile}!</echo>
+            <mkdir dir="@{destdir}" />
+          
+            <jar destfile="@{destdir}/@{destfile}" duplicate="preserve">
+              <content />
+              <parameters />
+
+              <manifest>
+                <attribute name="Built-by" value="${user.name}">
+                </attribute>
+                <attribute name="Built-on" value="${build.time}">
+                </attribute>
+                <section name="@{section}">
+                  <attribute name="Specification-Title" value="${project.fullname}">
+                  </attribute>
+                  <attribute name="Specification-Version" value="${version}">
+                  </attribute>
+                  <attribute name="Specification-Vendor" value="MIT TEAL/Studio Physics Project">
+                  </attribute>
+                  <attribute name="Implementation-Title" value="${project.fullname}">
+                  </attribute>
+                  <attribute name="Implementation-Version" value="${version}">
+                  </attribute>
+                  <attribute name="Implementation-Vendor" value="MIT TEAL/Studio Physics Project">
+                  </attribute>
+                </section>
+                <mf-parameters />
+              </manifest>
+            </jar>
+          
+            <signjar keystore="${jar.keystore.file}" alias="${jar.alias}" storepass="${jar.storepass}">
+              <fileset dir="@{destdir}" includes="@{destfile}" />
+            </signjar>
+          </sequential>
+        </outofdate>
+      
+      </sequential>
+    </macrodef>
+  
+  <!-- Debugging macro to show the contents of a fileset -->
+    <macrodef name="echo-fileset">
+      <attribute name="filesetref" />
+      <sequential>
+        <pathconvert pathsep=" " property=" ">
+          <path>
+            <fileset refid="@{filesetref}" />
+          </path>
+        </pathconvert>
+        <echo>${@{filesetref}.echopath}</echo>
+      </sequential>
+    </macrodef>
+  </target>
+  
+
+  <!-- this takes the .class files of tealsim and packs it into a jar file -->
+  <target name="pack_tealsim">
+    <echo>TARGET NOT PROPERLY TESTED YET!</echo>
+    <!--
+    <mkdir dir="${module.libdir}"/>
+    <jar jarfile="${module.libdir}/${module.client.jar}">
+      <fileset dir="${tealsim.classes.dir}">
+        <include name="**/*.class"/>
+        <include name="**/*.png"/>
+        <exclude name="org/**/*.class"/>
+        <exclude name="tests/**/*.class"/>
+        <exclude name="teal/render/j3d/**/*.class"/>
+        <include name="teal.render.j3d/HasPickCanvas.java"/>
+      </fileset>
+    </jar>-->
+  </target>
+
+  <import file="nbproject/build-impl.xml"/>
+    <!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+
+    (Targets beginning with '-' are not intended to be called on their own.)
+
+    Example of inserting an obfuscator after compilation could look like this:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported 
+    nbproject/build-impl.xml file. 
+
+
+    Another way to customize the build is by overriding existing main targets.
+    The targets of interest are: 
+
+      -init-macrodef-javac:     defines macro for javac compilation
+      -init-macrodef-junit:     defines macro for junit execution
+      -init-macrodef-debug:     defines macro for class debugging
+      -init-macrodef-java:      defines macro for class execution
+      -do-jar-with-manifest:    JAR building (if you are using a manifest)
+      -do-jar-without-manifest: JAR building (if you are not using a manifest)
+      run:                      execution of project 
+      -javadoc-build:           Javadoc generation
+      test-report:              JUnit report generation
+
+    An example of overriding the target for project execution could look like this:
+
+        <target name="run" depends="TEALsim-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Notice that the overridden target depends on the jar target and not only on 
+    the compile target as the regular run target does. Again, for a list of available 
+    properties which you can use, check the target you are overriding in the
+    nbproject/build-impl.xml file. 
+
+    -->
+</project>

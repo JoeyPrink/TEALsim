@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="@WebURL@">
+  <information>
+     <title>Java 3D 1.5.2 (JOALMixer)</title>
+     <vendor>Sun Microsystems Inc.</vendor>
+     <homepage href="http://java3d.dev.java.net"/>
+     <description>Java 3D library</description>
+	 <description>Modified to run from a private server</description>
+     <offline-allowed/>
+  </information>
+
+  <security>
+    <all-permissions/>
+  </security>
+
+  <resources>
+    <jar href="j3dcore.jar" download="eager"/>
+    <jar href="j3dutils.jar" download="eager"/>
+    <jar href="vecmath.jar" download="eager"/>
+    <jar href="joalmixer.jar" download="eager"/>
+    <property name="j3d.audiodevice" value="org.jdesktop.j3d.audioengines.joal.JOALMixer"/>
+
+    <extension name="joal" href="joal.jnlp" />
+  </resources>
+
+  <resources os="Windows" arch="x86">
+    <nativelib href="windows-i586/j3dcore-ogl-chk_dll.jar" download="eager"/>
+    <nativelib href="windows-i586/j3dcore-ogl_dll.jar" download="eager"/>
+    <nativelib href="windows-i586/j3dcore-d3d_dll.jar" download="eager"/>
+  </resources>
+
+  <resources os="Windows" arch="amd64">
+    <nativelib href="windows-amd64/j3dcore-ogl_dll.jar" download="eager"/>
+  </resources>
+
+  <resources os="Linux" arch="i386">
+    <nativelib href="linux-i586/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="Linux" arch="x86">
+    <nativelib href="linux-i586/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="Linux" arch="amd64">
+    <nativelib href="linux-amd64/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="Linux" arch="x86_64">
+    <nativelib href="linux-amd64/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="SunOS" arch="sparc">
+    <nativelib href="solaris-sparc/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="SunOS" arch="sparcv9">
+    <nativelib href="solaris-sparc-v9/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="SunOS" arch="x86">
+    <nativelib href="solaris-x86/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="SunOS" arch="amd64">
+    <nativelib href="solaris-x86-amd64/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="SunOS" arch="x86_64">
+    <nativelib href="solaris-x86-amd64/lib_j3dcore-ogl_so.jar" download="eager"/>
+  </resources>
+
+  <resources os="Mac OS X">
+    <property name="j3d.rend" value="jogl"/>
+  </resources>
+
+  <component-desc />
+</jnlp>

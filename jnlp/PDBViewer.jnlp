@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for TEALsim -->
+<jnlp spec="1.0+" codebase="@WebURL@">
+  <information>
+    <title>PDB Viewer</title>
+    <vendor>TEALsim Project</vendor>
+    <homepage href="@WebURL@"/>
+    <description>TEALsim - PDB Viewer</description>
+    <offline-allowed/>
+  </information>
+  <security> 
+      <all-permissions/> 
+  </security> 
+  <resources>
+    <j2se version="@JavaMinVersion@" initial-heap-size="64m" max-heap-size="512m"/>
+    <jar href="TEALsim-core.jar" download="eager"/>
+    <jar href="pdb.jar" download="eager"/>
+    <jar href="TEALsim-simulations.jar" download="eager"/>
+	<extension href="@GFXExtension@" />
+	@Libraries@
+  </resources> 
+  <application-desc main-class="teal.app.SimPlayerApp">
+     <argument>-n</argument>
+     <argument>tealsim.biochem.PDBViewer</argument>
+  </application-desc>
+</jnlp> 
+

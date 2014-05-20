@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for Java3D --> 
+<jnlp spec="1.0+" codebase="http://evangelion.mit.edu/simulations/lib/j3d" href="Java3D.jnlp">
+	<information> 
+		<title>Java3D</title> 
+		<vendor>Sun Microsystems, Inc.</vendor> 
+	</information>
+   	<security>
+		<all-permissions/> 
+	</security>
+	<resources os="Windows"> 
+		<jar href="windows/j3daudio.jar"/>
+		<jar href="windows/j3dcore.jar"/>
+		<jar href="windows/j3dutils.jar"/>
+		<jar href="windows/vecmath.jar"/>
+		<nativelib href="windows/j3dDLL.jar"/>
+	</resources>
+	<component-desc/>
+</jnlp> 

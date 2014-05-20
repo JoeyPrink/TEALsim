@@ -1,0 +1,11 @@
+The taskpane ui component is provided by the l2fprod-common-tasks library package, which is open source 
+software, written by L2FProd.com. 
+
+The software is available from:
+      http://l2fprod-common.dev.java.net
+
+The plotting components are provided by the Ptolemy II library package, which is open source software, 
+written by the PTolemy Project Team, and copyright by the Regents of the University of California.
+
+The original software is available from:
+      http://ptolemy.eecs.berkeley.edu/ptolemyII/

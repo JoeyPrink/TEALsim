@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for TEAL Simulation Application -->
+<jnlp spec="1.0+" codebase="@WebURL@">
+  <information>
+    <title>Celestial Simulation</title>
+    <vendor>Studio Physics</vendor>
+    <homepage href="docs/help.html"/>
+    <description>Celestial Simulation</description>
+    <description kind="short">Celestial Simulation</description>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="@JavaMinVersion@" initial-heap-size="64m" max-heap-size="512m"/>
+    <jar href="TEALsim-simulations.jar" download="eager"/>
+    <jar href="TEALsim-core.jar" main="true" download="eager"/>
+	<extension href="@GFXExtension@" />
+	@Libraries@
+  </resources>
+  <application-desc main-class="teal.app.SimPlayerApp">
+	<argument>-n</argument>
+	<argument>tealsim.physics.mech.CelestialApp</argument>
+  </application-desc>
+</jnlp> 

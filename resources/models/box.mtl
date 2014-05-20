@@ -1,0 +1,12 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+newmtl Metal_Tinfoil
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  15.0
+illum 2
+map_Kd brick.jpg
+#
+# EOF

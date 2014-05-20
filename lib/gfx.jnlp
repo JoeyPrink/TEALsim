@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" @WebURL@>
+  <information>
+     <title>MIT TEAL/Studio Physics Project rendering engine loader</title>
+     <vendor>MIT TEAL/Studio Physics Project</vendor>
+     <description>Loads the operating-system specific libraries required to run TEAL/Studio Physics Project</description>
+     <offline-allowed/>
+  </information>
+
+  <security>
+    <all-permissions/>
+  </security>
+
+  <resources>
+    <extension name="j3d" href="@J3D@" />
+	<extension name="lwjgl" href="@LWJGL@" />
+	<extension name="jogl" href="@JOGL@" />
+	
+    <include name="jogl/jogl.jar" />
+    <include name="*.jar" />
+  </resources>
+  <component-desc />
+</jnlp>

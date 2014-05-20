@@ -1,0 +1,51 @@
+/* $Id: beanInfoTemplate.txt,v 1.4 2007/07/16 22:04:45 pbailey Exp $ */
+
+package teal.x;
+
+import java.beans.*;
+import java.util.Collection;
+import java.util.ArrayList;
+
+import teal..baseBeanInfo;
+import teal.util.TDebug;
+
+public class yBeanInfo extends xBeanInfo
+{
+
+	protected static ArrayList sProperties =null;
+	protected static Class baseClass = x.class;
+	
+	static
+	{
+	   sProperties = new ArrayList(AbstractObjectBeanInfo.getPropertyList());
+       try
+       {
+            PropertyDescriptor pd = null;
+
+/*
+			pd = new PropertyDescriptor("",baseClass);
+			pd.setBound(true);
+			sProperties.add(pd);			
+*/
+
+
+		}
+        catch(IntrospectionException ie)
+        {
+           TDebug.println(ie.getMessage());
+		}
+ 		TDebug.println(1,baseClass.getName()+"BeanInfo: static complete");    
+          
+	} 
+
+	public static Collection getPropertyList()
+	{
+		return sProperties;
+	}
+
+	public PropertyDescriptor[] getPropertyDescriptors()
+	{
+		return (PropertyDescriptor[]) sProperties.toArray(sPropertyTemplate);
+	}
+
+}

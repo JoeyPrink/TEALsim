@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="teal/math/Transform3D.java|teal/math/Transform3d.java|teal/math/Vec2d.java|teal/math/Vec2dTransform.java|teal/physics/em/Seafloor.java|teal/physics/em/SeafloorBeanInfo.java|teal/plot/SeafloorPlot.java|teal/render/j3d/SceneViewerJ3D.java|teal/render/viewer/AbstractSceneViewer3D.java|teal/render/viewer/SceneViewer.java|teal/visualization/processing/ColorCoding.java|tealsim/physics/em/SeafloorApp.java|teal/render/BoundsBox.java|teal/render/BoundsSphere.java|teal/render/BoundsT.java|teal/render/jme/TransformGizmo.java|teal/render/jme/TextureLoader.java|teal/render/jme/MoveGizmo.java|teal/render/jme/ArrowWallNode.java|teal/render/jme/BehaviorManager.java|teal/render/jme/FogBehavior.java|teal/render/jme/GridNode.java|teal/render/j3d/WonderlandViewer.java" kind="src" path="java/src"/>
+	<classpathentry kind="lib" path="java/lib/j3d/1.5.2/lib/ext/vecmath.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre6"/>
+	<classpathentry kind="lib" path="java/lib/TEALsim-resources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/j3d"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JME">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="TEALsimPlus/java/lib/jme/lwjgl/native/win32"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mtGame">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="TEALsimPlus/java/lib/mtgame/jogl/native/windows-i586"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

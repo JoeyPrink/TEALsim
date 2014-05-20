@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : build.old.xml
+    Created on : 17 May 2011, 3:44 PM
+    Author     : Chrisi
+    Description:
+        Purpose of the document follows.
+-->
+
+  <property name="cell.dir" location="${top.dir}/wonderland-modules/src/modules/apps/3d/shapecell/lib"/>
+  <property name="wl.dir" location="${top.dir}/lg3d-wonderland/build-tools/webstart"/>
+
+  <property name="publish.project.home" value="www" />
+  <property name="publish.download.dir" value="lib" />
+  <property name="publish.local.dir" value="../TEALsim_jars" />
+
+  <target name="init.depend" depends="init">
+    <property name="proxy.host" value="" />
+    <property name="proxy.port" value="80" />
+    <echo>If you are behind a proxy or firewall, you can set the properties:
+			proxy.host
+			proxy.port
+    </echo>
+    <setproxy proxyhost="${proxy.host}" proxyport="${proxy.port}" />
+		<!--get src="https://jlearn.mit.edu/TEALsim/xdocs/xsl/changelog-text.xsl?rev=1.1&amp;content-type=application/xml" dest="${dependency.dir}/changelog-text.xsl" usetimestamp="yes" ignoreerrors="yes" /-->
+  </target>
+
+  <target name="publish" depends="init,dist">
+		<!-- copy zip to dist folder -->
+		<!--copy todir="${publish.download.dir}" file="${project}-${version}-${build.version}.zip" /-->
+
+    <filter token="WEB" value="${publish.web.url}" />
+		<!-- update the jnlp website with the new release -->
+		<!-- put skinlf.jar in jnlp folder -->
+    <copy todir="${publish.project.home}/simulations/" filtering="on" overwrite="yes">
+      <fileset dir="java/jnlp" includes="*.jnlp" />
+    </copy>
+    <copy todir="${publish.project.home}" filtering="on" overwrite="yes">
+      <fileset dir="xdocs" includes="*.html" />
+    </copy>
+    <copy file="${build.dir}/lib/${project}-core.jar" todir="${publish.project.home}/simulations/lib/" />
+    <copy file="${build.dir}/lib/${project}-examples.jar" todir="${publish.project.home}/simulations/lib/" />
+		<!--copy file="${build.dir}/lib/${project}-simulations.jar" todir="${publish.project.home}/simulations/lib/" /-->
+
+		<!-- Sign all Jars -->
+    <signjar keystore="xdocs/TEALKey" alias="tealkey" storepass="galileo">
+      <fileset dir="${publish.project.home}/simulations/lib" includes="*.jar" />
+    </signjar>
+
+		<!--ftp server="${build.www.server}" userid="${build.www.userid}" password="${build.www.password}" remotedir="${build.www.remotedir}/jnlp" action="put" verbose="yes" depends="yes">
+			<fileset dir="${build.www.dir}/jnlp">
+				<include name="*" />
+			</fileset>
+		</ftp-->
+  </target>
+
+
+  
+
+  <target name="core_release" depends="init">
+    <tstamp>
+      <format property="touch.time" pattern="MMddyyyyhhmm" unit="hour" />
+    </tstamp>
+    <filter token="WEB" value="${publish.web.url}" />
+		<!--copy todir="${project.release}" filtering="on" overwrite="yes"-->
+		<!--fileset dir="src/jnlp/" includes="PDBViewer.jnlp" /-->
+		<!--/copy-->
+
+    <mkdir dir="${publish.local.dir}" />
+
+    <jar basedir="${project.classes}" compress="true" destfile="${publish.local.dir}/TEALcore.jar">
+      <exclude name="CVS/*.*" />
+      <include name="teal/**/*" />
+      <include name="isocket/**/*" />
+      <include name="tealsim/**/*.*" />
+      <include name="resources/**/*.*" />
+    </jar>
+
+		<!--jar basedir="${project.classes}" compress="true" destfile="${project.release}/pdb.jar"-->
+		<!--exclude name="CVS/*.*" /-->
+		<!--include name="color/**/*.*" /-->
+		<!--include name="plugin/**/*.*" /-->
+		<!--include name="pdb/**/*.*" /-->
+		<!--include name="tealsim/biochem/**/*.*" /-->
+		<!--include name="resources/pdb/**/*.*" /-->
+		<!--/jar-->
+
+    <copy todir="${publish.local.dir}" overwrite="no">
+      <fileset dir="lib/" includes="wsdl4j-1.5.1.jar" />
+      <fileset dir="lib/" includes="saaj.jar" />
+      <fileset dir="lib/" includes="log4j.jar" />
+      <fileset dir="lib/" includes="jaxrpc.jar" />
+      <fileset dir="lib/" includes="commons-logging-1.0.4.jar" />
+      <fileset dir="lib/" includes="commons-discovery-0.2.jar" />
+      <fileset dir="lib/" includes="axis-schema.jar" />
+      <fileset dir="lib/" includes="axis-ant.jar" />
+      <fileset dir="lib/" includes="axis.jar" />
+      <fileset dir="lib/" includes="log4j.properties" />
+    </copy>
+
+    <signjar keystore="xdocs/TEALKey" alias="tealkey" storepass="galileo">
+      <fileset dir="${publish.local.dir}" includes="*.jar" />
+    </signjar>
+
+
+  </target>
+
+  <target name="jar_resources" description="Package resource files">
+    <echo>Creating resourceJar:</echo>
+    <delete file="${basedir}/java/lib/TEALsim-resources.jar" />
+    <tealsim-jar destdir="${basedir}/java/lib" destfile="TEALsim-resources.jar" section="teal">
+      <parameters>
+        <fileset refid="resource.files" />
+      </parameters>
+    </tealsim-jar>
+  </target>

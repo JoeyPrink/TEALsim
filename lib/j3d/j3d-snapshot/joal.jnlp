@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="@WebURL@">
+  <information>
+    <title>JOAL</title>
+    <vendor>Sun Microsystems, Inc.</vendor>
+    <homepage href="http://joal.dev.java.net/"/>
+    <description>JOAL</description>
+    <description kind="short">Java Binding to the OpenAL API.</description>
+	<description>Modified to run from a private server</description>
+    <offline-allowed/>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>
+    <resources os="Windows" arch="x86">
+      <nativelib href = "joal-natives-windows-i586.jar" />
+    </resources>
+    <!-- We don't yet support OpenAL on Solaris -->
+    <!--
+    <resources os="SunOS" arch="sparc">
+      <nativelib href = "joal-natives-solaris-sparc.jar" />
+    </resources>
+    <resources os="SunOS" arch="sparcv9">
+      <nativelib href = "joal-natives-solaris-sparcv9.jar" />
+    </resources>
+    <resources os="SunOS" arch="x86">
+      <nativelib href = "joal-natives-solaris-i586.jar" />
+    </resources>
+    <resources os="SunOS" arch="amd64">
+      <nativelib href = "joal-natives-solaris-amd64.jar" />
+    </resources>
+    <resources os="SunOS" arch="x86_64">
+      <nativelib href = "joal-natives-solaris-amd64.jar" />
+    </resources>
+    -->
+    <resources os="Linux" arch="i386">
+      <nativelib href = "joal-natives-linux-i586.jar" />
+    </resources>
+    <resources os="Linux" arch="x86">
+      <nativelib href = "joal-natives-linux-i586.jar" />
+    </resources>
+    <!-- No 64-bit support yet either -->
+    <!--
+    <resources os="Linux" arch="amd64">
+      <nativelib href = "joal-natives-linux-amd64.jar" />
+    </resources>
+    <resources os="Linux" arch="x86_64">
+      <nativelib href = "joal-natives-linux-amd64.jar" />
+    </resources>
+    -->
+    <resources os="Mac OS X" arch="ppc">
+      <nativelib href = "joal-natives-macosx-ppc.jar" />
+    </resources>
+    <resources os="Mac OS X" arch="i386">
+      <nativelib href = "joal-natives-macosx-universal.jar" />
+    </resources>
+  <component-desc />
+</jnlp>

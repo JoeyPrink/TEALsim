@@ -1,0 +1,128 @@
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<link rel=Edit-Time-Data href="mappingfields_files/editdata.mso">
+<link rel=OLE-Object-Data href="mappingfields_files/oledata.mso">
+<title>Purpose: The Mapping Fields applet helps to visualize the structure of 
+two dimension vector fields using the “grass seeds” or</title>
+<style><!--
+.MsoEndnoteText
+	{line-height:200%;
+	font-size:12.0pt;
+	font-family:Times;}
+.SpellE
+	{}
+.GramE
+	{}
+.Section1
+	{page:Section1;}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF" class="Normal" lang=EN-US>
+<div class=Section1> 
+  <p><b>Mapping Fields</b></p>
+  <p><b>Purpose:</b>  The Mapping Fields applet helps to visualize the structure 
+    of two dimensional vector fields using the “grass seeds” or “iron filings” 
+    representation [1].  By “two dimensional vector field” we mean a vector field 
+    that is given by </p>
+  <p><sub> <img width=179 height=25
+src="mappingfields_files/image002.gif" v:shapes="_x0000_i1025"> </sub>                            
+                                                    (1)</p>
+  <p>In the “grass seeds” representations, <span
+style='"MS Mincho"'>the direction of the field at any point is indicated by the 
+    orientation of the correlations in texture near that point.  </span> </p>
+  <p><b>Usage:</b>  To use the applet, enter the <i>x</i> and <i>y</i> components 
+    of your field (that is, <i>g(<span class=SpellE>x<span class=GramE>,y</span></span>)</i> 
+    and <i>h(<span class=SpellE>x,y</span>)</i>) in the boxes provided, and hit 
+    “Grass Seeds”.  After a few seconds the screen will display the grass seeds 
+    representation of your function. A blue rectangular box shows you the region 
+    within which the field is represented. Initially, the center is at the center 
+    of coordinates (<i>x = 0</i> and <i>y = 0</i>), and the scale is set to <i>8</i>, 
+    meaning that the range is <i>–8 &lt; x &lt; 8</i> (horizontal) and <i>–8 &lt; 
+    y &lt; 8</i> (vertical). You can change the center of the evaluation region 
+    by either dragging around the blue rectangular box on the display screen, 
+    or entering proper center coordinates in the provided boxes. You can change 
+    the scale of the evaluation region by using either the provided slider, or 
+    its accompanying textbox. After a texture is displayed, you can zoom in and 
+    out using “alt-left click-drag”.</p>
+  <p>If you choose “<span class=SpellE>Equipotential</span> Lines” instead <span class=GramE>of  
+    “</span>Grass Seeds”, the applet will display the vector field that is everywhere 
+    perpendicular to <sub> <img width=49 height=25
+src="mappingfields_files/image004.gif" v:shapes="_x0000_i1026"> </sub> , i.e. 
+    it will display the field </p>
+  <p>            <sub> <img width=191 height=25
+src="mappingfields_files/image006.gif" v:shapes="_x0000_i1027"> </sub>                                     
+                            (2)</p>
+  <p>If  <sub> <img width=49 height=25
+src="mappingfields_files/image004.gif" v:shapes="_x0000_i1028"> </sub>  is an 
+    electrostatic vector field, this would define the <span class=SpellE>equipotentials</span> 
+    of that problem.  To get you started in exploring various functions, we give 
+    some examples, which can be selected using the “Example” pull down box (left 
+    click and scroll to select).</p>
+  <p><b>Functions</b>:   Use “^” for power, “*” for multiplication, “/” for division, 
+    “+” and “–” for addition and subtraction. You are also provided with a set 
+    of elementary functions, such as square root (<span
+class=SpellE><i>sqrt</i></span>), trigonometric (<i>sin</i>, <span
+class=SpellE><i>cos</i></span> and <i>tan</i>), inverse trigonometric (<span
+class=SpellE><i>asin</i></span>, <span class=SpellE><i>acos</i></span> and <span
+class=SpellE><i>atan</i></span>), hyperbolic (<span class=SpellE><i>sinh</i></span>, 
+    <span class=SpellE><i>cosh</i></span> and <span class=SpellE><i>tanh</i></span>), 
+    exponential (<i>exp</i>) and logarithmic (natural: <span class=SpellE><span
+class=GramE><i>ln</i></span></span><span class=GramE>,</span> and base 10: <i>log</i>).</p>
+  <p><b>Polar coordinates</b>: If you enter “<i>r</i>”, the program will interpret 
+    that letter as “<span class=SpellE><i>sqrt</i></span><i>(x^2+y^2)”</i>, so 
+    that entering e.g. the field of a dipole is easier. If you enter “<i>t</i>”, 
+    the program will interpret it as the counter-clockwise angle <i>&#952;</i> 
+    from the <i>x</i>-axis, equivalent to “<span class=SpellE><i>atan</i></span><i>(y/x)</i>”, 
+    but will yield a value between –<i>&#960;</i> and <i>&#960;</i>, in contrast 
+    to using “<span
+class=SpellE><i>atan</i></span>” explicitly, which ranges between –<i>&#960;/2</i> 
+    and <i>&#960;/2</i> only.</p>
+  <p><b>Hints:</b>  In two dimensions the divergence of <b>F</b>(<span class=SpellE>x<span
+class=GramE>,y</span></span>) is given by </p>
+  <p class=MsoEndnoteText style='
+line-height:normal'><span style='font-family:"Times New Roman"'><sub> <img width=103 height=44
+src="mappingfields_files/image008.gif" v:shapes="_x0000_i1029"> </sub>                                               
+                                                    (3)</span></p>
+  <p><span class=GramE>where</span> the partial of <i>g(<span class=SpellE>x,y</span>)</i> 
+    with respect to <i>x</i> is just the ordinary derivative with respect to <i>x</i> 
+    holding <i>y</i> constant.  If you want to make a function which has no sources 
+    (<sub> <img width=57 height=19
+src="mappingfields_files/image010.gif" v:shapes="_x0000_i1030"> </sub> ), choose 
+    <i>g(<span
+class=SpellE>x<span class=GramE>,y</span></span>)</i> and <i>h(<span class=SpellE>x,y</span>)</i> 
+    so that the quantity on the right hand side above is zero.  An example of 
+    this would be <i>g(<span class=SpellE>x<span
+class=GramE>,y</span></span>) = x</i> and <i>h(<span
+class=SpellE>x,y</span>) = – y</i>.  In two dimensions, the curl of <b>F</b>(<span
+class=SpellE>x<span class=GramE>,y</span></span>) is given by</p>
+  <p><sub> <img width=167 height=48
+src="mappingfields_files/image012.gif" v:shapes="_x0000_i1031"> </sub>                               
+                                                    (4)</p>
+  <p>If you want to make a function that has no sources but has a circulation, 
+    choose <i>g(<span class=SpellE>x<span
+class=GramE>,y</span></span>)</i> and <i>h(<span
+class=SpellE>x,y</span>)</i> so that the divergence is zero but the curl is not.  
+    For example, <i>g(<span class=SpellE>x<span class=GramE>,y</span></span>) 
+    = – y</i> and <i>h(<span class=SpellE>x,y</span>) = x</i> is a function with 
+    zero divergence and non-zero curl.  To get a function which both has a source 
+    and a circulation, you must have both of the quantities defined above non-zero 
+    (for example, <i>g(<span class=SpellE>x<span
+class=GramE>,y</span></span>) =  – y + x</i> and <i>h(<span class=SpellE>x,y</span>) 
+    = y + x</i>).  </p>
+  <p>In electrostatics, all of our vector electric fields will have non-zero divergence 
+    and zero curl.  In <span class=SpellE>magnetostatics</span>, all of our vector 
+    magnetic fields will have zero divergence and non-zero curl.  When we let 
+    things vary with time, we will pick up electric fields with both non-zero 
+    divergence and non-zero curls, but as far as we know magnetic fields even 
+    in time varying situations always have zero divergence (there are no magnetic 
+    monopoles).  </p>
+  <h1>References</h1>
+  <p class=MsoEndnoteText style='line-height:normal'><span class=GramE>[1] <span
+style='font-family:"Times New Roman"'>B. Cabral and C. <span class=SpellE>Leedom</span>, 
+    “Imaging Vector Fields Using Line Integral Convolution” Proc. SIGGRAPH ’93, 
+    pp. 263-270, 1993.</span></span></p>
+</div>
+</body>
+</html>
