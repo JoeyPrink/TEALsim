@@ -94,7 +94,8 @@ public class Task extends JCheckBox implements ActionListener {
         
     public void actionPerformed(ActionEvent e) {
             hintTextField.setVisible(true);
-            gamificationAgent.revalidate();         
+            gamificationAgent.revalidate();
+            this.setSelected(false);
     } 
 }
     
