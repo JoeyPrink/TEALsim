@@ -302,7 +302,30 @@ public class FaradaysLaw extends SimEM {
         fmanager.setSymmetryAxis(new Vector3d(1.,0.,0.));
         addElement(fmanager);
 
-   
+        // Gamification Client startet==========================================
+        gamificationPanel = new GamificationAgent(mSEC);
+        
+        // task 1:
+        task1 = new Task();
+        task1.addDescription("this is task1");
+        task1.addHint("Hint Me");
+        FluxRequirement flux_req = new FluxRequirement();
+        flux_req.addRing(roc);
+        flux_req.addFluxRange(0.2, 0.3);
+        task1.addRequirement(flux_req);
+        gamificationPanel.addTask(task1);
+
+        // task 2:
+        task2 = new Task();
+        task2.addDescription("this is task2");
+        task2.addHint("Hint Me");
+        FluxRequirement flux_req2 = new FluxRequirement();
+        flux_req2.addRing(roc);
+        flux_req2.addFluxValue(0.4);
+        task2.addRequirement(flux_req2);
+        gamificationPanel.addTask(task2);
+        
+        addElement(gamificationPanel);
         
         slidermag = new PropertyDouble();
         slidermag.setText("Dipole Moment");
@@ -328,6 +351,7 @@ public class FaradaysLaw extends SimEM {
         //addElement(sliderroc);
 
         flux_graph = new Graph();
+        flux_graph.addGamification(gamificationPanel);
         flux_graph.setXRange(0., 12.);
         flux_graph.setYRange(-0.1, 0.5);
         //flux_graph.setXPersistence(100.0);
@@ -403,29 +427,6 @@ public class FaradaysLaw extends SimEM {
         reset();
         mSEC.init();
       //  mSEC.start();
-        
-        
-        // Gamification Client startet==========================================
-        gamificationPanel = new GamificationAgent(mSEC);
-        
-        // task 1:
-        task1 = new Task();
-        task1.addDescription("this is task1");
-        task1.addHint("Hint Me");
-        Requirement req = new FluxRequirement(flux_plot, 0.2, 0.3);
-
-//         mag_gizmo.addPropertyChangeListener("position", this);
-        task1.addRequirement(req);
-        gamificationPanel.addTask(task1);
-        
-        
-        // task 2:
-        task2 = new Task();
-        task2.addDescription("this is task2");
-        task2.addHint("Hint Me");
-        gamificationPanel.addTask(task2);
-        
-        addElement(gamificationPanel);
 
     }
 

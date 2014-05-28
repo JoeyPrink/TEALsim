@@ -11,46 +11,60 @@ import teal.plot.FluxPlot;
 
 /**
  *
- * @author Georg
+ * @author Florian Schitter
  */
 public class FluxRequirement extends Requirement {
     
+    int ticks;
     double value, range1, range2;
     RingOfCurrent roc;
-    FluxPlot plot;
     
-    public FluxRequirement(RingOfCurrent roc, double value) {
+    public FluxRequirement() {
         super();
-        this.value = value;
+        this.value = 0.;
         this.range1 = 0.;
         this.range2 = 0.;
         this.roc = roc;
+        this.ticks = 0;
     }
     
-    public FluxRequirement(FluxPlot plot, double range1, double range2) {
-        super();
-        this.value = 0.;
+    public void addRing(RingOfCurrent roc) {
+        this.roc = roc;
+    }
+    
+    public void addFluxValue(double value) {
+        this.value = value;
+    }
+    
+    public void addFluxRange(double range1, double range2) {
         this.range1 = range1;
         this.range2 = range2;
-        this.plot = plot;
     }
     
     @Override
     public boolean isFullFilled() {
         
+        ticks += 1;
 //        System.out.format("total flux: %f\n", roc.getTotalFlux());
+        double flux = roc.getTotalFlux();
         
-        if(this.value > 0.) {
-            if(plot.getTotalFlux() == this.value) {
-                this.fullfilled = true;
+        if(value > 0.) {
+            if(flux >= (value - 0.02) && flux <= (value + 0.02) && ticks > 75) {
+                fullfilled = true;
+            }
+            else {
+                ticks = 0;
             }
         }
         else {
-            if(plot.getTotalFlux() > this.range1 && plot.getTotalFlux() < this.range2) {
-                this.fullfilled = true;
+            if(flux > range1 && flux < range2 && ticks > 100) {
+                fullfilled = true;
+            }
+            else {
+                ticks = 0;
             }
         }
-        return this.fullfilled;
+        return fullfilled;
     }
     
 }

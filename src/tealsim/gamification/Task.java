@@ -19,7 +19,7 @@ import teal.framework.TealAction;
 
 /**
  *
- * @author Flo
+ * @author Viktor Unterberger, Florian Schitter
  */
 public class Task extends JCheckBox implements ActionListener {
     
@@ -41,8 +41,6 @@ public class Task extends JCheckBox implements ActionListener {
     
     
     public void run() throws InterruptedException {
-    
-        System.out.println(this.getText());
 //        while(true) {
 //            //ladida
 //            if(req.isFullFilled()) {
@@ -51,10 +49,6 @@ public class Task extends JCheckBox implements ActionListener {
 //            System.out.println("test");
 ////            Thread.sleep(500);
 //        }
-        
-        // check box -> move on to next task (agent)
-        this.setSelected(true);
-        this.setEnabled(false);   
     }
     
     public void addRequirement (Requirement req) {
@@ -96,11 +90,17 @@ public class Task extends JCheckBox implements ActionListener {
             hintTextField.setVisible(true);
             gamificationAgent.revalidate();
             this.setSelected(false);
-    } 
+    }
     
-    public void done() {
-        this.setSelected(true);
-        this.setEnabled(false);
+    public boolean checkReq() {
+        if(req != null && req.isFullFilled()) {
+            this.setSelected(true);
+            this.setEnabled(false);
+            
+            return true;
+        }
+        
+        return false;
     }
 }
     
