@@ -97,6 +97,11 @@ public class Task extends JCheckBox implements ActionListener {
             gamificationAgent.revalidate();
             this.setSelected(false);
     } 
+    
+    public void done() {
+        this.setSelected(true);
+        this.setEnabled(false);
+    }
 }
     
     
