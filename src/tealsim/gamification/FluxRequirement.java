@@ -15,9 +15,9 @@ import teal.plot.FluxPlot;
  */
 public class FluxRequirement extends Requirement {
     
+    int ticks;
     double value, range1, range2;
     RingOfCurrent roc;
-    FluxPlot plot;
     
     public FluxRequirement(RingOfCurrent roc, double value) {
         super();
@@ -25,32 +25,35 @@ public class FluxRequirement extends Requirement {
         this.range1 = 0.;
         this.range2 = 0.;
         this.roc = roc;
+        this.ticks = 0;
     }
     
-    public FluxRequirement(FluxPlot plot, double range1, double range2) {
+    public FluxRequirement(RingOfCurrent roc, double range1, double range2) {
         super();
         this.value = 0.;
         this.range1 = range1;
         this.range2 = range2;
-        this.plot = plot;
+        this.roc = roc;
+        this.ticks = 0;
     }
     
     @Override
     public boolean isFullFilled() {
         
+        ticks += 1;
 //        System.out.format("total flux: %f\n", roc.getTotalFlux());
         
-        if(this.value > 0.) {
-            if(plot.getTotalFlux() == this.value) {
-                this.fullfilled = true;
+        if(value > 0.) {
+            if(roc.getTotalFlux() == value && ticks > 125) {
+                fullfilled = true;
             }
         }
         else {
-            if(plot.getTotalFlux() > this.range1 && plot.getTotalFlux() < this.range2) {
-                this.fullfilled = true;
+            if(roc.getTotalFlux() > range1 && roc.getTotalFlux() < range2 && ticks > 125) {
+                fullfilled = true;
             }
         }
-        return this.fullfilled;
+        return fullfilled;
     }
     
 }

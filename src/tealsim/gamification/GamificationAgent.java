@@ -26,7 +26,7 @@ import teal.ui.control.ControlGroup;
 
 /**
  *
- * @author Georg
+ * @author Viktor Unterberger, Florian Schitter
  */
 public final class GamificationAgent extends ControlGroup {
     
@@ -36,7 +36,7 @@ public final class GamificationAgent extends ControlGroup {
     private JButton hintButton;
     private JTextField hintTextbox;
     private int labelWidth = 200; //zum Positionieren
-    private JProgressBar gamiProgressBar =null;
+    private JProgressBar gamiProgressBar = null;
     private int sumTasks = 0;
     private String motivationMessage = null;
     
@@ -45,9 +45,9 @@ public final class GamificationAgent extends ControlGroup {
             
     public GamificationAgent (EngineControl msec) {
         super();
-        mSEC =msec;
+        mSEC = msec;
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
-        setText("Gamification Panel");
+        setText("Tasks");
         gamiProgressBar = new JProgressBar( 0, 100 );
         gamiProgressBar.setValue(0);
         gamiProgressBar.setStringPainted( true );
@@ -110,24 +110,32 @@ public final class GamificationAgent extends ControlGroup {
         tasks.size();
     }
     
-    public void startTasks()
-    {
-        this.setVisible(true);
-        int i = 0;
-        while(tasks.size()>0)
-        {
-            Task temp = tasks.get(i);
-            tasks.remove(i);
-            i++;
-            double progress = ((double)i/sumTasks)*100;
-            gamiProgressBar.setValue((int)progress);
-            try {
-                temp.run();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GamificationAgent.class.getName()).log(Level.SEVERE, null, ex);
-            }
-//            gamiProgressBar.setValue();
- 
+//    public void startTasks()
+//    {
+//        this.setVisible(true);
+//        int i = 0;
+//        while(tasks.size()>0)
+//        {
+//            Task temp = tasks.get(i);
+//            tasks.remove(i);
+//            i++;
+//            double progress = ((double)i/sumTasks)*100;
+//            gamiProgressBar.setValue((int)progress);
+//            try {
+//                temp.run();
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(GamificationAgent.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+////            gamiProgressBar.setValue();
+// 
+//        }
+//    }
+    
+    public void checkTask() {
+        Task current = tasks.get(0);
+        
+        if(current.checkReq()) {
+            tasks.remove(0);
         }
     }
     

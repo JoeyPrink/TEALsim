@@ -54,7 +54,7 @@ public class Task extends JCheckBox implements ActionListener {
         
         // check box -> move on to next task (agent)
         this.setSelected(true);
-        this.setEnabled(false);   
+        this.setEnabled(false);
     }
     
     public void addRequirement (Requirement req) {
@@ -96,7 +96,18 @@ public class Task extends JCheckBox implements ActionListener {
             hintTextField.setVisible(true);
             gamificationAgent.revalidate();
             this.setSelected(false);
-    } 
+    }
+    
+    public boolean checkReq() {
+        if(req != null && req.isFullFilled()) {
+            this.setSelected(true);
+            this.setEnabled(false);
+            
+            return true;
+        }
+        
+        return false;
+    }
 }
     
     
