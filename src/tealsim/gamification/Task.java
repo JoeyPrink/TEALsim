@@ -69,9 +69,12 @@ public class Task extends JPanel implements ActionListener {
         taskFinishedCheckBox = new JCheckBox(taskNameString);
         taskFinishedCheckBox.setEnabled(true);
         taskFinishedCheckBox.setSelected(false);
+        taskFinishedCheckBox.addActionListener(this);
+        taskFinishedCheckBox.setActionCommand("task checkbox");
         taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
+        hintButton.setActionCommand("hint button");
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
@@ -116,6 +119,7 @@ public class Task extends JPanel implements ActionListener {
         taskFinishedCheckBox = new JCheckBox(taskNameString);
         taskFinishedCheckBox.setEnabled(true);
         taskFinishedCheckBox.setSelected(false);
+        taskFinishedCheckBox.addActionListener(this);
         taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
@@ -169,8 +173,12 @@ public class Task extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(this, this.hintString);   
+        if(e.getSource() == hintButton) {
+            JOptionPane.showMessageDialog(this, this.hintString);
+        }
+        else if(e.getSource() == taskFinishedCheckBox) {
             taskFinishedCheckBox.setSelected(false);
+        }
     } 
     
     public UIPanel getPanel()

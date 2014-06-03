@@ -90,13 +90,17 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                 break;
             }
         }
-        this.fullfilled=true;
         if(!isComplete)
-            JOptionPane.showMessageDialog(this.reqPanel, "You Loose");
-        else
-            JOptionPane.showMessageDialog(this.reqPanel, "You Win");
+            JOptionPane.showMessageDialog(this.reqPanel, "This is no correct. Try again!");
+        else {
+            JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
+            isFullFilled(); 
+        }
     } 
     
+    public boolean isFullFilled() {
+        return fullfilled = true;
+    }
     
     public UIPanel getPanel()
     {

@@ -12,7 +12,7 @@ import teal.ui.UIPanel;
  *
  * @author Georg
  */
-public class Requirement {
+public abstract class Requirement {
  
     boolean fullfilled;
     UIPanel reqPanel;
@@ -22,9 +22,6 @@ public class Requirement {
         this.reqPanel = new UIPanel();
     }
     
-    public boolean isFullFilled() {
-        System.out.println(fullfilled?"fullfilled":"not fullfilled");
-        return fullfilled;
-    }
+    public abstract boolean isFullFilled();
     
 }
