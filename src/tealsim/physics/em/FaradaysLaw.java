@@ -57,6 +57,7 @@ import teal.ui.control.PropertyDouble;
 import teal.ui.swing.JTaskPane;
 import teal.util.TDebug;
 import teal.visualization.dlic.DLIC;
+import tealsim.gamification.CurrentRequirement;
 import tealsim.gamification.FluxRequirement;
 import tealsim.gamification.GamificationAgent;
 import tealsim.gamification.Requirement;
@@ -303,25 +304,25 @@ public class FaradaysLaw extends SimEM {
         addElement(fmanager);
 
         // Gamification Client startet==========================================
-        gamificationPanel = new GamificationAgent(mSEC);
+        gamificationPanel = new GamificationAgent(mSEC); // gamificationPanel.init(mSEC); oder so
         
         // task 1:
         task1 = new Task();
-        task1.addDescription("this is task1");
-        task1.addHint("Hint Me");
+        task1.addDescription("This is task 1 - flux betweent 0.2 - 0.3");
+        task1.addHint("Give me a hint");
         FluxRequirement flux_req = new FluxRequirement();
         flux_req.addRing(roc);
-        flux_req.addFluxRange(0.2, 0.3);
+        flux_req.setFluxRange(0.2, 0.3);
         task1.addRequirement(flux_req);
         gamificationPanel.addTask(task1);
 
         // task 2:
         task2 = new Task();
-        task2.addDescription("this is task2");
-        task2.addHint("Hint Me");
-        FluxRequirement flux_req2 = new FluxRequirement();
+        task2.addDescription("This is task2 - current between 0.2 - 0.3");
+        task2.addHint("Give me a hint");
+        CurrentRequirement flux_req2 = new CurrentRequirement();
         flux_req2.addRing(roc);
-        flux_req2.addFluxValue(0.4);
+        flux_req2.setCurrentRange(0.2, 0.3);
         task2.addRequirement(flux_req2);
         gamificationPanel.addTask(task2);
         
@@ -369,6 +370,7 @@ public class FaradaysLaw extends SimEM {
         //addElement(flux_graph);
 
         current_graph = new Graph();
+        current_graph.addGamification(gamificationPanel);
         current_graph.setXRange(0., 12.);
         current_graph.setYRange(-0.4, 0.4);
         //current_graph.setXPersistence(100.0);

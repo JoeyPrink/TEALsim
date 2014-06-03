@@ -7,7 +7,7 @@
 package tealsim.gamification;
 
 import teal.physics.em.RingOfCurrent;
-import teal.plot.FluxPlot;
+
 
 /**
  *
@@ -24,7 +24,7 @@ public class FluxRequirement extends Requirement {
         this.value = 0.;
         this.range1 = 0.;
         this.range2 = 0.;
-        this.roc = roc;
+        this.roc = null;
         this.ticks = 0;
     }
     
@@ -32,11 +32,11 @@ public class FluxRequirement extends Requirement {
         this.roc = roc;
     }
     
-    public void addFluxValue(double value) {
+    public void setFluxValue(double value) {
         this.value = value;
     }
     
-    public void addFluxRange(double range1, double range2) {
+    public void setFluxRange(double range1, double range2) {
         this.range1 = range1;
         this.range2 = range2;
     }
@@ -49,16 +49,21 @@ public class FluxRequirement extends Requirement {
         double flux = roc.getTotalFlux();
         
         if(value > 0.) {
-            if(flux >= (value - 0.02) && flux <= (value + 0.02) && ticks > 75) {
-                fullfilled = true;
+            if(flux >= (value - 0.02) && flux <= (value + 0.02)) {
+                if(ticks > 75) {
+                    fullfilled = true;
+                }
             }
             else {
                 ticks = 0;
             }
         }
         else {
-            if(flux > range1 && flux < range2 && ticks > 100) {
-                fullfilled = true;
+            System.out.println(ticks);
+            if(flux > range1 && flux < range2) {
+                if(ticks > 100) {
+                    fullfilled = true;
+                }
             }
             else {
                 ticks = 0;

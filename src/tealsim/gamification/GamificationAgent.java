@@ -58,7 +58,6 @@ public final class GamificationAgent extends ControlGroup {
     
     public void addTask(Task task) {
         UIPanel Panel = new UIPanel();
-        task.gamificationAgent = this;
         task.setHorizontalAlignment(SwingConstants.LEFT);
         task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
         Panel.add(task);
@@ -133,6 +132,8 @@ public final class GamificationAgent extends ControlGroup {
     }
     
     public void checkTask() {
+        
+//        System.out.println("HWUT UP!");
         
         if(!tasks.isEmpty()) {
             Task current = tasks.get(0);
