@@ -40,11 +40,11 @@ public final class GamificationAgent extends ControlGroup {
     private JTextField hintTextbox;
     private int labelWidth = 200; //zum Positionieren
     private JProgressBar gamiProgressBar =null;
-    private int sumTasks = 0;
+    private double sumTasks = 0;
     private long startTimeSecond = 0;
     private long timeAllowedSecond = 0;
     private long endTimeSecond = 0;
-    private int finished = 0;
+    private double finished = 0;
     boolean isChecked = false;
        
             
@@ -54,63 +54,17 @@ public final class GamificationAgent extends ControlGroup {
         mSEC = msec;
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
         setText("Gamification Panel");
-        gamiProgressBar = new JProgressBar( 0, 1000000 );
+        gamiProgressBar = new JProgressBar( 0, 100);
         gamiProgressBar.setValue(0);
         gamiProgressBar.setStringPainted( true );
         add(gamiProgressBar);//,BorderLayout.PAGE_START );
     }
     
     public void addTask(Task task) {
-        UIPanel Panel = new UIPanel();
-//        task.setHorizontalAlignment(SwingConstants.LEFT);
         task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
         add(task);
-//        Panel.add(task);
-//        if(task.hint!=null)
-//        {
-//            Panel.add(task.hintButton);
-//            task.hintTextField.setPreferredSize(new Dimension(100, task.getPreferredSize().height));
-//            add(Panel); 
-//
-//            add(task.hintTextField);
-//        }
-//        if(task.getPanel()!=null)
-//        {
-//            Panel.add(task.getPanel());
-//        }
-        //guiElements.add(plate1Panel);
-        
-//            
-////            groundButton = new JButton(new TealAction("Ground", "Ground", this));
-////        groundButton.setFont(groundButton.getFont().deriveFont(Font.BOLD));
-////        groundButton.setBounds(40, 570, 195, 24);
-////        controls.add(groundButton);
-//       
-//        hintButton = new JButton("Hint");
-//        hintButton.setHorizontalAlignment(SwingConstants.RIGHT);
-//        hintButton.addActionListener(this);
-//        add(hintButton);
-//        
-//        hintTextbox = new JTextField(task.hint);
-//        hintTextbox.setVisible(true);
-//        add(hintTextbox);
-//        }
-        
-        
-        
-        
-//        plate2Charge_label.setPreferredSize(new Dimension(labelWidth, plate2Charge_label.getPreferredSize().height));
-//        plate2Charge_label.setHorizontalAlignment(SwingConstants.RIGHT);
-
-//        plate2Charge = new JTextField();
-//        plate2Charge.setColumns(4);
-//        plate2Charge.setHorizontalAlignment(SwingConstants.RIGHT);
-//        plate2Charge.setText(String.valueOf(-pc_charge));
-//        plate2Charge.addActionListener(this);
-   
-        
-      //  setID(task.getName());
         tasks.add(task);
+        sumTasks++;
     }
     
     public void getSizeOfTaskList() {
@@ -149,7 +103,7 @@ public final class GamificationAgent extends ControlGroup {
             if(current.checkReq()) {
                 tasks.remove(0);
                 finished++;
-                double progress = ((double)finished/sumTasks)*100;
+                int progress = (int)((finished/sumTasks)*100);
                 gamiProgressBar.setValue((int)progress);
             }
         }

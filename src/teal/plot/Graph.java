@@ -54,6 +54,7 @@ public class Graph extends teal.plot.ptolemy.Plot implements TUpdatable, TSimEle
             pi.doPlot(this);
         }
         if(gamification != null) {
+            System.out.println("moooooo!");
             gamification.checkTask();
         }
         
