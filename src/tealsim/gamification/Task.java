@@ -6,75 +6,176 @@
 
 package tealsim.gamification;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 import teal.core.TUpdatable;
 import teal.framework.TFramework;
 import teal.framework.TealAction;
+import teal.ui.UIPanel;
 
 /**
  *
- * @author Viktor Unterberger, Florian Schitter
+ * @author Viktors
  */
-public class Task extends JCheckBox implements ActionListener {
-    
+public class Task extends JPanel implements ActionListener {
     Requirement req;
-    String hint;
+    String  hintString;
     int timer;
     int points;
+    UIPanel taskPanelUp = null;
+    UIPanel taskPanelCenterFirst= null; 
+    UIPanel taskPanelCenterSecond =null;
+    UIPanel taskPanelDown = null;
     JButton hintButton = null;
     JTextField hintTextField = null;
-    JLabel hintLabel = null;
     GamificationAgent gamificationAgent = null;
+    UIPanel taskPanel =null;
+    JCheckBox taskFinishedCheckBox = null;
+    JTextArea taskNameTextArea = null;
+    String taskNameString = null;
+    JLabel taskDescription = null;
     
-    public Task () {
-        super();
-        this.setSelected(false);
-        this.addActionListener(this);
+     public Task (GamificationAgent ga) {
+        gamificationAgent = ga;
+        this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
         
+        //erzeuge Rahmen
+        Border borderMain = this.getBorder();
+        Border marginMain = new LineBorder(Color.DARK_GRAY,2);
+        this.setBorder(new CompoundBorder(borderMain, marginMain));
+        
+        
+        //Normales Layout
+        // Erzeuge 2 Panels
+        taskPanelUp = new UIPanel();
+        taskPanelCenterFirst = new UIPanel();
+        //        taskPanelCenterSecond = new UIPanel();
+        //        taskPanelDown = new UIPanel();
+        
+        //Fuelle Panels
+        //1)
+        Border border = taskPanelUp.getBorder();
+        Border margin = new LineBorder(Color.BLUE,1);
+        taskPanelUp.setBorder(new CompoundBorder(border, margin));
+        taskPanelUp.setLayout(new GridLayout(0,2));
+        taskNameString = "DEFAULT - Task";
+        taskFinishedCheckBox = new JCheckBox(taskNameString);
+        taskFinishedCheckBox.setEnabled(false);
+        taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        hintButton = new JButton("Hint");
+        hintButton.addActionListener(this);
+        this.hintString = new String("Sorry, no hint available");
+        hintButton.setSize(2,4);
+        hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
+        taskPanelUp.add(hintButton);//, BorderLayout.EAST);
+       
+        
+        //2)
+        taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
+        //        taskDescription.setColumns(50);
+        //        taskDescription.setRows(3);
+        taskDescription.setEnabled(false);
+        taskPanelCenterFirst.add(taskDescription);
+
+        this.add(taskPanelUp);//, BorderLayout.NORTH);
+        this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+
+    }
+    
+     
+     
+
+
+    public Task (GamificationAgent ga, String tName) {
+        gamificationAgent = ga;
+        this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
+        
+        //erzeuge Rahmen
+        Border borderMain = this.getBorder();
+        Border marginMain = new LineBorder(Color.DARK_GRAY,2);
+        this.setBorder(new CompoundBorder(borderMain, marginMain));
+        
+        
+        //Normales Layout
+        // Erzeuge 2 Panels
+        taskPanelUp = new UIPanel();
+        taskPanelCenterFirst = new UIPanel();
+        //        taskPanelCenterSecond = new UIPanel();
+        //        taskPanelDown = new UIPanel();
+        
+        //Fuelle Panels
+        //1)
+        Border border = taskPanelUp.getBorder();
+        Border margin = new LineBorder(Color.BLUE,1);
+        taskPanelUp.setBorder(new CompoundBorder(border, margin));
+        taskPanelUp.setLayout(new GridLayout(0,2));
+        taskNameString = tName;
+        taskFinishedCheckBox = new JCheckBox(taskNameString);
+        taskFinishedCheckBox.setEnabled(false);
+        taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        hintButton = new JButton("Hint");
+        hintButton.addActionListener(this);
+        this.hintString = new String("Sorry, no hint available");
+        hintButton.setSize(2,4);
+        hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
+        taskPanelUp.add(hintButton);//, BorderLayout.EAST);
+       
+        
+        //2)
+        taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
+        //        taskDescription.setColumns(50);
+        //        taskDescription.setRows(3);
+        taskDescription.setEnabled(false);
+        taskPanelCenterFirst.add(taskDescription);
+
+        this.add(taskPanelUp);//, BorderLayout.NORTH);
+        this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
     }
     
     
     public void run() throws InterruptedException {
-//        while(true) {
-//            //ladida
-//            if(req.isFullFilled()) {
-//                break;
-//            }
-//            System.out.println("test");
-////            Thread.sleep(500);
-//        }
+    
+        System.out.println(this.taskNameTextArea.getText());
+        // check box -> move on to next task (agent)
+        this.taskFinishedCheckBox.setSelected(true);
+        this.taskFinishedCheckBox.setEnabled(false);
     }
     
     public void addRequirement (Requirement req) {
         this.req = req;
+        this.taskPanelCenterSecond = req.reqPanel;
+        this.add(taskPanelCenterSecond);
+        this.revalidate();
     }
     
     public void addDescription (String desc) {
-        this.setText(desc);
+        this.taskDescription.setText(desc);
     }
     
     public void addHint (String hint) {
-        this.hint = hint;
-
-        hintButton = new JButton("Hint");
-        hintButton.setHorizontalAlignment(SwingConstants.RIGHT);
-        hintButton.addActionListener(this);
-        
-        hintTextField = new JTextField(hint);
-        hintTextField.setHorizontalAlignment(SwingConstants.LEFT);
-        hintTextField.setVisible(false);
-        hintTextField.setEditable(false);
-        
-        hintLabel = new JLabel(hint);
-        hintLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        hintLabel.setVisible(false);
-        
+        this.hintString = hint;
     }
     
     public void addPoints (int points) {
@@ -84,23 +185,14 @@ public class Task extends JCheckBox implements ActionListener {
     public void addTimer (int timer) {  // necessary? at what rate are points lost?
         this.timer = timer;
     }
-    
         
     public void actionPerformed(ActionEvent e) {
-            hintTextField.setVisible(true);
-            gamificationAgent.revalidate();
-            this.setSelected(false);
-    }
+            JOptionPane.showMessageDialog(this, this.hintString);      
+    } 
     
-    public boolean checkReq() {
-        if(req != null && req.isFullFilled()) {
-            this.setSelected(true);
-            this.setEnabled(false);
-            
-            return true;
-        }
-        
-        return false;
+    public UIPanel getPanel()
+    {
+        return taskPanel;
     }
 }
     

@@ -6,6 +6,8 @@
 
 package tealsim.gamification;
 
+import teal.ui.UIPanel;
+
 /**
  *
  * @author Georg
@@ -13,9 +15,11 @@ package tealsim.gamification;
 public class Requirement {
  
     boolean fullfilled;
+    UIPanel reqPanel;
     
     public Requirement () {
         this.fullfilled = false;
+        this.reqPanel = new UIPanel();
     }
     
     public boolean isFullFilled() {
