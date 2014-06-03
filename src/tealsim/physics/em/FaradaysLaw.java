@@ -412,7 +412,7 @@ public class FaradaysLaw extends SimEM {
         
         
         // task 0: mc task
-        task0 = new Task(gamificationPanel, "SIMULATION ON FARADAY'S LAW: QUESTION 1");
+        task0 = new Task("SIMULATION ON FARADAY'S LAW: QUESTION 1");
         task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
         task0.addHint("Don't ask your Neighbor");
         MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
@@ -430,10 +430,12 @@ public class FaradaysLaw extends SimEM {
                 
         
         // task 1:
-        task1 = new Task(gamificationPanel);
+        task1 = new Task();
         task1.addDescription("Description");
 //        task1.addHint("Hint Me");
-        Requirement req = new FluxRequirement(flux_plot, 0.2, 0.3);
+        FluxRequirement req = new FluxRequirement();
+        req.setFluxRange(0.2, 0.3);
+        req.addRing(roc);
 //         mag_gizmo.addPropertyChangeListener("position", this);
         task1.addRequirement(req);
         gamificationPanel.addTask(task1);

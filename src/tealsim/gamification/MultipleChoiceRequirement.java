@@ -7,22 +7,13 @@
 package tealsim.gamification;
 
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import teal.sim.engine.EngineControl;
 import teal.ui.UIPanel;
 
 /**
@@ -32,7 +23,7 @@ import teal.ui.UIPanel;
 
 
 public class MultipleChoiceRequirement extends Requirement implements ActionListener {
-    int NUMBER_OF_CHECKBOX =5; //defaultmäßig 5 Einträge
+    int NUMBER_OF_CHECKBOX = 5; // 5 number of default entries
     String question;
     private ArrayList<JCheckBox> answerN;
     private boolean [] isRightN;
@@ -68,7 +59,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     
     public void addAnswer(String answer, boolean isRight)
     {
-        //JCheckBoxen werden erstellt
+        // JCheckBoxes are created
         boolean empty_found = false;
         if(answer!=null)
         {
