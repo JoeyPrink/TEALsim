@@ -24,4 +24,6 @@ public abstract class Requirement {
     
     public abstract boolean isFullFilled();
     
+    public abstract void setRequirementEnabled(boolean b);
+    
 }

@@ -90,6 +90,7 @@ public class Task extends JPanel implements ActionListener {
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+//        this.setVisible(false);
 
     }
 
@@ -112,7 +113,7 @@ public class Task extends JPanel implements ActionListener {
         //Fuelle Panels
         //1)
         Border border = taskPanelUp.getBorder();
-        Border margin = new LineBorder(Color.BLUE,1);
+        Border margin = new LineBorder(Color.BLACK,1);
         taskPanelUp.setBorder(new CompoundBorder(border, margin));
         taskPanelUp.setLayout(new GridLayout(0,2));
         taskNameString = tName;
@@ -127,7 +128,7 @@ public class Task extends JPanel implements ActionListener {
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
         taskPanelUp.add(hintButton);//, BorderLayout.EAST);
-       
+        
         
         //2)
         taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
@@ -138,6 +139,7 @@ public class Task extends JPanel implements ActionListener {
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+//        this.setVisible(false);
     }
     
     
@@ -146,6 +148,10 @@ public class Task extends JPanel implements ActionListener {
         System.out.println(this.taskNameTextArea.getText());
         // check box -> move on to next task (agent)
         
+    }
+    
+    public void addName(String name) {
+        taskFinishedCheckBox.setName(name);
     }
     
     public void addRequirement (Requirement req) {
@@ -187,12 +193,17 @@ public class Task extends JPanel implements ActionListener {
     }
     
     public boolean checkReq() {
+        
         if(req != null && req.isFullFilled()) {
             taskFinishedCheckBox.setSelected(true);
             taskFinishedCheckBox.setEnabled(false);
+            hintButton.setEnabled(false);
+            taskDescription.setEnabled(false);
+            req.setRequirementEnabled(false);
+
             return true;
         }
-        
+
         return false;
     }
 }

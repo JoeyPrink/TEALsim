@@ -46,7 +46,6 @@ public final class GamificationAgent extends ControlGroup {
     private long endTimeSecond = 0;
     private double finished = 0;
     boolean isChecked = false;
-       
             
             
     public GamificationAgent (EngineControl msec) {
@@ -64,6 +63,7 @@ public final class GamificationAgent extends ControlGroup {
         task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
         add(task);
         tasks.add(task);
+//        tasks.get(0).setVisible(true);
         sumTasks++;
     }
     
@@ -99,12 +99,14 @@ public final class GamificationAgent extends ControlGroup {
         
         if(!tasks.isEmpty()) {
             Task current = tasks.get(0);
+//            current.setVisible(true);
            
             if(current.checkReq()) {
                 tasks.remove(0);
                 finished++;
                 int progress = (int)((finished/sumTasks)*100);
                 gamiProgressBar.setValue((int)progress);
+//                current.setVisible(false);
             }
         }
         else {

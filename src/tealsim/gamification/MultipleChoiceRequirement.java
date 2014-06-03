@@ -18,7 +18,7 @@ import teal.ui.UIPanel;
 
 /**
  *
- * @author VikMc
+ * @author VikMc, Flo McFly
  */
 
 
@@ -39,9 +39,8 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         
-        for(int i=0;i<NUMBER_OF_CHECKBOX; i++)
-        {
-            isRightN[i]=false;
+        for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+            isRightN[i] = false;
             JCheckBox checkbox = new JCheckBox();
             checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
             checkbox.setVisible(false);
@@ -49,7 +48,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
             
             this.reqPanel.add(answerN.get(i));
         }  
-        doneButton = new JButton("Done");
+        doneButton = new JButton("Submit");
         doneButton.addActionListener(this);
         this.reqPanel.add(doneButton);
         isComplete = true;
@@ -61,13 +60,11 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     {
         // JCheckBoxes are created
         boolean empty_found = false;
-        if(answer!=null)
+        if(answer != null)
         {
-            for(int i=0;i<NUMBER_OF_CHECKBOX; i++)
-            {
-                if(answerN.get(i).isVisible()==false)
-                {
-                    isRightN[i]=isRight;
+            for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+                if(answerN.get(i).isVisible() == false) {
+                    isRightN[i] = isRight;
                     answerN.get(i).setVisible(true);
                     answerN.get(i).setText(answer);
                     empty_found = true;
@@ -82,8 +79,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     
     public void actionPerformed(ActionEvent e) {
         isComplete = true;
-        for(int i=0;i<NUMBER_OF_CHECKBOX; i++)
-        {
+        for(int i = 0 ;i < NUMBER_OF_CHECKBOX; i++) {
             if(answerN.get(i).isSelected() != isRightN[i])
             {
                 isComplete = false;
@@ -107,6 +103,13 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     public UIPanel getPanel()
     {
         return this.reqPanel;
+    }
+    
+    public void setRequirementEnabled(boolean b) {
+        doneButton.setEnabled(b);
+        for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+            answerN.get(i).setEnabled(b);
+        }
     }
     
 }

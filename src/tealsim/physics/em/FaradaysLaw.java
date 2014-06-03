@@ -308,18 +308,21 @@ public class FaradaysLaw extends SimEM {
         gamificationPanel.setTimerBadge(900);
 
         // task 0: multiple choice task
-        task0 = new Task("SIMULATION ON FARADAY'S LAW: QUESTION 1");
+        task0 = new Task("TASK 1: MULTIPLE CHOICE QUESTION");
         task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
         task0.addHint("Don't ask your Neighbor");
         MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone",true);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",true);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone.",false);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",false);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",false);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
+        reqMC.addAnswer("None of the above.",false);
         task0.addRequirement(reqMC);
         gamificationPanel.addTask(task0);
 
         // task 1: total flux task
-        task1 = new Task();
-        task1.addDescription("Description");
+        task1 = new Task("TASK 2: TOTAL FLUX");
+        task1.addDescription("Try to keep the total flux between 0.2 and 0.3");
         FluxRequirement req = new FluxRequirement();
         req.setFluxRange(0.2, 0.3);
         req.addRing(roc);
@@ -518,7 +521,7 @@ public class FaradaysLaw extends SimEM {
         ta = new TealAction("Level Complete", "Level Complete", this);    //added jwb 7/13/2008
         watch.setAction(ta);                                                //added jwb 7/13/2008
        
-         ta = new TealAction("Start Gamification", this);
+         ta = new TealAction("Start Timer", this);
         addAction("Actions", ta);
         
     }
@@ -535,7 +538,7 @@ public class FaradaysLaw extends SimEM {
         } else if (e.getActionCommand().equalsIgnoreCase("Reset Layout")) {
             //resetLayout();
         }
-        else if (e.getActionCommand().equalsIgnoreCase("Start Gamification")) {
+        else if (e.getActionCommand().equalsIgnoreCase("Start Timer")) {
            gamificationPanel.startTasks();
         }
         else {
