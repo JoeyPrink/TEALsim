@@ -41,15 +41,16 @@ public final class GamificationAgent extends ControlGroup {
     private int labelWidth = 200; //zum Positionieren
     private JProgressBar gamiProgressBar =null;
     private int sumTasks = 0;
-    private long startTimeSecond=0;
-    private long timeAllowedSecond=0;
-    private long endTimeSecond=0;
+    private long startTimeSecond = 0;
+    private long timeAllowedSecond = 0;
+    private long endTimeSecond = 0;
+    private int finished = 0;
        
             
             
     public GamificationAgent (EngineControl msec) {
         super();
-        mSEC =msec;
+        mSEC = msec;
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
         setText("Gamification Panel");
         gamiProgressBar = new JProgressBar( 0, 1000000 );
@@ -134,6 +135,23 @@ public final class GamificationAgent extends ControlGroup {
         }
         long endTimeSecond = startTimeSecond - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
         checkTimerBatch(endTimeSecond);
+    }
+    
+    public void checkTask() {
+        
+        if(!tasks.isEmpty()) {
+            Task current = tasks.get(0);
+           
+            if(current.checkReq()) {
+                tasks.remove(0);
+                finished++;
+                double progress = ((double)finished/sumTasks)*100;
+                gamiProgressBar.setValue((int)progress);
+            }
+        }
+        else {
+            // ALL TASKS COMPLETED - YAAAAAYYYY!!!
+        }
     }
     
     public void setTimerBatch(long time_for_task) {
