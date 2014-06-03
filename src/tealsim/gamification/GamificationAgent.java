@@ -134,7 +134,7 @@ public final class GamificationAgent extends ControlGroup {
 //            }
         }
         long endTimeSecond = startTimeSecond - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-        checkTimerBatch(endTimeSecond);
+        checkTimerBadge(endTimeSecond);
     }
     
     public void checkTask() {
@@ -154,16 +154,16 @@ public final class GamificationAgent extends ControlGroup {
         }
     }
     
-    public void setTimerBatch(long time_for_task) {
+    public void setTimerBadge(long time_for_task) {
         timeAllowedSecond = time_for_task;
                 
     }
     
-    public void checkTimerBatch(long endTime) {
+    public void checkTimerBadge(long endTime) {
         if(endTimeSecond <timeAllowedSecond)
         {
             ImageIcon timerIcon =  new javax.swing.ImageIcon(getClass().getResource("/tealsim/gamification/timer.png"));
-            JOptionPane.showMessageDialog(this, "You received \"Timer-Batch\", for beeing in-time","Batch Received",1, timerIcon);
+            JOptionPane.showMessageDialog(this, "You received \"Timer-Badge\", for beeing in-time","Badge Received",1, timerIcon);
         }     
     }
     

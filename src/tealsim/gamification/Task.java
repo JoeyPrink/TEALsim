@@ -6,33 +6,20 @@
 
 package tealsim.gamification;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
-import teal.core.TUpdatable;
-import teal.framework.TFramework;
-import teal.framework.TealAction;
 import teal.ui.UIPanel;
 
 /**
@@ -45,12 +32,12 @@ public class Task extends JPanel implements ActionListener {
     int timer;
     int points;
     UIPanel taskPanelUp = null;
-    UIPanel taskPanelCenterFirst= null; 
-    UIPanel taskPanelCenterSecond =null;
+    UIPanel taskPanelCenterFirst = null; 
+    UIPanel taskPanelCenterSecond = null;
     UIPanel taskPanelDown = null;
     JButton hintButton = null;
     JTextField hintTextField = null;
-    UIPanel taskPanel =null;
+    UIPanel taskPanel = null;
     JCheckBox taskFinishedCheckBox = null;
     JTextArea taskNameTextArea = null;
     String taskNameString = null;
@@ -80,7 +67,8 @@ public class Task extends JPanel implements ActionListener {
         taskPanelUp.setLayout(new GridLayout(0,2));
         taskNameString = "DEFAULT - Task";
         taskFinishedCheckBox = new JCheckBox(taskNameString);
-        taskFinishedCheckBox.setEnabled(false);
+        taskFinishedCheckBox.setEnabled(true);
+        taskFinishedCheckBox.setSelected(false);
         taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
@@ -94,17 +82,13 @@ public class Task extends JPanel implements ActionListener {
         taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
-        taskDescription.setEnabled(false);
+        taskDescription.setEnabled(true);
         taskPanelCenterFirst.add(taskDescription);
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
 
     }
-    
-     
-     
-
 
     public Task (String tName) {
         this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
@@ -130,7 +114,8 @@ public class Task extends JPanel implements ActionListener {
         taskPanelUp.setLayout(new GridLayout(0,2));
         taskNameString = tName;
         taskFinishedCheckBox = new JCheckBox(taskNameString);
-        taskFinishedCheckBox.setEnabled(false);
+        taskFinishedCheckBox.setEnabled(true);
+        taskFinishedCheckBox.setSelected(false);
         taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
@@ -144,7 +129,7 @@ public class Task extends JPanel implements ActionListener {
         taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
-        taskDescription.setEnabled(false);
+        taskDescription.setEnabled(true);
         taskPanelCenterFirst.add(taskDescription);
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
@@ -156,8 +141,7 @@ public class Task extends JPanel implements ActionListener {
     
         System.out.println(this.taskNameTextArea.getText());
         // check box -> move on to next task (agent)
-        this.taskFinishedCheckBox.setSelected(true);
-        this.taskFinishedCheckBox.setEnabled(false);
+        
     }
     
     public void addRequirement (Requirement req) {
@@ -182,14 +166,26 @@ public class Task extends JPanel implements ActionListener {
     public void addTimer (int timer) {  // necessary? at what rate are points lost?
         this.timer = timer;
     }
-        
+    
+    @Override
     public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(this, this.hintString);      
+            JOptionPane.showMessageDialog(this, this.hintString);   
+            taskFinishedCheckBox.setSelected(false);
     } 
     
     public UIPanel getPanel()
     {
         return taskPanel;
+    }
+    
+    public boolean checkReq() {
+        if(req != null && req.isFullFilled()) {
+            this.taskFinishedCheckBox.setSelected(true);
+            this.taskFinishedCheckBox.setEnabled(false);
+            return true;
+        }
+        
+        return false;
     }
 }
     

@@ -303,7 +303,30 @@ public class FaradaysLaw extends SimEM {
         fmanager.setSymmetryAxis(new Vector3d(1.,0.,0.));
         addElement(fmanager);
 
-   
+        // gamification starts
+        gamificationPanel = new GamificationAgent(mSEC);
+        gamificationPanel.setTimerBadge(900);
+
+        // task 0: multiple choice task
+        task0 = new Task("SIMULATION ON FARADAY'S LAW: QUESTION 1");
+        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
+        task0.addHint("Don't ask your Neighbor");
+        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone",true);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",true);
+        task0.addRequirement(reqMC);
+        gamificationPanel.addTask(task0);
+
+        // task 1: total flux task
+        task1 = new Task();
+        task1.addDescription("Description");
+        FluxRequirement req = new FluxRequirement();
+        req.setFluxRange(0.2, 0.3);
+        req.addRing(roc);
+        task1.addRequirement(req);
+        gamificationPanel.addTask(task1);
+        
+        addElement(gamificationPanel);
         
         slidermag = new PropertyDouble();
         slidermag.setText("Dipole Moment");
@@ -404,52 +427,6 @@ public class FaradaysLaw extends SimEM {
         reset();
         mSEC.init();
       //  mSEC.start();
-        
-        
-        // Gamification Client startet==========================================
-        gamificationPanel = new GamificationAgent(mSEC);
-        gamificationPanel.setTimerBatch(900);
-        
-        
-        // task 0: mc task
-        task0 = new Task("SIMULATION ON FARADAY'S LAW: QUESTION 1");
-        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
-        task0.addHint("Don't ask your Neighbor");
-        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone",true);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",true);
-//        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",true);
-//        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
-//        reqMC.addAnswer("None of the above",true);
- 
-
-    
-        
-        task0.addRequirement(reqMC);
-        gamificationPanel.addTask(task0);
-                
-        
-        // task 1:
-        task1 = new Task();
-        task1.addDescription("Description");
-//        task1.addHint("Hint Me");
-        FluxRequirement req = new FluxRequirement();
-        req.setFluxRange(0.2, 0.3);
-        req.addRing(roc);
-//         mag_gizmo.addPropertyChangeListener("position", this);
-        task1.addRequirement(req);
-        gamificationPanel.addTask(task1);
-        
-        
-//        // task 2:
-//        task2 = new Task();
-//        task2.addDescription("this is task2");
-//        task2.addHint("Hint Me");
-//        gamificationPanel.addTask(task2);
-        
-        addElement(gamificationPanel);
-        
-        
 
     }
 
