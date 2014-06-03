@@ -14,19 +14,22 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-
 import javax.media.j3d.Appearance;
-
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.TransparencyAttributes;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-
 import teal.framework.TFramework;
 import teal.framework.TealAction;
 import teal.math.RectangularPlane;
+import teal.physics.em.MagneticDipole;
+import teal.physics.em.RingOfCurrent;
+import teal.physics.em.SimEM;
+import teal.physics.physical.Ball;
 import teal.plot.CurrentPlot;
 import teal.plot.FluxPlot;
 import teal.plot.Graph;
@@ -41,16 +44,13 @@ import teal.sim.constraint.SpringConstraint;
 import teal.sim.control.VisualizationControl;
 import teal.sim.engine.EngineObj;
 import teal.sim.engine.TEngineControl;
-import teal.physics.physical.Ball;
-import teal.physics.em.SimEM;
-import teal.physics.em.MagneticDipole;
-import teal.physics.em.RingOfCurrent;
 import teal.sim.properties.IsSpatial;
 import teal.sim.spatial.FieldConvolution;
 import teal.sim.spatial.FieldDirectionGrid;
 import teal.sim.spatial.FieldLine;
 import teal.sim.spatial.FieldLineManager;
 import teal.sim.spatial.FluxFieldLine;
+import teal.ui.UIPanel;
 import teal.ui.control.ControlGroup;
 import teal.ui.control.PropertyCheck;
 import teal.ui.control.PropertyDouble;
@@ -59,6 +59,7 @@ import teal.util.TDebug;
 import teal.visualization.dlic.DLIC;
 import tealsim.gamification.FluxRequirement;
 import tealsim.gamification.GamificationAgent;
+import tealsim.gamification.MultipleChoiceRequirement;
 import tealsim.gamification.Requirement;
 import tealsim.gamification.Task;
 
@@ -91,7 +92,7 @@ public class FaradaysLaw extends SimEM {
     Ball roc_gizmo;
     
     GamificationAgent gamificationPanel;
-    Task task1, task2, task3;
+    Task task0, task1, task2, task3;
 
     FieldLineManager fmanager;
     protected FieldConvolution mDLIC = null;
@@ -302,30 +303,7 @@ public class FaradaysLaw extends SimEM {
         fmanager.setSymmetryAxis(new Vector3d(1.,0.,0.));
         addElement(fmanager);
 
-        // Gamification Client startet==========================================
-        gamificationPanel = new GamificationAgent(mSEC);
-        
-        // task 1:
-        task1 = new Task();
-        task1.addDescription("this is task1");
-        task1.addHint("Hint Me");
-        FluxRequirement flux_req = new FluxRequirement();
-        flux_req.addRing(roc);
-        flux_req.setFluxRange(0.2, 0.3);
-        task1.addRequirement(flux_req);
-        gamificationPanel.addTask(task1);
-
-        // task 2:
-        task2 = new Task();
-        task2.addDescription("this is task2");
-        task2.addHint("Hint Me");
-        FluxRequirement flux_req2 = new FluxRequirement();
-        flux_req2.addRing(roc);
-        flux_req2.setFluxValue(0.4);
-        task2.addRequirement(flux_req2);
-        gamificationPanel.addTask(task2);
-        
-        addElement(gamificationPanel);
+   
         
         slidermag = new PropertyDouble();
         slidermag.setText("Dipole Moment");
@@ -351,7 +329,6 @@ public class FaradaysLaw extends SimEM {
         //addElement(sliderroc);
 
         flux_graph = new Graph();
-        flux_graph.addGamification(gamificationPanel);
         flux_graph.setXRange(0., 12.);
         flux_graph.setYRange(-0.1, 0.5);
         //flux_graph.setXPersistence(100.0);
@@ -427,6 +404,50 @@ public class FaradaysLaw extends SimEM {
         reset();
         mSEC.init();
       //  mSEC.start();
+        
+        
+        // Gamification Client startet==========================================
+        gamificationPanel = new GamificationAgent(mSEC);
+        gamificationPanel.setTimerBatch(900);
+        
+        
+        // task 0: mc task
+        task0 = new Task(gamificationPanel, "SIMULATION ON FARADAY'S LAW: QUESTION 1");
+        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
+        task0.addHint("Don't ask your Neighbor");
+        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone",true);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",true);
+//        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",true);
+//        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
+//        reqMC.addAnswer("None of the above",true);
+ 
+
+    
+        
+        task0.addRequirement(reqMC);
+        gamificationPanel.addTask(task0);
+                
+        
+        // task 1:
+        task1 = new Task(gamificationPanel);
+        task1.addDescription("Description");
+//        task1.addHint("Hint Me");
+        Requirement req = new FluxRequirement(flux_plot, 0.2, 0.3);
+//         mag_gizmo.addPropertyChangeListener("position", this);
+        task1.addRequirement(req);
+        gamificationPanel.addTask(task1);
+        
+        
+//        // task 2:
+//        task2 = new Task();
+//        task2.addDescription("this is task2");
+//        task2.addHint("Hint Me");
+//        gamificationPanel.addTask(task2);
+        
+        addElement(gamificationPanel);
+        
+        
 
     }
 

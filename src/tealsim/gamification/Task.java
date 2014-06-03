@@ -50,15 +50,13 @@ public class Task extends JPanel implements ActionListener {
     UIPanel taskPanelDown = null;
     JButton hintButton = null;
     JTextField hintTextField = null;
-    GamificationAgent gamificationAgent = null;
     UIPanel taskPanel =null;
     JCheckBox taskFinishedCheckBox = null;
     JTextArea taskNameTextArea = null;
     String taskNameString = null;
     JLabel taskDescription = null;
     
-     public Task (GamificationAgent ga) {
-        gamificationAgent = ga;
+     public Task () {
         this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
         
         //erzeuge Rahmen
@@ -108,8 +106,7 @@ public class Task extends JPanel implements ActionListener {
      
 
 
-    public Task (GamificationAgent ga, String tName) {
-        gamificationAgent = ga;
+    public Task (String tName) {
         this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
         
         //erzeuge Rahmen

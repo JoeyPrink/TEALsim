@@ -60,7 +60,6 @@ public final class GamificationAgent extends ControlGroup {
     
     public void addTask(Task task) {
         UIPanel Panel = new UIPanel();
-        task.gamificationAgent = this;
 //        task.setHorizontalAlignment(SwingConstants.LEFT);
         task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
         add(task);
