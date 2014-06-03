@@ -311,7 +311,7 @@ public class FaradaysLaw extends SimEM {
         task1.addHint("Hint Me");
         FluxRequirement flux_req = new FluxRequirement();
         flux_req.addRing(roc);
-        flux_req.addFluxRange(0.2, 0.3);
+        flux_req.setFluxRange(0.2, 0.3);
         task1.addRequirement(flux_req);
         gamificationPanel.addTask(task1);
 
@@ -321,7 +321,7 @@ public class FaradaysLaw extends SimEM {
         task2.addHint("Hint Me");
         FluxRequirement flux_req2 = new FluxRequirement();
         flux_req2.addRing(roc);
-        flux_req2.addFluxValue(0.4);
+        flux_req2.setFluxValue(0.4);
         task2.addRequirement(flux_req2);
         gamificationPanel.addTask(task2);
         
