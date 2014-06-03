@@ -352,6 +352,7 @@ public class FaradaysLaw extends SimEM {
         //addElement(sliderroc);
 
         flux_graph = new Graph();
+        flux_graph.addGamification(gamificationPanel);
         flux_graph.setXRange(0., 12.);
         flux_graph.setYRange(-0.1, 0.5);
         //flux_graph.setXPersistence(100.0);

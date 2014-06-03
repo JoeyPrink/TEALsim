@@ -90,16 +90,18 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                 break;
             }
         }
-        if(!isComplete)
-            JOptionPane.showMessageDialog(this.reqPanel, "This is no correct. Try again!");
+        if(!isComplete) {
+            JOptionPane.showMessageDialog(this.reqPanel, "This is not correct. Try again!");
+        }
         else {
             JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
-            isFullFilled(); 
+            fullfilled = true;
         }
     } 
     
+    @Override
     public boolean isFullFilled() {
-        return fullfilled = true;
+        return fullfilled;
     }
     
     public UIPanel getPanel()
@@ -108,7 +110,3 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     }
     
 }
-
-
-
-   

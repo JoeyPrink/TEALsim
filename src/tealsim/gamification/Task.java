@@ -188,8 +188,8 @@ public class Task extends JPanel implements ActionListener {
     
     public boolean checkReq() {
         if(req != null && req.isFullFilled()) {
-            this.taskFinishedCheckBox.setSelected(true);
-            this.taskFinishedCheckBox.setEnabled(false);
+            taskFinishedCheckBox.setSelected(true);
+            taskFinishedCheckBox.setEnabled(false);
             return true;
         }
         

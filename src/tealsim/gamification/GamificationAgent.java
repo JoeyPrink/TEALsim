@@ -45,6 +45,7 @@ public final class GamificationAgent extends ControlGroup {
     private long timeAllowedSecond = 0;
     private long endTimeSecond = 0;
     private int finished = 0;
+    boolean isChecked = false;
        
             
             
@@ -120,21 +121,24 @@ public final class GamificationAgent extends ControlGroup {
     {
         startTimeSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
         this.setVisible(true);
-        int i = 0;
-        while(tasks.size()>0)
-        {
-            break;
-//            Task temp = tasks.get(i);
-//            tasks.remove(i);
-//            i++;
+//        int i = 0;
+//        while(tasks.size()>0)
+//        {
+//            Task current = tasks.get(i);
 //            try {
-//                temp.run();
+//                current.run();
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(GamificationAgent.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-        }
-        long endTimeSecond = startTimeSecond - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
-        checkTimerBadge(endTimeSecond);
+//            if(current.checkReq()) {
+//                tasks.remove(i);
+//                i++;
+//            }
+//        }
+//        if(tasks.isEmpty()) {
+//            long endTimeSecond = startTimeSecond - TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+//            checkTimerBadge(endTimeSecond);
+//        }
     }
     
     public void checkTask() {
@@ -151,6 +155,10 @@ public final class GamificationAgent extends ControlGroup {
         }
         else {
             // ALL TASKS COMPLETED - YAAAAAYYYY!!!
+            if(!isChecked) {
+                long endTimeSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - startTimeSecond;
+                checkTimerBadge(endTimeSecond);
+            }
         }
     }
     
@@ -160,8 +168,10 @@ public final class GamificationAgent extends ControlGroup {
     }
     
     public void checkTimerBadge(long endTime) {
-        if(endTimeSecond <timeAllowedSecond)
+        System.out.println(endTime);
+        if(endTime < timeAllowedSecond && endTime > 0)
         {
+            isChecked = true;
             ImageIcon timerIcon =  new javax.swing.ImageIcon(getClass().getResource("/tealsim/gamification/timer.png"));
             JOptionPane.showMessageDialog(this, "You received \"Timer-Badge\", for beeing in-time","Badge Received",1, timerIcon);
         }     
