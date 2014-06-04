@@ -42,7 +42,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             isRightN[i] = false;
             JCheckBox checkbox = new JCheckBox();
-            checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
+            checkbox.setAlignmentX(Component.LEFT_ALIGNMENT);
             checkbox.setVisible(false);
             answerN.add(checkbox);
             
@@ -50,6 +50,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         }  
         doneButton = new JButton("Submit");
         doneButton.addActionListener(this);
+//        doneButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(doneButton);
         isComplete = true;
     }

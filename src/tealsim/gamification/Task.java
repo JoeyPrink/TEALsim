@@ -7,6 +7,8 @@
 package tealsim.gamification;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,11 +97,22 @@ public class Task extends JPanel implements ActionListener {
     }
 
     public Task (String tName) {
-        this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
+        this.setLayout(new GridBagLayout()); // Plane für 3 Panels, da Requirement auch eines hat
+        GridBagConstraints cPanelUp = new GridBagConstraints();
+        GridBagConstraints cPanelCenter = new GridBagConstraints();
+        
+//        cPanelUp.gridwidth = 2;
+        cPanelUp.anchor = GridBagConstraints.CENTER;
+        cPanelUp.gridy = 0;
+//        cPanelUp.ipadx = 100;
+        
+        cPanelCenter.fill = GridBagConstraints.VERTICAL;
+//        cPanelCenter.fill = GridBagConstraints.CENTER;
+        cPanelCenter.gridy = 1;
         
         //erzeuge Rahmen
         Border borderMain = this.getBorder();
-        Border marginMain = new LineBorder(Color.DARK_GRAY,2);
+        Border marginMain = new LineBorder(Color.BLACK,2);
         this.setBorder(new CompoundBorder(borderMain, marginMain));
         
         
@@ -113,21 +126,27 @@ public class Task extends JPanel implements ActionListener {
         //Fuelle Panels
         //1)
         Border border = taskPanelUp.getBorder();
-        Border margin = new LineBorder(Color.BLACK,1);
+        Border margin = new LineBorder(Color.DARK_GRAY,2);
         taskPanelUp.setBorder(new CompoundBorder(border, margin));
-        taskPanelUp.setLayout(new GridLayout(0,2));
+        taskPanelUp.setLayout(new GridBagLayout());
         taskNameString = tName;
         taskFinishedCheckBox = new JCheckBox(taskNameString);
         taskFinishedCheckBox.setEnabled(true);
         taskFinishedCheckBox.setSelected(false);
         taskFinishedCheckBox.addActionListener(this);
-        taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        
+        GridBagConstraints cTaskCheckBox = new GridBagConstraints();
+        cTaskCheckBox.anchor = GridBagConstraints.LINE_START;
+        taskPanelUp.add(taskFinishedCheckBox, cTaskCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
-        taskPanelUp.add(hintButton);//, BorderLayout.EAST);
+        
+        GridBagConstraints cHintButton = new GridBagConstraints();
+        cHintButton.anchor = GridBagConstraints.LINE_END;
+        taskPanelUp.add(hintButton, cHintButton);//, BorderLayout.EAST);
         
         
         //2)
@@ -137,8 +156,8 @@ public class Task extends JPanel implements ActionListener {
         taskDescription.setEnabled(true);
         taskPanelCenterFirst.add(taskDescription);
 
-        this.add(taskPanelUp);//, BorderLayout.NORTH);
-        this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+        this.add(taskPanelUp, cPanelUp);//, BorderLayout.NORTH);
+        this.add(taskPanelCenterFirst, cPanelCenter);//, BorderLayout.CENTER);
 //        this.setVisible(false);
     }
     
@@ -157,7 +176,11 @@ public class Task extends JPanel implements ActionListener {
     public void addRequirement (Requirement req) {
         this.req = req;
         this.taskPanelCenterSecond = req.reqPanel;
-        this.add(taskPanelCenterSecond);
+        GridBagConstraints cReq = new GridBagConstraints();
+        cReq.gridy = 2;
+        cReq.anchor = GridBagConstraints.CENTER;
+        cReq.fill = GridBagConstraints.SOUTH;
+        this.add(taskPanelCenterSecond, cReq);
         this.revalidate();
     }
     

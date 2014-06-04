@@ -309,13 +309,13 @@ public class FaradaysLaw extends SimEM {
 
         // task 0: multiple choice task
         task0 = new Task("TASK 1: MULTIPLE CHOICE QUESTION");
-        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
+        task0.addDescription("\"Total magnetic flux\" means:\n The flux through the ring due to the magnetic field");
         task0.addHint("Don't ask your Neighbor");
         MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone.",false);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",false);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",false);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
+        reqMC.addAnswer("of the magnet alone.",false);
+        reqMC.addAnswer("associated with the eddy currents in the ring.",false);
+        reqMC.addAnswer("of the magnet minus that associated with the eddy currents in the ring.",false);
+        reqMC.addAnswer("of the magnet plus that associated with the eddy currents in the ring.",true);
         reqMC.addAnswer("None of the above.",false);
         task0.addRequirement(reqMC);
         gamificationPanel.addTask(task0);

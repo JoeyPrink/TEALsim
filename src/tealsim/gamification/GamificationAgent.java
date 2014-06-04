@@ -34,7 +34,7 @@ import teal.ui.control.ControlGroup;
 public final class GamificationAgent extends ControlGroup {
     
     private ArrayList<Task> tasks = new ArrayList<Task>();
-    private  EngineControl mSEC;
+    private EngineControl mSEC;
     private JLabel hintLabel;
     private JButton hintButton;
     private JTextField hintTextbox;
