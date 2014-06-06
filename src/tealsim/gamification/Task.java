@@ -7,6 +7,7 @@
 package tealsim.gamification;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -148,14 +149,13 @@ public class Task extends JPanel implements ActionListener {
         cHintButton.anchor = GridBagConstraints.LINE_END;
         taskPanelUp.add(hintButton, cHintButton);//, BorderLayout.EAST);
         
-        
         //2)
         taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
         taskDescription.setEnabled(true);
         taskPanelCenterFirst.add(taskDescription);
-
+        
         this.add(taskPanelUp, cPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst, cPanelCenter);//, BorderLayout.CENTER);
 //        this.setVisible(false);

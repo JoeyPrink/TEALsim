@@ -69,4 +69,9 @@ public class CurrentRequirement extends Requirement {
         return fullfilled;
     }
     
+    @Override
+    public void setRequirementEnabled(boolean b) {
+
+    }
+    
 }
