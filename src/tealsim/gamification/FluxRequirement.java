@@ -70,4 +70,9 @@ public class FluxRequirement extends Requirement {
         return fullfilled;
     }
     
+    @Override
+    public void setRequirementEnabled(boolean b) {
+        
+    }
+    
 }
