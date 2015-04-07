@@ -308,7 +308,7 @@ public class FaradaysLaw extends SimEM {
         gamificationPanel = new GamificationAgent(mSEC);
         gamificationPanel.setTimerBadge(900);
 
-        /*
+        
         // task 0: multiple choice task
         task0 = new Task("TASK 1: MULTIPLE CHOICE QUESTION");
         task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
@@ -331,7 +331,7 @@ public class FaradaysLaw extends SimEM {
         reqF.addRing(roc);
         task1.addRequirement(reqF);
         gamificationPanel.addTask(task1);
-        */
+        
         // task 2: current task
         task2 = new Task("TASK 3: CURRENT");
         task2.addDescription("Try to keep the current between 0.1 and -0.1");
