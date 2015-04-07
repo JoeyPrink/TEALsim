@@ -106,6 +106,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     }
     
     public void setRequirementEnabled(boolean b) {
+        this.enabled = b;
         doneButton.setEnabled(b);
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             answerN.get(i).setEnabled(b);

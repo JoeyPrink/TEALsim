@@ -15,7 +15,7 @@ import teal.plot.FluxPlot;
  */
 public class FluxRequirement extends Requirement {
     
-    int ticks;
+    int ticks, time;
     double value, range1, range2;
     RingOfCurrent roc;
     
@@ -25,6 +25,7 @@ public class FluxRequirement extends Requirement {
         this.range1 = 0.;
         this.range2 = 0.;
         this.ticks = 0;
+        this.time = 75;
     }
     
     public void addRing(RingOfCurrent roc) {
@@ -40,6 +41,10 @@ public class FluxRequirement extends Requirement {
         this.range2 = range2;
     }
     
+    public void setTimeInTicks(int time) {
+        this.time = time;
+    }
+    
     @Override
     public boolean isFullFilled() {
         
@@ -49,7 +54,7 @@ public class FluxRequirement extends Requirement {
         
         if(value > 0.) {
             if(flux >= (value - 0.02) && flux <= (value + 0.02)) {
-                if(ticks > 75) {
+                if(ticks > time) {
                     fullfilled = true;
                 }
             }
@@ -59,7 +64,7 @@ public class FluxRequirement extends Requirement {
         }
         else {
             if(flux > range1 && flux < range2) {
-                if(ticks > 75) {
+                if(ticks > time) {
                     fullfilled = true;
                 }
             }
@@ -72,7 +77,7 @@ public class FluxRequirement extends Requirement {
     
     @Override
     public void setRequirementEnabled(boolean b) {
-        
+        this.enabled = b;
     }
     
 }

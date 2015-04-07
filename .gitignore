@@ -1,6 +1,7 @@
 #gitignore file
 *
 !.gitignore
-!/src/*
+!/src/tealsim.gamification/
+!/src/tealsim.physics.em/
 !/nbproject/project.xml
 !/nbproject/project.properties

@@ -13,17 +13,18 @@ import teal.physics.em.RingOfCurrent;
  * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public class CurrentRequirement extends Requirement {
-    int ticks;
+    int ticks, time;
     double value, range1, range2;
     RingOfCurrent roc;
     
     public CurrentRequirement() {
         super();
-        this.value = 0.;
-        this.range1 = 0.;
-        this.range2 = 0.;
+        this.value = 0.0;
+        this.range1 = 0.0;
+        this.range2 = 0.0;
         this.roc = null;
         this.ticks = 0;
+        this.time = 75;
     }
     
     public void addRing(RingOfCurrent roc) {
@@ -32,6 +33,10 @@ public class CurrentRequirement extends Requirement {
     
     public void setCurrentValue(double value) {
         this.value = value;
+    }
+    
+    public void setTimeInTicks(int time) {
+        this.time = time;
     }
     
     public void setCurrentRange(double range1, double range2) {
@@ -46,19 +51,16 @@ public class CurrentRequirement extends Requirement {
 //        System.out.format("total flux: %f\n", roc.getTotalFlux());
         double current = roc.getCurrent();
         
-        if(value > 0.) {
+        if(value > 0.0) {
             if(current >= (value - 0.02) && current <= (value + 0.02)) {
-                if(ticks > 75) {
+                if(ticks > time) {
                     fullfilled = true;
                 }
-            }
-            else {
-                ticks = 0;
             }
         }
         else {
             if(current > range1 && current < range2) {
-                if(ticks > 100) {
+                if(ticks > time) {
                     fullfilled = true;
                 }
             }
@@ -71,7 +73,7 @@ public class CurrentRequirement extends Requirement {
     
     @Override
     public void setRequirementEnabled(boolean b) {
-        
+        this.enabled = b;
     }
     
 }
