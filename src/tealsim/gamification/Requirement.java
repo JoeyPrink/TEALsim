@@ -15,6 +15,7 @@ import teal.ui.UIPanel;
 public abstract class Requirement {
  
     boolean fullfilled;
+    boolean enabled;
     UIPanel reqPanel;
     
     public Requirement () {
