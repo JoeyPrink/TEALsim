@@ -305,7 +305,7 @@ public class FaradaysLaw extends SimEM {
         addElement(fmanager);
 
         // gamification starts
-        gamificationPanel = new GamificationAgent(mSEC);
+        gamificationPanel = new GamificationAgent();
         gamificationPanel.setTimerBadge(900);
 
         

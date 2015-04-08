@@ -54,21 +54,21 @@ public class CurrentRequirement extends Requirement {
         if(value > 0.0) {
             if(current >= (value - 0.02) && current <= (value + 0.02)) {
                 if(ticks > time) {
-                    fullfilled = true;
+                    fulfilled = true;
                 }
             }
         }
         else {
             if(current > range1 && current < range2) {
                 if(ticks > time) {
-                    fullfilled = true;
+                    fulfilled = true;
                 }
             }
             else {
                 ticks = 0;
             }
         }
-        return fullfilled;
+        return fulfilled;
     }
     
     @Override

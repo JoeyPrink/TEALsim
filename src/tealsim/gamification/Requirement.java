@@ -8,23 +8,29 @@ package tealsim.gamification;
 
 import teal.ui.UIPanel;
 
+
 /**
  *
- * @author Georg
+ * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public abstract class Requirement {
  
-    boolean fullfilled;
-    boolean enabled;
-    UIPanel reqPanel;
+    protected boolean fulfilled;
+    protected boolean enabled;
+    protected UIPanel reqPanel;
     
     public Requirement () {
-        this.fullfilled = false;
+        this.fulfilled = false;
+        this.enabled = true;
         this.reqPanel = new UIPanel();
     }
     
     public abstract boolean isFullFilled();
     
     public abstract void setRequirementEnabled(boolean b);
+    
+    public UIPanel getReqPanel() {
+        return this.reqPanel;
+    }
     
 }

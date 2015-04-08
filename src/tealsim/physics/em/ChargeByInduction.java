@@ -12,6 +12,7 @@ package tealsim.physics.em;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import teal.render.BoundingSphere;
 import javax.swing.*;
@@ -20,13 +21,10 @@ import javax.vecmath.*;
 import teal.framework.TFramework;
 import teal.framework.TealAction;
 import teal.math.RectangularPlane;
-import teal.render.Rendered;
 import teal.render.primitives.Pipe;
-import teal.render.scene.TShapeNode;
 import teal.render.viewer.*;
 import teal.sim.collision.*;
 import teal.sim.control.VisualizationControl;
-import teal.sim.engine.SimEngine;
 import teal.sim.engine.TEngineControl;
 import teal.physics.em.SimEM;
 import teal.physics.physical.PhysicalObject;
@@ -37,6 +35,9 @@ import teal.ui.control.PropertyDouble;
 import teal.visualization.dlic.DLIC;
 
 import teal.util.TDebug;
+import tealsim.gamification.CollisionRequirement;
+import tealsim.gamification.GamificationAgent;
+import tealsim.gamification.Task;
 
 public class ChargeByInduction extends SimEM implements SelectListener {
 
@@ -59,6 +60,9 @@ public class ChargeByInduction extends SimEM implements SelectListener {
 
     Pipe ring1, ring2;
     PhysicalObject cylinder1, cylinder2;
+    
+    GamificationAgent gamificationPanel;
+    Task task0;
 
     public ChargeByInduction() {
 
@@ -207,11 +211,37 @@ public class ChargeByInduction extends SimEM implements SelectListener {
         
         addElement(controls);
         addElement(visGroup);
+        
+        gamificationPanel = new GamificationAgent();
+        gamificationPanel.setTimerBadge(900);
+        
+        // task 2: current task
+        task0 = new Task("TASK 1: COLLISION");
+        task0.addDescription("Try to make the charges touch the outer ring");
+        ArrayList<HasCollisionController> negPointCharges = new ArrayList<HasCollisionController>();
+        for(int i = 0; i < pointCharges.length; i++) {
+            if(pointCharges[i].getCharge() < 0.0) {
+                negPointCharges.add(pointCharges[i]);
+            }
+        }
+        System.out.println("negative point chaaaaaaaaarges length: " + negPointCharges.size());
+        CollisionRequirement reqC = new CollisionRequirement(cylinder1, negPointCharges);
+        task0.addRequirement(reqC);
+        gamificationPanel.addTask(task0);
+        
+        addElement(gamificationPanel);
      
         addSelectListener(this);
+        
+        addActions();
         mSEC.init();
         resetCamera();
         //reset();
+    }
+    
+    void addActions() {
+        TealAction ta = new TealAction("Start Timer", this);
+        addAction("Actions", ta);
     }
 
     public void actionPerformed(ActionEvent e) {

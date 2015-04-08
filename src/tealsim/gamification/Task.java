@@ -24,7 +24,7 @@ import teal.ui.UIPanel;
 
 /**
  *
- * @author Viktors
+ * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>
  */
 public class Task extends JPanel implements ActionListener {
     Requirement req;
@@ -34,7 +34,6 @@ public class Task extends JPanel implements ActionListener {
     UIPanel taskPanelUp = null;
     UIPanel taskPanelCenterFirst = null; 
     UIPanel taskPanelCenterSecond = null;
-    UIPanel taskPanelDown = null;
     JButton hintButton = null;
     JTextField hintTextField = null;
     UIPanel taskPanel = null;
@@ -44,22 +43,22 @@ public class Task extends JPanel implements ActionListener {
     JLabel taskDescription = null;
     
      public Task () {
-        this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
+        this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
         
-        //erzeuge Rahmen
+        // create frame
         Border borderMain = this.getBorder();
         Border marginMain = new LineBorder(Color.DARK_GRAY,2);
         this.setBorder(new CompoundBorder(borderMain, marginMain));
         
         
-        //Normales Layout
-        // Erzeuge 2 Panels
+        // normal layout
+        // create 2 panels
         taskPanelUp = new UIPanel();
         taskPanelCenterFirst = new UIPanel();
         //        taskPanelCenterSecond = new UIPanel();
         //        taskPanelDown = new UIPanel();
         
-        //Fuelle Panels
+        // fill panels
         //1)
         Border border = taskPanelUp.getBorder();
         Border margin = new LineBorder(Color.BLUE,1);
@@ -95,22 +94,22 @@ public class Task extends JPanel implements ActionListener {
     }
 
     public Task (String tName) {
-        this.setLayout(new GridLayout(3,0)); // Plane für 3 Panels, da Requirement auch eines hat
+        this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
         
-        //erzeuge Rahmen
+        // create frame
         Border borderMain = this.getBorder();
         Border marginMain = new LineBorder(Color.DARK_GRAY,2);
         this.setBorder(new CompoundBorder(borderMain, marginMain));
         
         
-        //Normales Layout
-        // Erzeuge 2 Panels
+        // normal layout
+        // create 2 panels
         taskPanelUp = new UIPanel();
         taskPanelCenterFirst = new UIPanel();
         //        taskPanelCenterSecond = new UIPanel();
         //        taskPanelDown = new UIPanel();
         
-        //Fuelle Panels
+        // fill panels
         //1)
         Border border = taskPanelUp.getBorder();
         Border margin = new LineBorder(Color.BLACK,1);
@@ -156,7 +155,7 @@ public class Task extends JPanel implements ActionListener {
     
     public void addRequirement (Requirement req) {
         this.req = req;
-        this.taskPanelCenterSecond = req.reqPanel;
+        this.taskPanelCenterSecond = req.getReqPanel();
         this.add(taskPanelCenterSecond);
         this.revalidate();
     }

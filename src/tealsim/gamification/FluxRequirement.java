@@ -11,13 +11,13 @@ import teal.plot.FluxPlot;
 
 /**
  *
- * @author Florian Schitter
+ * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public class FluxRequirement extends Requirement {
     
-    int ticks, time;
-    double value, range1, range2;
-    RingOfCurrent roc;
+    private int ticks, time;
+    private double value, range1, range2;
+    private RingOfCurrent roc;
     
     public FluxRequirement() {
         super();
@@ -55,7 +55,7 @@ public class FluxRequirement extends Requirement {
         if(value > 0.) {
             if(flux >= (value - 0.02) && flux <= (value + 0.02)) {
                 if(ticks > time) {
-                    fullfilled = true;
+                    fulfilled = true;
                 }
             }
             else {
@@ -65,14 +65,14 @@ public class FluxRequirement extends Requirement {
         else {
             if(flux > range1 && flux < range2) {
                 if(ticks > time) {
-                    fullfilled = true;
+                    fulfilled = true;
                 }
             }
             else {
                 ticks = 0;
             }
         }
-        return fullfilled;
+        return fulfilled;
     }
     
     @Override

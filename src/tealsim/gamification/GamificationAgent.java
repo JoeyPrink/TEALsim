@@ -6,40 +6,25 @@
 
 package tealsim.gamification;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import teal.framework.TealAction;
 import teal.sim.engine.EngineControl;
-import teal.ui.UIPanel;
 import teal.ui.control.ControlGroup;
 
 /**
  *
- * @author Georg
+ * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public final class GamificationAgent extends ControlGroup {
     
     private ArrayList<Task> tasks = new ArrayList<Task>();
     private  EngineControl mSEC;
-    private JLabel hintLabel;
-    private JButton hintButton;
-    private JTextField hintTextbox;
     private int labelWidth = 200; //zum Positionieren
-    private JProgressBar gamiProgressBar =null;
+    private JProgressBar gamificationProgressBar = null;
     private double sumTasks = 0;
     private long startTimeSecond = 0;
     private long timeAllowedSecond = 0;
@@ -48,15 +33,15 @@ public final class GamificationAgent extends ControlGroup {
     boolean isChecked = false;
             
             
-    public GamificationAgent (EngineControl msec) {
+    public GamificationAgent () {
         super();
-        mSEC = msec;
+        mSEC = null;
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
         setText("Gamification Panel");
-        gamiProgressBar = new JProgressBar( 0, 100);
-        gamiProgressBar.setValue(0);
-        gamiProgressBar.setStringPainted( true );
-        add(gamiProgressBar);//,BorderLayout.PAGE_START );
+        gamificationProgressBar = new JProgressBar( 0, 100);
+        gamificationProgressBar.setValue(0);
+        gamificationProgressBar.setStringPainted( true );
+        add(gamificationProgressBar);//,BorderLayout.PAGE_START );
     }
     
     public void addTask(Task task) {
@@ -67,8 +52,8 @@ public final class GamificationAgent extends ControlGroup {
         sumTasks++;
     }
     
-    public void getSizeOfTaskList() {
-        tasks.size();
+    public int getSizeOfTaskList() {
+        return tasks.size();
     }
     
     public void startTasks()
@@ -105,7 +90,7 @@ public final class GamificationAgent extends ControlGroup {
                 tasks.remove(0);
                 finished++;
                 int progress = (int)((finished/sumTasks)*100);
-                gamiProgressBar.setValue((int)progress);
+                gamificationProgressBar.setValue((int)progress);
 //                current.setVisible(false);
             }
         }

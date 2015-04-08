@@ -18,7 +18,7 @@ import teal.ui.UIPanel;
 
 /**
  *
- * @author VikMc, Flo McFly
+ * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>, Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 
 
@@ -91,13 +91,13 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         }
         else {
             JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
-            fullfilled = true;
+            fulfilled = true;
         }
     } 
     
     @Override
     public boolean isFullFilled() {
-        return fullfilled;
+        return fulfilled;
     }
     
     public UIPanel getPanel()
