@@ -47,7 +47,7 @@ public class ChargeByInduction extends SimEM implements SelectListener {
     JButton ungroundButton = null;
     PropertyDouble slider1 = null;
    
-    ControlGroup controls;
+    ControlGroup controls, gamification;
     VisualizationControl visGroup;
     
     protected FieldConvolution mDLIC = null;
@@ -228,8 +228,9 @@ public class ChargeByInduction extends SimEM implements SelectListener {
         CollisionRequirement reqC = new CollisionRequirement(cylinder1, negPointCharges);
         task0.addRequirement(reqC);
         gamificationPanel.addTask(task0);
-        
-        addElement(gamificationPanel);
+        gamification = new ControlGroup();
+        gamification.addElement(gamificationPanel);
+        addElement(gamification);
      
         addSelectListener(this);
         
@@ -253,6 +254,8 @@ public class ChargeByInduction extends SimEM implements SelectListener {
             ground();
         } else if (e.getActionCommand().compareToIgnoreCase("Unground") == 0) {
             unground();
+        }  else if (e.getActionCommand().equalsIgnoreCase("Start Timer")) {
+           gamificationPanel.startTimer();
         } else {
             super.actionPerformed(e);
         }

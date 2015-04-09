@@ -83,7 +83,7 @@ public class FaradaysLaw extends SimEM {
     JTaskPane tp;
     PropertyCheck showRingCurrent;
     
-    ControlGroup params,graphs;
+    ControlGroup params, graphs, gamification;
     VisualizationControl vis;
     RingOfCurrent roc;
     MagneticDipole mag;
@@ -342,7 +342,10 @@ public class FaradaysLaw extends SimEM {
         task2.addRequirement(reqC);
         gamificationPanel.addTask(task2);
         
-        addElement(gamificationPanel);
+        gamification = new ControlGroup();
+        gamification.setText("Gamification");
+        gamification.addElement(gamificationPanel);
+        addElement(gamification);
         
         slidermag = new PropertyDouble();
         slidermag.setText("Dipole Moment");
@@ -368,7 +371,7 @@ public class FaradaysLaw extends SimEM {
         //addElement(sliderroc);
 
         flux_graph = new Graph();
-        flux_graph.addGamification(gamificationPanel);
+        //flux_graph.addGamification(gamificationPanel);
         flux_graph.setXRange(0., 12.);
         flux_graph.setYRange(-0.1, 0.5);
         //flux_graph.setXPersistence(100.0);
@@ -386,6 +389,7 @@ public class FaradaysLaw extends SimEM {
         //addElement(flux_graph);
 
         current_graph = new Graph();
+        //current_graph.addGamification(gamificationPanel);
         current_graph.setXRange(0., 12.);
         current_graph.setYRange(-0.4, 0.4);
         //current_graph.setXPersistence(100.0);
@@ -534,7 +538,7 @@ public class FaradaysLaw extends SimEM {
         ta = new TealAction("Level Complete", "Level Complete", this);    //added jwb 7/13/2008
         watch.setAction(ta);                                                //added jwb 7/13/2008
        
-         ta = new TealAction("Start Timer", this);
+        ta = new TealAction("Start Timer", this);
         addAction("Actions", ta);
         
     }
@@ -550,11 +554,9 @@ public class FaradaysLaw extends SimEM {
             resetGeneratorMode();
         } else if (e.getActionCommand().equalsIgnoreCase("Reset Layout")) {
             //resetLayout();
-        }
-        else if (e.getActionCommand().equalsIgnoreCase("Start Timer")) {
-           gamificationPanel.startTasks();
-        }
-        else {
+        } else if (e.getActionCommand().equalsIgnoreCase("Start Timer")) {
+           gamificationPanel.startTimer();
+        } else {
             super.actionPerformed(e);
         }
     }

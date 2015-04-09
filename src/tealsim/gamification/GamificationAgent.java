@@ -12,18 +12,21 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
-import teal.sim.engine.EngineControl;
+import teal.core.TUpdatable;
+import teal.sim.TSimElement;
 import teal.ui.control.ControlGroup;
 
 /**
  *
  * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
-public final class GamificationAgent extends ControlGroup {
+public final class GamificationAgent extends ControlGroup implements TUpdatable, TSimElement {
+    
+    private static final long serialVersionUID = 3761131530902252017L;
     
     private ArrayList<Task> tasks = new ArrayList<Task>();
-    private  EngineControl mSEC;
-    private int labelWidth = 200; //zum Positionieren
+    private ArrayList<Task> tasks_backup = new ArrayList<Task>();
+    private int labelWidth = 200; // to position
     private JProgressBar gamificationProgressBar = null;
     private double sumTasks = 0;
     private long startTimeSecond = 0;
@@ -32,10 +35,8 @@ public final class GamificationAgent extends ControlGroup {
     private double finished = 0;
     boolean isChecked = false;
             
-            
-    public GamificationAgent () {
+    public GamificationAgent() {
         super();
-        mSEC = null;
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
         setText("Gamification Panel");
         gamificationProgressBar = new JProgressBar( 0, 100);
@@ -48,16 +49,18 @@ public final class GamificationAgent extends ControlGroup {
         task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
         add(task);
         tasks.add(task);
+        tasks_backup.add(task);
 //        tasks.get(0).setVisible(true);
-        sumTasks++;
+//        sumTasks++;
     }
     
     public int getSizeOfTaskList() {
         return tasks.size();
     }
     
-    public void startTasks()
+    public void startTimer()
     {
+        System.out.println("GamificationAgent, startTasks() started");
         startTimeSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
         this.setVisible(true);
 //        int i = 0;
@@ -80,7 +83,7 @@ public final class GamificationAgent extends ControlGroup {
 //        }
     }
     
-    public void checkTask() {
+    public void checkTasks() {
         
         if(!tasks.isEmpty()) {
             Task current = tasks.get(0);
@@ -89,12 +92,11 @@ public final class GamificationAgent extends ControlGroup {
             if(current.checkReq()) {
                 tasks.remove(0);
                 finished++;
-                int progress = (int)((finished/sumTasks)*100);
+                int progress = (int)((finished/(tasks.size()+1))*100);
                 gamificationProgressBar.setValue((int)progress);
 //                current.setVisible(false);
             }
-        }
-        else {
+        } else {
             // ALL TASKS COMPLETED - YAAAAAYYYY!!!
             if(!isChecked) {
                 long endTimeSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - startTimeSecond;
@@ -116,6 +118,11 @@ public final class GamificationAgent extends ControlGroup {
             ImageIcon timerIcon =  new javax.swing.ImageIcon(getClass().getResource("/tealsim/gamification/timer.png"));
             JOptionPane.showMessageDialog(this, "You received \"Timer-Badge\", for beeing in-time","Badge Received",1, timerIcon);
         }     
+    }
+    
+    public void update() {
+        checkTasks();
+        Thread.yield();
     }
     
 }

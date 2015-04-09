@@ -42,7 +42,7 @@ public class CollisionRequirement extends Requirement {
         if(objects != null) {
             boolean all_colliding = true;
             for(int i = 0; i < objects.size(); i++) {
-                if(!objects.get(i).isColliding()) {
+                if(!objects.get(i).isAdheredTo(object1)) {
                     all_colliding = false;
                 }
             }

@@ -35,11 +35,7 @@ public class Graph extends teal.plot.ptolemy.Plot implements TUpdatable, TSimEle
             plotItems.add(pi);
         }
     }
-    
-    public synchronized void addGamification(GamificationAgent game) {
-        gamification = game;
-    }
-
+   
     public synchronized void removePlotItem(PlotItem pi) {
 
         if (plotItems.contains(pi)) {
@@ -52,9 +48,6 @@ public class Graph extends teal.plot.ptolemy.Plot implements TUpdatable, TSimEle
         while (it.hasNext()) {
             PlotItem pi = (PlotItem) it.next();
             pi.doPlot(this);
-        }
-        if(gamification != null) {
-            gamification.checkTask();
         }
         
         repaint();
