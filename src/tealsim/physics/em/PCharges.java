@@ -64,12 +64,12 @@ public class PCharges extends SimEM {
         // Here we set the bounding area of the simulation space.  This should be characteristic of the size of the space
         // being used.
        
-        theEngine.setBoundingArea(new BoundingSphere(new Point3d(), 10));
+        setBoundingArea(new BoundingSphere(new Point3d(), 10));
         // Here we set the generalized velocity-based damping of the simulation.        
-        theEngine.setDamping(0.1);
+        setDamping(0.1);
         // Here we set the time step of the simulation.
-        theEngine.setDeltaTime(0.1);
-        theEngine.setGravity(new Vector3d());
+        setDeltaTime(0.1);
+        setGravity(new Vector3d());
  
         
         // setNavigationMode() sets the mouse-based camera navigation modes available in this simulation.  In this case 
