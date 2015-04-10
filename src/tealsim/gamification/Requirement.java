@@ -29,6 +29,8 @@ public abstract class Requirement {
     
     public abstract void setRequirementEnabled(boolean b);
     
+    public abstract void resetRequirement();
+    
     public UIPanel getReqPanel() {
         return this.reqPanel;
     }

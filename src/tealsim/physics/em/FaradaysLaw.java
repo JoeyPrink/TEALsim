@@ -566,6 +566,8 @@ public class FaradaysLaw extends SimEM {
         if (mSEC.getSimState() == TEngineControl.RUNNING) {
             mSEC.stop();
         }
+        
+        gamificationPanel.reset();
 
         Vector3d roc_position = new Vector3d(0., 0., 0.);
         roc_gizmo.setPosition(roc_position);

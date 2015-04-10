@@ -62,4 +62,10 @@ public class CollisionRequirement extends Requirement {
     public void setRequirementEnabled(boolean b) {
         this.enabled = b;
     }
+    
+    @Override
+    public void resetRequirement () {
+        this.fulfilled = false;
+        this.enabled = true;
+    }
 }

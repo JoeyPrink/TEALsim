@@ -76,4 +76,10 @@ public class CurrentRequirement extends Requirement {
         this.enabled = b;
     }
     
+    @Override
+    public void resetRequirement () {
+        this.fulfilled = false;
+        this.enabled = true;
+        this.ticks = 0;
+    }
 }

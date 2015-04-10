@@ -293,6 +293,7 @@ public class ChargeByInduction extends SimEM implements SelectListener {
 
     public void reset() {
         resetPointCharges();
+        gamificationPanel.reset();
         mSEC.stop();
         //resetCamera();
 

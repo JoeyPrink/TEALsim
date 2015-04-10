@@ -105,12 +105,26 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         return this.reqPanel;
     }
     
+    @Override
     public void setRequirementEnabled(boolean b) {
         this.enabled = b;
         doneButton.setEnabled(b);
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             answerN.get(i).setEnabled(b);
         }
+    }
+    
+    @Override
+    public void resetRequirement () {
+        this.fulfilled = false;
+        this.enabled = true;
+        
+        for (int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+            answerN.get(i).setSelected(false);
+            answerN.get(i).setEnabled(true);
+        }
+        
+        doneButton.setEnabled(true);
     }
     
 }

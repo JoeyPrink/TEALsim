@@ -92,7 +92,8 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
             if(current.checkReq()) {
                 tasks.remove(0);
                 finished++;
-                int progress = (int)((finished/(tasks.size()+1))*100);
+                System.out.println("checkTasks, size of tasks: " + tasks.size());
+                int progress = (int)((finished/(tasks_backup.size()))*100);
                 gamificationProgressBar.setValue((int)progress);
 //                current.setVisible(false);
             }
@@ -118,6 +119,16 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
             ImageIcon timerIcon =  new javax.swing.ImageIcon(getClass().getResource("/tealsim/gamification/timer.png"));
             JOptionPane.showMessageDialog(this, "You received \"Timer-Badge\", for beeing in-time","Badge Received",1, timerIcon);
         }     
+    }
+    
+    public void reset() {
+        gamificationProgressBar.setValue(0);
+        tasks.removeAll(tasks);
+        tasks.addAll(tasks_backup);
+        finished = 0;
+        for(int i = 0; i < tasks.size(); i++) {
+            tasks.get(i).resetTask();
+        }
     }
     
     public void update() {

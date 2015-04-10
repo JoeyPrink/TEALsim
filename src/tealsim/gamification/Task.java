@@ -205,6 +205,14 @@ public class Task extends JPanel implements ActionListener {
 
         return false;
     }
+    
+    public void resetTask() {
+        taskFinishedCheckBox.setSelected(false);
+        taskFinishedCheckBox.setEnabled(true);
+        hintButton.setEnabled(true);
+        taskDescription.setEnabled(true);
+        req.resetRequirement();
+    }
 }
     
     
