@@ -8,8 +8,30 @@ package tealsim.gamification;
 
 /**
  *
- * @author Georg
+ * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
-public class ZoneRequirement {
+public class ZoneRequirement extends Requirement {
+    
+    ZoneRequirement() {
+        super();
+        
+    }
+    
+    @Override
+    public boolean isFullFilled() {
+
+        return fulfilled;
+    }
+    
+    @Override
+    public void setRequirementEnabled(boolean b) {
+        this.enabled = b;
+    }
+    
+    @Override
+    public void resetRequirement () {
+        this.fulfilled = false;
+        this.enabled = true;
+    }
     
 }
