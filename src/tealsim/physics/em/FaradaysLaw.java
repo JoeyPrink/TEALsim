@@ -310,8 +310,8 @@ public class FaradaysLaw extends SimEM {
 
         
         // task 0: multiple choice task
-        task0 = new Task("TASK 1: MULTIPLE CHOICE QUESTION");
-        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: (15 points possible)");
+        task0 = new Task("TASK 1", 440, 40);
+        task0.addDescription("In the explanation page of this simulation, \"total magnetic\n flux\" means: (15 points possible)");
         task0.addHint("Don't ask your Neighbor");
         MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
         reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone.",false);
@@ -323,8 +323,8 @@ public class FaradaysLaw extends SimEM {
         gamificationPanel.addTask(task0);
 
         // task 1: total flux task
-        task1 = new Task("TASK 2: TOTAL FLUX");
-        task1.addDescription("Try to keep the total flux between 0.2 and 0.3");
+        task1 = new Task("TASK 2", 440, 40);
+        task1.addDescription("Try to keep the total flux between 0.2 and 0.3\n (15 points possible)");
         FluxRequirement reqF = new FluxRequirement();
         reqF.setFluxRange(0.2, 0.3);
         reqF.setTimeInTicks(50);
@@ -333,8 +333,8 @@ public class FaradaysLaw extends SimEM {
         gamificationPanel.addTask(task1);
         
         // task 2: current task
-        task2 = new Task("TASK 3: CURRENT");
-        task2.addDescription("Try to keep the current between 0.1 and -0.1");
+        task2 = new Task("TASK 3", 440, 40);
+        task2.addDescription("Try to keep the current between 0.1 and -0.1\n (15 points possible)");
         CurrentRequirement reqC = new CurrentRequirement();
         reqC.setCurrentValue(-0.1);
         reqC.setTimeInTicks(50);

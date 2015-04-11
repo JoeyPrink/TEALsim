@@ -7,12 +7,13 @@
 package tealsim.gamification;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
+import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -40,7 +41,7 @@ public class Task extends JPanel implements ActionListener {
     JCheckBox taskFinishedCheckBox = null;
     JTextArea taskNameTextArea = null;
     String taskNameString = null;
-    JLabel taskDescription = null;
+    JEditorPane taskDescription = null;
     
      public Task () {
         this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
@@ -81,10 +82,12 @@ public class Task extends JPanel implements ActionListener {
        
         
         //2)
-        taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
+        taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
+        taskDescription.setSize(taskPanelCenterFirst.getWidth(), taskPanelCenterFirst.getHeight());
         taskDescription.setEnabled(true);
+        taskDescription.setEditable(false);
         taskPanelCenterFirst.add(taskDescription);
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
@@ -93,8 +96,9 @@ public class Task extends JPanel implements ActionListener {
 
     }
 
-    public Task (String tName) {
+    public Task (String tName, int width, int height) {
         this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
+        //this.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
         
         // create frame
         Border borderMain = this.getBorder();
@@ -128,12 +132,14 @@ public class Task extends JPanel implements ActionListener {
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
         taskPanelUp.add(hintButton);//, BorderLayout.EAST);
         
-        
         //2)
-        taskDescription = new JLabel("DEFAULT - No Description");//,4,10);
+        taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
+        taskDescription.setPreferredSize(new Dimension(width, height));
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
+        //taskDescription.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
         taskDescription.setEnabled(true);
+        taskDescription.setEditable(false);
         taskPanelCenterFirst.add(taskDescription);
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);

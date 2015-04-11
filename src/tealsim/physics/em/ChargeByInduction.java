@@ -215,9 +215,9 @@ public class ChargeByInduction extends SimEM implements SelectListener {
         gamificationPanel = new GamificationAgent();
         gamificationPanel.setTimerBadge(900);
         
-        // task 2: current task
-        task0 = new Task("TASK 1: COLLISION");
-        task0.addDescription("Try to make the negative charges touch the outer ring");
+        // task 1: collision task
+        task0 = new Task("TASK 1", 240, 60);
+        task0.addDescription("Try to make the negative charges touch the outer ring\n(15 points possibru)");
         ArrayList<HasCollisionController> negPointCharges = new ArrayList<HasCollisionController>();
         for(int i = 0; i < pointCharges.length; i++) {
             if(pointCharges[i].getCharge() < 0.0) {
