@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
@@ -28,7 +29,7 @@ import teal.ui.UIPanel;
  * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>
  */
 public class Task extends JPanel implements ActionListener {
-    Requirement req;
+    ArrayList<Requirement> req_list;
     String  hintString;
     int timer;
     int points;
@@ -89,6 +90,8 @@ public class Task extends JPanel implements ActionListener {
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
         taskPanelCenterFirst.add(taskDescription);
+        
+        req_list = new ArrayList<Requirement>();
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
@@ -141,6 +144,8 @@ public class Task extends JPanel implements ActionListener {
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
         taskPanelCenterFirst.add(taskDescription);
+        
+        req_list = new ArrayList<Requirement>();
 
         this.add(taskPanelUp);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
@@ -160,7 +165,7 @@ public class Task extends JPanel implements ActionListener {
     }
     
     public void addRequirement (Requirement req) {
-        this.req = req;
+        this.req_list.add(req);
         this.taskPanelCenterSecond = req.getReqPanel();
         this.add(taskPanelCenterSecond);
         this.revalidate();
@@ -198,17 +203,24 @@ public class Task extends JPanel implements ActionListener {
     }
     
     public boolean checkReq() {
+        boolean all_fulfilled = true;
         
-        if(req != null && req.isFullFilled()) {
-            taskFinishedCheckBox.setSelected(true);
-            taskFinishedCheckBox.setEnabled(false);
-            hintButton.setEnabled(false);
-            taskDescription.setEnabled(false);
-            req.setRequirementEnabled(false);
-
+        for (Requirement req : req_list) {
+            if(!req.isFullFilled())
+                all_fulfilled = false;
+        }
+        
+        if(all_fulfilled) {
+            for (Requirement req : req_list) {
+                taskFinishedCheckBox.setSelected(true);
+                taskFinishedCheckBox.setEnabled(false);
+                hintButton.setEnabled(false);
+                taskDescription.setEnabled(false);
+                req.setRequirementEnabled(false);
+            }
+            
             return true;
         }
-
         return false;
     }
     
@@ -217,7 +229,8 @@ public class Task extends JPanel implements ActionListener {
         taskFinishedCheckBox.setEnabled(true);
         hintButton.setEnabled(true);
         taskDescription.setEnabled(true);
-        req.resetRequirement();
+        for (Requirement req : req_list)
+            req.resetRequirement();
     }
 }
     
