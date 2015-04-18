@@ -178,5 +178,15 @@ public class RectangularBox extends SimObj implements TWallCollection {
         }
         return array;
     }
+    
+    public boolean contains(Vector3d object) {
+        
+        if(position.x <= object.x && position.y <= object.y && position.z <= object.z && 
+                position.x + length >= object.x && position.y + height >= object.y && 
+                position.z + width >= object.z)
+            return true;
+        
+        return false;
+    }
 
 }

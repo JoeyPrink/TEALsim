@@ -12,7 +12,9 @@ package tealsim.physics.em;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import teal.render.BoundingSphere;
 import javax.vecmath.Point3d;
@@ -26,11 +28,10 @@ import teal.math.RectangularPlane;
 import teal.render.viewer.TViewer;
 import teal.sim.collision.SphereCollisionController;
 import teal.sim.control.VisualizationControl;
-import teal.sim.engine.SimEngine;
 import teal.physics.em.SimEM;
 import teal.physics.physical.RectangularBox;
 import teal.physics.em.PointCharge;
-import teal.sim.simulation.SimWorld;
+import teal.physics.physical.PhysicalObject;
 import teal.sim.spatial.FieldConvolution;
 import teal.sim.spatial.FieldDirectionGrid;
 import teal.sim.spatial.FieldLine;
@@ -39,6 +40,9 @@ import teal.sim.spatial.RelativeFLine;
 import teal.ui.control.ControlGroup;
 import teal.ui.control.PropertyDouble;
 import teal.visualization.dlic.DLIC;
+import tealsim.gamification.ZoneRequirement;
+import tealsim.gamification.GamificationAgent;
+import tealsim.gamification.Task;
 
 public class PCharges extends SimEM {
 
@@ -48,9 +52,12 @@ public class PCharges extends SimEM {
     FieldConvolution mDLIC;
     FieldLineManager fmanager;
     VisualizationControl visGroup;
-    ControlGroup controls;
+    ControlGroup controls, gamification;
     PointCharge pc1;
     PointCharge pc2;
+    
+    GamificationAgent gamificationPanel;
+    Task task0;
 
     public PCharges() {
 
@@ -268,6 +275,21 @@ public class PCharges extends SimEM {
         // add the VisualizationControl to the application.
         addElement(visGroup);
         
+        // task 2: current task
+        /*task0 = new Task("TASK 1", 440, 40);
+        task0.addDescription("Move the positive charge\n (15 points possible)");
+        HashMap<PhysicalObject, ArrayList<PhysicalObject>> objects = new HashMap<PhysicalObject, ArrayList<PhysicalObject>>();
+        RectangularBox target_zone = new RectangularBox();
+        
+        ZoneRequirement reqZ = new ZoneRequirement();
+        task0.addRequirement(reqZ);
+        gamificationPanel.addTask(task0);
+        
+        gamification = new ControlGroup();
+        gamification.setText("Gamification");
+        gamification.addElement(gamificationPanel);
+        addElement(gamification);
+        */
 
         // Final initializations
         mSEC.init();

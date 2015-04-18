@@ -14,7 +14,7 @@ import teal.physics.em.RingOfCurrent;
  */
 public class CurrentRequirement extends Requirement {
     int ticks, time;
-    double value, range1, range2;
+    double value, range1, range2, tolerance;
     RingOfCurrent roc;
     
     public CurrentRequirement() {
@@ -25,6 +25,7 @@ public class CurrentRequirement extends Requirement {
         this.roc = null;
         this.ticks = 0;
         this.time = 75;
+        this.tolerance = 0.02;
     }
     
     public void addRing(RingOfCurrent roc) {
@@ -33,6 +34,11 @@ public class CurrentRequirement extends Requirement {
     
     public void setCurrentValue(double value) {
         this.value = value;
+    }
+    
+    public void setCurrentValue(double value, double tolerance) {
+        this.value = value;
+        this.tolerance = tolerance;
     }
     
     public void setTimeInTicks(int time) {

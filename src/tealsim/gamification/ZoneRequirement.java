@@ -6,19 +6,35 @@
 
 package tealsim.gamification;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.HashMap;
+import teal.physics.physical.PhysicalObject;
+import teal.physics.physical.RectangularBox;
+
 /**
  *
  * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public class ZoneRequirement extends Requirement {
     
-    ZoneRequirement() {
+    HashMap<RectangularBox, ArrayList<PhysicalObject>> objects = new HashMap<RectangularBox, ArrayList<PhysicalObject>>();
+    
+    ZoneRequirement(HashMap<RectangularBox, ArrayList<PhysicalObject>> objects) {
         super();
         
+        this.objects = objects;
     }
     
     @Override
     public boolean isFullFilled() {
+        // loop through all RectangularBox
+        //  loop through ArrayList<PhysicalObject>
+        //      if all PhysicalObjects are within their respective RectangularBox return true
+        //      else return false
+        
+        // call contains() method on each RectangularBox for all PhysicalObjects
+        
 
         return fulfilled;
     }
@@ -33,5 +49,6 @@ public class ZoneRequirement extends Requirement {
         this.fulfilled = false;
         this.enabled = true;
     }
+
     
 }

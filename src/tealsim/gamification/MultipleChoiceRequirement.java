@@ -31,11 +31,12 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     boolean isComplete;
     Task myTask;
   
-    public MultipleChoiceRequirement() {
+    public MultipleChoiceRequirement(int no_of_answers) {
         super();
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
+        this.NUMBER_OF_CHECKBOX = no_of_answers;
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         

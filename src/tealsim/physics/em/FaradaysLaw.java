@@ -313,7 +313,7 @@ public class FaradaysLaw extends SimEM {
         task0 = new Task("TASK 1", 440, 40);
         task0.addDescription("In the explanation page of this simulation, \"total magnetic\n flux\" means: (15 points possible)");
         task0.addHint("Don't ask your Neighbor");
-        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement();
+        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement(5);
         reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone.",false);
         reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",false);
         reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",false);
