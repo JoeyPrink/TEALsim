@@ -275,13 +275,15 @@ public class PCharges extends SimEM {
         // add the VisualizationControl to the application.
         addElement(visGroup);
         
+        
+        gamificationPanel = new GamificationAgent();
         // task 2: current task
-        /*task0 = new Task("TASK 1", 440, 40);
+        task0 = new Task("TASK 1", 440, 40);
         task0.addDescription("Move the positive charge\n (15 points possible)");
-        HashMap<PhysicalObject, ArrayList<PhysicalObject>> objects = new HashMap<PhysicalObject, ArrayList<PhysicalObject>>();
-        RectangularBox target_zone = new RectangularBox();
         
         ZoneRequirement reqZ = new ZoneRequirement();
+        reqZ.setTargetZone(3, 3, 3, new Vector3d(0, -2, 0));
+        reqZ.addObject(pc1);
         task0.addRequirement(reqZ);
         gamificationPanel.addTask(task0);
         
@@ -289,7 +291,7 @@ public class PCharges extends SimEM {
         gamification.setText("Gamification");
         gamification.addElement(gamificationPanel);
         addElement(gamification);
-        */
+        
 
         // Final initializations
         mSEC.init();

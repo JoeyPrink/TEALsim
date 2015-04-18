@@ -6,9 +6,8 @@
 
 package tealsim.gamification;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.HashMap;
+import javax.vecmath.Vector3d;
 import teal.physics.physical.PhysicalObject;
 import teal.physics.physical.RectangularBox;
 
@@ -18,25 +17,43 @@ import teal.physics.physical.RectangularBox;
  */
 public class ZoneRequirement extends Requirement {
     
-    HashMap<RectangularBox, ArrayList<PhysicalObject>> objects = new HashMap<RectangularBox, ArrayList<PhysicalObject>>();
+    RectangularBox target_zone;
+    ArrayList<PhysicalObject> objects;
+    int time;
     
-    ZoneRequirement(HashMap<RectangularBox, ArrayList<PhysicalObject>> objects) {
+    public ZoneRequirement() {
         super();
         
-        this.objects = objects;
+        target_zone = new RectangularBox();
+        objects = new ArrayList<PhysicalObject>();
+        time = 70;
+    }
+    
+    public void addObject(PhysicalObject object) {
+        objects.add(object);
+    }
+    
+    public void setTargetZone(double width, double length, double height, Vector3d pos) {
+        this.target_zone.setPosition(pos);
+        this.target_zone.setWidth(width);
+        this.target_zone.setLength(length);
+        this.target_zone.setHeight(height);
+    }
+    
+    public void setTimeInTicks(int ticks) {
+        this.time = ticks;
     }
     
     @Override
     public boolean isFullFilled() {
-        // loop through all RectangularBox
-        //  loop through ArrayList<PhysicalObject>
-        //      if all PhysicalObjects are within their respective RectangularBox return true
-        //      else return false
+        this.fulfilled = true;
         
-        // call contains() method on each RectangularBox for all PhysicalObjects
+        for (PhysicalObject obj: objects) {
+            if(!this.target_zone.contains(obj.getPosition()))
+                this.fulfilled = false;
+        }
         
-
-        return fulfilled;
+        return this.fulfilled;
     }
     
     @Override

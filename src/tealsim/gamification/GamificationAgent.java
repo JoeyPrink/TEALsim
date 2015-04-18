@@ -24,8 +24,8 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
     
     private static final long serialVersionUID = 3761131530902252017L;
     
-    private ArrayList<Task> tasks = new ArrayList<Task>();
-    private ArrayList<Task> tasks_backup = new ArrayList<Task>();
+    private ArrayList<Task> tasks;
+    private ArrayList<Task> tasks_backup;
     private int labelWidth = 200; // to position
     private JProgressBar gamificationProgressBar = null;
     private double sumTasks = 0;
@@ -43,6 +43,9 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
         gamificationProgressBar.setValue(0);
         gamificationProgressBar.setStringPainted( true );
         add(gamificationProgressBar);//,BorderLayout.PAGE_START );
+        
+        tasks = new ArrayList<Task>();
+        tasks_backup = new ArrayList<Task>();
     }
     
     public void addTask(Task task) {
