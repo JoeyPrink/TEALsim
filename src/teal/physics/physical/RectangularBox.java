@@ -180,11 +180,14 @@ public class RectangularBox extends SimObj implements TWallCollection {
     }
     
     public boolean contains(Vector3d object) {
-        
-        if(position.x <= object.x && position.y <= object.y && position.z <= object.z && 
-                position.x + length >= object.x && position.y + height >= object.y && 
-                position.z + width >= object.z)
+           
+        if(position.x - length/2 <= object.x && position.y - height/2 <= object.y && 
+                position.z - width/2 <= object.z && 
+                position.x + length/2 >= object.x && position.y + height/2 >= object.y && 
+                position.z + width/2 >= object.z) {
+            
             return true;
+        }
         
         return false;
     }

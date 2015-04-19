@@ -12,9 +12,7 @@ package tealsim.physics.em;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import teal.render.BoundingSphere;
 import javax.vecmath.Point3d;
@@ -31,7 +29,6 @@ import teal.sim.control.VisualizationControl;
 import teal.physics.em.SimEM;
 import teal.physics.physical.RectangularBox;
 import teal.physics.em.PointCharge;
-import teal.physics.physical.PhysicalObject;
 import teal.sim.spatial.FieldConvolution;
 import teal.sim.spatial.FieldDirectionGrid;
 import teal.sim.spatial.FieldLine;
@@ -55,6 +52,7 @@ public class PCharges extends SimEM {
     ControlGroup controls, gamification;
     PointCharge pc1;
     PointCharge pc2;
+    RectangularBox rect_box;
     
     GamificationAgent gamificationPanel;
     Task task0;
@@ -282,7 +280,7 @@ public class PCharges extends SimEM {
         task0.addDescription("Move the positive charge\n (15 points possible)");
         
         ZoneRequirement reqZ = new ZoneRequirement();
-        reqZ.setTargetZone(3, 3, 3, new Vector3d(0, -2, 0));
+        reqZ.setTargetZone(3., 3., 3., new Vector3d(0., -0.75, 0.));
         reqZ.addObject(pc1);
         task0.addRequirement(reqZ);
         gamificationPanel.addTask(task0);
@@ -292,6 +290,7 @@ public class PCharges extends SimEM {
         gamification.addElement(gamificationPanel);
         addElement(gamification);
         
+        //addElements(reqZ.getTargetZone().getTargetZoneWalls());
 
         // Final initializations
         mSEC.init();
@@ -321,6 +320,7 @@ public class PCharges extends SimEM {
         super.reset();
         pc1.setPosition(new Vector3d(0, 2, 0));
         pc2.setPosition(new Vector3d(0, -2, 0));
+        gamificationPanel.reset();
         //theEngine.refresh();
     }
 

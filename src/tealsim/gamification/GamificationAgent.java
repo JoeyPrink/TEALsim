@@ -129,11 +129,12 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
         tasks.removeAll(tasks);
         tasks.addAll(tasks_backup);
         finished = 0;
-        for(int i = 0; i < tasks.size(); i++) {
-            tasks.get(i).resetTask();
+        for (Task task : tasks) {
+            task.resetTask();
         }
     }
     
+    @Override
     public void update() {
         checkTasks();
         Thread.yield();

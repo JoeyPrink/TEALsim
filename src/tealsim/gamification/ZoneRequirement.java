@@ -7,9 +7,11 @@
 package tealsim.gamification;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.vecmath.Vector3d;
 import teal.physics.physical.PhysicalObject;
 import teal.physics.physical.RectangularBox;
+import teal.physics.physical.Wall;
 
 /**
  *
@@ -17,9 +19,9 @@ import teal.physics.physical.RectangularBox;
  */
 public class ZoneRequirement extends Requirement {
     
-    RectangularBox target_zone;
-    ArrayList<PhysicalObject> objects;
-    int time;
+    protected RectangularBox target_zone;
+    protected ArrayList<PhysicalObject> objects;
+    protected int time;
     
     public ZoneRequirement() {
         super();
@@ -38,19 +40,31 @@ public class ZoneRequirement extends Requirement {
         this.target_zone.setWidth(width);
         this.target_zone.setLength(length);
         this.target_zone.setHeight(height);
+        this.target_zone.setOrientation(new Vector3d(0., 1., 0.));
+        this.target_zone.setNormal(new Vector3d(0., 0., 1.));
     }
     
     public void setTimeInTicks(int ticks) {
         this.time = ticks;
     }
     
+    public Collection<Wall> getTargetZoneWalls() {
+        return this.target_zone.getWalls();
+    }
+    
     @Override
     public boolean isFullFilled() {
-        this.fulfilled = true;
+        boolean contains_all = true;
         
         for (PhysicalObject obj: objects) {
             if(!this.target_zone.contains(obj.getPosition()))
-                this.fulfilled = false;
+                contains_all = false;
+        }
+        
+        if(contains_all) {
+            this.fulfilled = true;
+        } else {
+            this.fulfilled = false;
         }
         
         return this.fulfilled;
