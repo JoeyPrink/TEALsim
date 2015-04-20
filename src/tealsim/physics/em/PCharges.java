@@ -290,7 +290,7 @@ public class PCharges extends SimEM {
         gamification.addElement(gamificationPanel);
         addElement(gamification);
         
-        //addElements(reqZ.getTargetZone().getTargetZoneWalls());
+        addElements(reqZ.getTargetZoneWalls());
 
         // Final initializations
         mSEC.init();

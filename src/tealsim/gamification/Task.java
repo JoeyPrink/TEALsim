@@ -33,7 +33,7 @@ public class Task extends JPanel implements ActionListener {
     String  hintString;
     int timer;
     int points;
-    UIPanel taskPanelUp = null;
+    UIPanel taskPanelTop = null;
     UIPanel taskPanelCenterFirst = null; 
     UIPanel taskPanelCenterSecond = null;
     JButton hintButton = null;
@@ -55,31 +55,31 @@ public class Task extends JPanel implements ActionListener {
         
         // normal layout
         // create 2 panels
-        taskPanelUp = new UIPanel();
+        taskPanelTop = new UIPanel();
         taskPanelCenterFirst = new UIPanel();
         //        taskPanelCenterSecond = new UIPanel();
         //        taskPanelDown = new UIPanel();
         
         // fill panels
         //1)
-        Border border = taskPanelUp.getBorder();
+        Border border = taskPanelTop.getBorder();
         Border margin = new LineBorder(Color.BLUE,1);
-        taskPanelUp.setBorder(new CompoundBorder(border, margin));
-        taskPanelUp.setLayout(new GridLayout(0,2));
+        taskPanelTop.setBorder(new CompoundBorder(border, margin));
+        taskPanelTop.setLayout(new GridLayout(0,2));
         taskNameString = "DEFAULT - Task";
         taskFinishedCheckBox = new JCheckBox(taskNameString);
         taskFinishedCheckBox.setEnabled(true);
         taskFinishedCheckBox.setSelected(false);
         taskFinishedCheckBox.addActionListener(this);
         taskFinishedCheckBox.setActionCommand("task checkbox");
-        taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        taskPanelTop.add(taskFinishedCheckBox);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
         hintButton.setActionCommand("hint button");
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
-        taskPanelUp.add(hintButton);//, BorderLayout.EAST);
+        taskPanelTop.add(hintButton);//, BorderLayout.EAST);
        
         
         //2)
@@ -93,7 +93,7 @@ public class Task extends JPanel implements ActionListener {
         
         req_list = new ArrayList<Requirement>();
 
-        this.add(taskPanelUp);//, BorderLayout.NORTH);
+        this.add(taskPanelTop);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
 //        this.setVisible(false);
 
@@ -102,7 +102,6 @@ public class Task extends JPanel implements ActionListener {
     public Task (String tName, int width, int height) {
         this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
         //this.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        
         // create frame
         Border borderMain = this.getBorder();
         Border marginMain = new LineBorder(Color.DARK_GRAY,2);
@@ -111,29 +110,33 @@ public class Task extends JPanel implements ActionListener {
         
         // normal layout
         // create 2 panels
-        taskPanelUp = new UIPanel();
+        taskPanelTop = new UIPanel();
         taskPanelCenterFirst = new UIPanel();
         //        taskPanelCenterSecond = new UIPanel();
         //        taskPanelDown = new UIPanel();
         
         // fill panels
         //1)
-        Border border = taskPanelUp.getBorder();
+        Border border = taskPanelTop.getBorder();
         Border margin = new LineBorder(Color.BLACK,1);
-        taskPanelUp.setBorder(new CompoundBorder(border, margin));
-        taskPanelUp.setLayout(new GridLayout(0,2));
+        taskPanelTop.setBorder(new CompoundBorder(border, margin));
+        taskPanelTop.setLayout(new GridLayout(0,2));
         taskNameString = tName;
+        
         taskFinishedCheckBox = new JCheckBox(taskNameString);
         taskFinishedCheckBox.setEnabled(true);
         taskFinishedCheckBox.setSelected(false);
         taskFinishedCheckBox.addActionListener(this);
-        taskPanelUp.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        
+        JPanel checkboxContainer = new JPanel();
+        checkboxContainer.add(taskFinishedCheckBox);
+        taskPanelTop.add(checkboxContainer);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
-        taskPanelUp.add(hintButton);//, BorderLayout.EAST);
+        taskPanelTop.add(hintButton);//, BorderLayout.EAST);
         
         //2)
         taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
@@ -146,8 +149,11 @@ public class Task extends JPanel implements ActionListener {
         taskPanelCenterFirst.add(taskDescription);
         
         req_list = new ArrayList<Requirement>();
+        
+        JPanel topPanel = new JPanel();
+        topPanel.add(taskPanelTop);
 
-        this.add(taskPanelUp);//, BorderLayout.NORTH);
+        this.add(topPanel);//, BorderLayout.NORTH);
         this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
 //        this.setVisible(false);
     }

@@ -49,7 +49,13 @@ public class ZoneRequirement extends Requirement {
     }
     
     public Collection<Wall> getTargetZoneWalls() {
-        return this.target_zone.getWalls();
+        
+        Collection<Wall> walls = this.target_zone.getWalls();
+        for(Wall wall: walls) {
+            wall.setColliding(false);
+        }
+        
+        return walls;
     }
     
     @Override
