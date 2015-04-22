@@ -114,6 +114,10 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         return tasks.size();
     }
     
+    public int getSubPaneWidth() {
+        return this.sub_pane_width;
+    }
+    
     public void startTimer()
     {
         System.out.println("GamificationAgent, startTasks() started");
