@@ -37,32 +37,67 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     String question;
     private ArrayList<JCheckBox> answerN;
     private ArrayList<JEditorPane> answerTextN;
+    private JLabel picLabel;
     private boolean [] isRightN;
     private JButton doneButton;
     boolean isComplete;
-    private Task myTask;
   
-    public MultipleChoiceRequirement(Task task) {
+    public MultipleChoiceRequirement(int width) {
         super();
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
-
+        
+        picLabel = new JLabel();
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.reqPanel.add(picLabel);
+       
+        answerTextN = new ArrayList<JEditorPane>();
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         
+        GridBagConstraints c = new GridBagConstraints();
+        
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+            UIPanel answerPane = new UIPanel();
+            answerPane.setLayout(new GridBagLayout());
+            answerPane.setPreferredSize(new Dimension(width-20, 60));
+            
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.gridx = 0;
+            c.gridy = i;
+            c.weightx = 0.1;
+            c.ipady = 5;
+            
             isRightN[i] = false;
             JCheckBox checkbox = new JCheckBox();
-            checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
+            //checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
             checkbox.setVisible(false);
             answerN.add(checkbox);
+            answerPane.add(checkbox, c);
             
-            this.reqPanel.add(answerN.get(i));
-        }  
+            
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.gridx = 1;
+            c.gridy = i;
+            c.weightx = 0.9;
+            
+            JEditorPane answerText = new JEditorPane();
+            answerText.setEnabled(true);
+            answerText.setEditable(false);
+            answerTextN.add(answerText);
+            answerPane.add(answerText, c);
+            
+            //answerPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+            this.reqPanel.add(answerPane);
+        }
+  
         doneButton = new JButton("Submit");
         doneButton.addActionListener(this);
+        doneButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(doneButton);
         isComplete = true;
     }
@@ -74,81 +109,10 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
         
-        this.NUMBER_OF_CHECKBOX = noOfAnswers;
-        answerTextN = new ArrayList<JEditorPane>();
-        answerN = new ArrayList<JCheckBox>();
-        isRightN = new boolean[NUMBER_OF_CHECKBOX];
-        
-        GridBagConstraints c = new GridBagConstraints();
-        
-        for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
-            UIPanel answerPane = new UIPanel();
-            answerPane.setLayout(new GridBagLayout());
-            System.out.println("subPaneWidth: " + width);
-            answerPane.setPreferredSize(new Dimension(width-20, 60));
-            
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.anchor = GridBagConstraints.FIRST_LINE_START;
-            c.gridx = 0;
-            c.gridy = i;
-            c.weightx = 0.1;
-            c.ipady = 5;
-            
-            isRightN[i] = false;
-            JCheckBox checkbox = new JCheckBox();
-            //checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
-            checkbox.setVisible(false);
-            answerN.add(checkbox);
-            answerPane.add(checkbox, c);
-            
-            
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.anchor = GridBagConstraints.FIRST_LINE_START;
-            c.gridx = 1;
-            c.gridy = i;
-            c.weightx = 0.9;
-            
-            JEditorPane answerText = new JEditorPane();
-            answerText.setEnabled(true);
-            answerText.setEditable(false);
-            answerTextN.add(answerText);
-            answerPane.add(answerText, c);
-            
-            //answerPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-            this.reqPanel.add(answerPane);
-        }
-  
-        doneButton = new JButton("Submit");
-        doneButton.addActionListener(this);
-        doneButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.reqPanel.add(doneButton);
-        isComplete = true;
-    }
-    
-    public MultipleChoiceRequirement(int width, int noOfAnswers, String imgPath) {
-        super();
-//        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
-        this.reqPanel = new UIPanel();
-        this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
-        this.reqPanel.setVisible(true);
-        
-        final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imgPath));
-        Image image = imageIcon.getImage();
-        Image scaledImage = image.getScaledInstance(width/2, 220,  java.awt.Image.SCALE_SMOOTH);
-        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
-        
-        JLabel picLabel = new JLabel(scaledImageIcon);
+        picLabel = new JLabel();
         picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(picLabel);
         
-        picLabel.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent e) {
-                JLabel bigPicLabel = new JLabel(imageIcon);
-                JOptionPane.showMessageDialog(null, imageIcon, "", JOptionPane.PLAIN_MESSAGE, null);
-            }
-        });
-        
         this.NUMBER_OF_CHECKBOX = noOfAnswers;
         answerTextN = new ArrayList<JEditorPane>();
         answerN = new ArrayList<JCheckBox>();
@@ -159,7 +123,6 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             UIPanel answerPane = new UIPanel();
             answerPane.setLayout(new GridBagLayout());
-            System.out.println("subPaneWidth: " + width);
             answerPane.setPreferredSize(new Dimension(width-20, 60));
             
             c.fill = GridBagConstraints.HORIZONTAL;
@@ -199,8 +162,6 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         this.reqPanel.add(doneButton);
         isComplete = true;
     }
-    
-    
     
     public void addAnswer(String answer, boolean isRight)
     {
@@ -220,6 +181,23 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
             if(!empty_found)
                 System.out.print("Sorry no CheckBox available anymore, increase NUMBER_OF_CHECKBOX");
         } 
+    }
+    
+    public void addImage(String imgPath, int width)
+    {
+        final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imgPath));
+        Image image = imageIcon.getImage();
+        Image scaledImage = image.getScaledInstance(width/2, 220,  java.awt.Image.SCALE_SMOOTH);
+        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
+        picLabel.setIcon(scaledImageIcon);
+        
+        picLabel.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, imageIcon, "", JOptionPane.PLAIN_MESSAGE, null);
+            }
+        });
     }
     
     

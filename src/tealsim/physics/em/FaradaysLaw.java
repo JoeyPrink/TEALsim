@@ -17,10 +17,8 @@ import java.beans.PropertyChangeEvent;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.TransparencyAttributes;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import teal.framework.TFramework;
@@ -50,7 +48,6 @@ import teal.sim.spatial.FieldDirectionGrid;
 import teal.sim.spatial.FieldLine;
 import teal.sim.spatial.FieldLineManager;
 import teal.sim.spatial.FluxFieldLine;
-import teal.ui.UIPanel;
 import teal.ui.control.ControlGroup;
 import teal.ui.control.PropertyCheck;
 import teal.ui.control.PropertyDouble;
@@ -59,9 +56,8 @@ import teal.util.TDebug;
 import teal.visualization.dlic.DLIC;
 import tealsim.gamification.FluxRequirement;
 import tealsim.gamification.GamificationAgent;
-import tealsim.gamification.MultipleChoiceRequirement;
 import tealsim.gamification.CurrentRequirement;
-import tealsim.gamification.Requirement;
+import tealsim.gamification.MultipleChoiceInputRequirement;
 import tealsim.gamification.Task;
 
 public class FaradaysLaw extends SimEM {
@@ -313,14 +309,13 @@ public class FaradaysLaw extends SimEM {
         
         // task 0: multiple choice task
         task0 = new Task("TASK 1", parentPanelWidth);
-        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: \n(15 points possible)");
+        String descriptionString = "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
+        task0.addDescription(descriptionString);
         task0.addHint("Don't ask your Neighbor");
-        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement(gamificationPanel.getSubPaneWidth(), 5, "/images/earth-day.jpg");
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
-        reqMC.addAnswer("None of the above.",false);
+        MultipleChoiceInputRequirement reqMC = new MultipleChoiceInputRequirement(parentPanelWidth);
+        reqMC.addAnswer("foo");
+        reqMC.addQuestion("At what value of x will the electric field be zero?");
+        reqMC.addImage("/images/test.png",  parentPanelWidth);
         task0.addRequirement(reqMC);
         gamificationPanel.addTask(task0);
 

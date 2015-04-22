@@ -29,7 +29,7 @@ import teal.ui.UIPanel;
 
 /**
  *
- * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>
+ * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>, @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
 public class Task extends UIPanel implements ActionListener {
     ArrayList<Requirement> req_list;
@@ -51,23 +51,13 @@ public class Task extends UIPanel implements ActionListener {
         this.setLayout(new GridBagLayout()); // do 3 panels to account for requirement panel
         GridBagConstraints c = new GridBagConstraints();
         
-        // create frame
-        //Border borderMain = this.getBorder();
-        //Border marginMain = new LineBorder(Color.DARK_GRAY,2);
-        //this.setBorder(new CompoundBorder(borderMain, marginMain));
-        
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
-        // normal layout
-        // create 2 panels
+
         taskPanelTop = new UIPanel();
         taskPanelCenterFirst = new UIPanel();
-        //        taskPanelCenterSecond = new UIPanel();
-        //        taskPanelDown = new UIPanel();
-        
-        // fill panels
-        //1)
+
         Border border = taskPanelTop.getBorder();
         Border margin = new LineBorder(Color.BLUE,1);
         taskPanelTop.setBorder(new CompoundBorder(border, margin));
@@ -88,13 +78,10 @@ public class Task extends UIPanel implements ActionListener {
         taskPanelTop.add(hintButton);//, BorderLayout.EAST);
         this.add(taskPanelTop, c);//, BorderLayout.NORTH);
         
-        //2)
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 1;
         taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
-        //        taskDescription.setColumns(50);
-        //        taskDescription.setRows(3);
         taskDescription.setSize(taskPanelCenterFirst.getWidth(), taskPanelCenterFirst.getHeight());
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
@@ -126,21 +113,13 @@ public class Task extends UIPanel implements ActionListener {
         // create 2 panels
         taskPanelTop = new UIPanel();
         taskPanelTop.setLayout(new GridBagLayout());
-        taskPanelCenterFirst = new UIPanel();
+        this.taskPanelCenterFirst = new UIPanel();
        
         c.fill = GridBagConstraints.VERTICAL;
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 0.9;
         c.anchor = GridBagConstraints.FIRST_LINE_START;
-        
-        // fill panels
-        //1)
-        /*Border border = taskPanelTop.getBorder();
-        Border margin = new LineBorder(Color.BLACK,1);
-        taskPanelTop.setBorder(new CompoundBorder(border, margin));
-        taskPanelTop.setLayout(new GridLayout(0,2));
-                */
         
         //max chars = 34!!!
         taskNameString = tName;
@@ -166,24 +145,24 @@ public class Task extends UIPanel implements ActionListener {
         taskPanelTop.add(hintButton, c);//, BorderLayout.EAST);
         
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
         c.gridx = 0;
         c.gridy = 0;
         this.add(taskPanelTop, c);
         
-        //2)
-        taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
-        
+
+        taskDescription = new JEditorPane("DEFAULT - No Description", null);
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
-        taskPanelCenterFirst.add(taskDescription);
+        this.taskPanelCenterFirst.add(taskDescription);
         
-        c.fill = GridBagConstraints.VERTICAL;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridwidth = 2;
         c.gridy = 1;
 
-        this.add(taskPanelCenterFirst, c);//, BorderLayout.CENTER);
-//        this.setVisible(false);
+        this.add(this.taskPanelCenterFirst, c);
+
         req_list = new ArrayList<Requirement>();
     }
     
@@ -218,11 +197,13 @@ public class Task extends UIPanel implements ActionListener {
             Dimension reqPanelSize = taskPanelCenterSecond.getPreferredSize();
             System.out.println("task width: " + taskSize.width + " height: " + taskSize.height);
             System.out.println("req width: " + reqPanelSize.width + " height: " + reqPanelSize.height);
-            //this.setPreferredSize(new Dimension(taskSize.width, taskSize.height + reqPanelSize.height));
+            this.setPreferredSize(new Dimension(taskSize.width, taskSize.height + reqPanelSize.height/2));
         }
     }
     
     public void addDescription (String desc) {
+        int noOfLines = desc.length()/55 + 1;
+        this.taskPanelCenterFirst.setPreferredSize(new Dimension(this.taskPanelCenterFirst.getWidth(), noOfLines*20+20));
         this.taskDescription.setText(desc);
     }
     
