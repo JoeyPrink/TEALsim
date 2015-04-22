@@ -7,19 +7,16 @@
 package tealsim.gamification;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import teal.ui.UIPanel;
@@ -34,22 +31,19 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     private int NUMBER_OF_CHECKBOX = 5; // 5 number of default entries
     String question;
     private ArrayList<JCheckBox> answerN;
+    private ArrayList<JEditorPane> answerTextN;
     private boolean [] isRightN;
     private JButton doneButton;
     boolean isComplete;
-    Task myTask;
+    private Task myTask;
   
-    public MultipleChoiceRequirement() {
+    public MultipleChoiceRequirement(Task task) {
         super();
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
+        this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
-        BufferedImage image;
 
-            //image = ImageIO.read(new File(MultipleChoiceRequirement.class.getResource("/icons/step.png")));
-            JButton picLabel = new JButton(new ImageIcon(getClass().getResource("/images/test.png")));
-            this.reqPanel.add(picLabel);
-        
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         
@@ -68,16 +62,16 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         isComplete = true;
     }
     
-    public MultipleChoiceRequirement(int no_of_answers) {
+    public MultipleChoiceRequirement(Task task, int noOfAnswers) {
         super();
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
+        this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
-        this.NUMBER_OF_CHECKBOX = no_of_answers;
+        
+        this.NUMBER_OF_CHECKBOX = noOfAnswers;
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
-        JLabel picLabel = new JLabel(new ImageIcon(getClass().getResource("/images/test.png")));
-            this.reqPanel.add(picLabel);
         
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             isRightN[i] = false;
@@ -90,6 +84,66 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         }  
         doneButton = new JButton("Submit");
         doneButton.addActionListener(this);
+        this.reqPanel.add(doneButton);
+        isComplete = true;
+    }
+    
+    public MultipleChoiceRequirement(Task task, int noOfAnswers, String imgPath) {
+        super();
+//        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
+        this.reqPanel = new UIPanel();
+        this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
+        this.reqPanel.setVisible(true);
+        
+        JLabel picLabel = new JLabel(new ImageIcon(getClass().getResource(imgPath)));
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.reqPanel.add(picLabel);
+        
+        this.NUMBER_OF_CHECKBOX = noOfAnswers;
+        answerTextN = new ArrayList<JEditorPane>();
+        answerN = new ArrayList<JCheckBox>();
+        isRightN = new boolean[NUMBER_OF_CHECKBOX];
+        
+        
+        GridBagConstraints c = new GridBagConstraints();
+        
+        for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
+            UIPanel answerPane = new UIPanel();
+            answerPane.setLayout(new GridBagLayout());
+            
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.gridx = 0;
+            c.gridy = i;
+            c.weightx = 0.1;
+            
+            isRightN[i] = false;
+            JCheckBox checkbox = new JCheckBox();
+            //checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
+            checkbox.setVisible(false);
+            answerN.add(checkbox);
+            answerPane.add(checkbox, c);
+            
+            
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.anchor = GridBagConstraints.FIRST_LINE_START;
+            c.gridx = 1;
+            c.gridy = i;
+            c.weightx = 0.9;
+            
+            JEditorPane answerText = new JEditorPane();
+            answerText.setEnabled(true);
+            answerText.setEditable(false);
+            answerTextN.add(answerText);
+            answerPane.add(answerText, c);
+            
+            answerPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+            this.reqPanel.add(answerPane);
+        }
+  
+        doneButton = new JButton("Submit");
+        doneButton.addActionListener(this);
+        doneButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(doneButton);
         isComplete = true;
     }
@@ -106,7 +160,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                 if(answerN.get(i).isVisible() == false) {
                     isRightN[i] = isRight;
                     answerN.get(i).setVisible(true);
-                    answerN.get(i).setText(answer);
+                    answerTextN.get(i).setText(answer);
                     empty_found = true;
                     break;
                 }

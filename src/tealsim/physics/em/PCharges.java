@@ -276,7 +276,7 @@ public class PCharges extends SimEM {
         
         gamificationPanel = new GamificationAgent();
         // task 2: current task
-        task0 = new Task("TASK 1", 440, 40);
+        task0 = new Task("TASK 1", 440);
         task0.addDescription("Move the positive charge\n (15 points possible)");
         
         ZoneRequirement reqZ = new ZoneRequirement();

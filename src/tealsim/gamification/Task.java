@@ -8,7 +8,10 @@ package tealsim.gamification;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ import teal.ui.UIPanel;
  *
  * @author Viktor Unterberger <viktor.unterberger (at) student.tugraz.at>
  */
-public class Task extends JPanel implements ActionListener {
+public class Task extends UIPanel implements ActionListener {
     ArrayList<Requirement> req_list;
     String  hintString;
     int timer;
@@ -45,14 +48,17 @@ public class Task extends JPanel implements ActionListener {
     JEditorPane taskDescription = null;
     
      public Task () {
-        this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
+        this.setLayout(new GridBagLayout()); // do 3 panels to account for requirement panel
+        GridBagConstraints c = new GridBagConstraints();
         
         // create frame
-        Border borderMain = this.getBorder();
-        Border marginMain = new LineBorder(Color.DARK_GRAY,2);
-        this.setBorder(new CompoundBorder(borderMain, marginMain));
+        //Border borderMain = this.getBorder();
+        //Border marginMain = new LineBorder(Color.DARK_GRAY,2);
+        //this.setBorder(new CompoundBorder(borderMain, marginMain));
         
-        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
         // normal layout
         // create 2 panels
         taskPanelTop = new UIPanel();
@@ -80,9 +86,12 @@ public class Task extends JPanel implements ActionListener {
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
         taskPanelTop.add(hintButton);//, BorderLayout.EAST);
-       
+        this.add(taskPanelTop, c);//, BorderLayout.NORTH);
         
         //2)
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 1;
         taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
         //        taskDescription.setColumns(50);
         //        taskDescription.setRows(3);
@@ -93,34 +102,47 @@ public class Task extends JPanel implements ActionListener {
         
         req_list = new ArrayList<Requirement>();
 
-        this.add(taskPanelTop);//, BorderLayout.NORTH);
-        this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+
+        this.add(taskPanelCenterFirst, c);//, BorderLayout.CENTER);
 //        this.setVisible(false);
 
     }
 
-    public Task (String tName, int width, int height) {
-        this.setLayout(new GridLayout(3,0)); // do 3 panels to account for requirement panel
+    public Task (String tName, int width) {
+        this.setLayout(new GridBagLayout()); // do 3 panels to account for requirement panel
+        GridBagConstraints c = new GridBagConstraints();
+        
         //this.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
         // create frame
         Border borderMain = this.getBorder();
         Border marginMain = new LineBorder(Color.DARK_GRAY,2);
         this.setBorder(new CompoundBorder(borderMain, marginMain));
         
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
         
         // normal layout
         // create 2 panels
         taskPanelTop = new UIPanel();
+        taskPanelTop.setLayout(new GridBagLayout());
         taskPanelCenterFirst = new UIPanel();
-        //        taskPanelCenterSecond = new UIPanel();
-        //        taskPanelDown = new UIPanel();
+       
+        c.fill = GridBagConstraints.VERTICAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 0.9;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
         
         // fill panels
         //1)
-        Border border = taskPanelTop.getBorder();
+        /*Border border = taskPanelTop.getBorder();
         Border margin = new LineBorder(Color.BLACK,1);
         taskPanelTop.setBorder(new CompoundBorder(border, margin));
         taskPanelTop.setLayout(new GridLayout(0,2));
+                */
+        
+        //max chars = 34!!!
         taskNameString = tName;
         
         taskFinishedCheckBox = new JCheckBox(taskNameString);
@@ -130,32 +152,39 @@ public class Task extends JPanel implements ActionListener {
         
         JPanel checkboxContainer = new JPanel();
         checkboxContainer.add(taskFinishedCheckBox);
-        taskPanelTop.add(checkboxContainer);//, BorderLayout.WEST);
+        taskPanelTop.add(checkboxContainer, c);//, BorderLayout.WEST);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
-        taskPanelTop.add(hintButton);//, BorderLayout.EAST);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 1;
+        c.gridy = 0;
+        c.weightx = 0.1;
+        taskPanelTop.add(hintButton, c);//, BorderLayout.EAST);
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        this.add(taskPanelTop, c);
         
         //2)
         taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
-        taskDescription.setPreferredSize(new Dimension(width, height));
-        //        taskDescription.setColumns(50);
-        //        taskDescription.setRows(3);
-        //taskDescription.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
         taskPanelCenterFirst.add(taskDescription);
         
-        req_list = new ArrayList<Requirement>();
-        
-        JPanel topPanel = new JPanel();
-        topPanel.add(taskPanelTop);
+        c.fill = GridBagConstraints.VERTICAL;
+        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridy = 1;
 
-        this.add(topPanel);//, BorderLayout.NORTH);
-        this.add(taskPanelCenterFirst);//, BorderLayout.CENTER);
+        this.add(taskPanelCenterFirst, c);//, BorderLayout.CENTER);
 //        this.setVisible(false);
+        req_list = new ArrayList<Requirement>();
     }
     
     
@@ -170,11 +199,27 @@ public class Task extends JPanel implements ActionListener {
         taskFinishedCheckBox.setName(name);
     }
     
+    // TODO resizing of tasksPane & possible gamificationAgent too!
     public void addRequirement (Requirement req) {
         this.req_list.add(req);
-        this.taskPanelCenterSecond = req.getReqPanel();
-        this.add(taskPanelCenterSecond);
-        this.revalidate();
+        
+        if(req.getReqPanel() != null) {
+            this.taskPanelCenterSecond = req.getReqPanel();
+
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.VERTICAL;
+            c.gridx = 0;
+            c.gridwidth = 2;
+            c.gridy = 2;
+            c.insets = new Insets(20,0,0,0);
+
+            this.add(taskPanelCenterSecond, c);
+            Dimension taskSize = this.getPreferredSize();
+            Dimension reqPanelSize = taskPanelCenterSecond.getPreferredSize();
+            System.out.println("task width: " + taskSize.width + " height: " + taskSize.height);
+            System.out.println("req width: " + reqPanelSize.width + " height: " + reqPanelSize.height);
+            //this.setPreferredSize(new Dimension(taskSize.width, taskSize.height + reqPanelSize.height));
+        }
     }
     
     public void addDescription (String desc) {
@@ -237,6 +282,14 @@ public class Task extends JPanel implements ActionListener {
         taskDescription.setEnabled(true);
         for (Requirement req : req_list)
             req.resetRequirement();
+    }
+    
+    public void setDescriptionSize(int width) {
+        Dimension prefSize = this.getPreferredSize();
+        prefSize.width = width-10;
+        prefSize.height = 60;
+        taskDescription.setPreferredSize(prefSize);
+        taskDescription.revalidate();
     }
 }
     

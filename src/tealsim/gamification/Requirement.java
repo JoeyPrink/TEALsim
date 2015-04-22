@@ -17,12 +17,11 @@ public abstract class Requirement {
  
     protected boolean fulfilled;
     protected boolean enabled;
-    protected UIPanel reqPanel;
+    protected UIPanel reqPanel = null;
     
     public Requirement () {
         this.fulfilled = false;
         this.enabled = true;
-        this.reqPanel = new UIPanel();
     }
     
     public abstract boolean isFullFilled();

@@ -7,54 +7,107 @@
 package tealsim.gamification;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import teal.core.TUpdatable;
 import teal.sim.TSimElement;
-import teal.ui.control.ControlGroup;
+import teal.ui.UIPanel;
 
 /**
  *
  * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
-public final class GamificationAgent extends ControlGroup implements TUpdatable, TSimElement {
+public final class GamificationAgent extends UIPanel implements TUpdatable, TSimElement {
     
     private static final long serialVersionUID = 3761131530902252017L;
     
     private ArrayList<Task> tasks;
     private ArrayList<Task> tasks_backup;
-    private int labelWidth = 200; // to position
+    private final int labelWidth = 200; // to position
     private JProgressBar gamificationProgressBar = null;
     private double sumTasks = 0;
     private long startTimeSecond = 0;
     private long timeAllowedSecond = 0;
     private long endTimeSecond = 0;
     private double finished = 0;
+    private UIPanel tasksPane;
+    private final int pane_width = 450;
+    private final int sub_pane_width = pane_width-10;
     boolean isChecked = false;
             
     public GamificationAgent() {
         super();
+        this.setLayout(new FlowLayout());
+        //this.setPreferredSize(new Dimension(pane_width, 200));
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
-        setText("Gamification Panel");
-        gamificationProgressBar = new JProgressBar( 0, 100);
+        this.setSize(pane_width, 0);
+        /*GridBagConstraints c = new GridBagConstraints();
+        
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weighty = 1;
+        c.anchor = GridBagConstraints.PAGE_START;*/
+        
+        UIPanel progressBarPane = new UIPanel();
+        progressBarPane.setPreferredSize(new Dimension(sub_pane_width, 40));
+        gamificationProgressBar = new JProgressBar();
+        gamificationProgressBar.setPreferredSize(new Dimension(sub_pane_width, 20));
         gamificationProgressBar.setValue(0);
-        gamificationProgressBar.setStringPainted( true );
-        add(gamificationProgressBar);//,BorderLayout.PAGE_START );
+        gamificationProgressBar.setStringPainted(true);
+        progressBarPane.add(gamificationProgressBar);
+        add(progressBarPane);//,BorderLayout.PAGE_START );
+        /*
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.weighty = 2;
+        c.anchor = GridBagConstraints.PAGE_START;*/
+        
+        tasksPane = new UIPanel();
+        tasksPane.setLayout(new GridBagLayout());
+        Dimension prefSize = tasksPane.getPreferredSize();
+        prefSize.width = sub_pane_width;
+        prefSize.height = 0;
+        System.out.println("tasks pane height: " + prefSize.height);
+        tasksPane.setPreferredSize(prefSize);
+        add(tasksPane);
+        
         
         tasks = new ArrayList<Task>();
         tasks_backup = new ArrayList<Task>();
     }
     
     public void addTask(Task task) {
-        task.setPreferredSize(new Dimension(labelWidth, task.getPreferredSize().height));
-        add(task);
+
+        task.setDescriptionSize(this.sub_pane_width-20);
+        Dimension prefSize = task.getPreferredSize();
+        prefSize.width = this.sub_pane_width;
+        task.setPreferredSize(prefSize);
+        
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = tasks.size();
+        tasksPane.add(task, c);
+        
         tasks.add(task);
         tasks_backup.add(task);
-//        tasks.get(0).setVisible(true);
-//        sumTasks++;
+
+        System.out.println("gamifcaition height: " + this.getHeight());
+        System.out.println("task height: " + prefSize.height);
+        Dimension tasksPrefSize = tasksPane.getPreferredSize();
+        System.out.println("tasks pane width: " + tasksPrefSize.width + " height: " + tasksPrefSize.height);
+        this.setSize(this.pane_width, this.getHeight() + prefSize.height);
+        this.setPreferredSize(new Dimension(this.pane_width, this.getHeight() + prefSize.height));
+        tasksPane.setPreferredSize(new Dimension(tasksPrefSize.width, tasksPrefSize.height + prefSize.height));
     }
     
     public int getSizeOfTaskList() {
@@ -111,7 +164,6 @@ public final class GamificationAgent extends ControlGroup implements TUpdatable,
     
     public void setTimerBadge(long time_for_task) {
         timeAllowedSecond = time_for_task;
-                
     }
     
     public void checkTimerBadge(long endTime) {

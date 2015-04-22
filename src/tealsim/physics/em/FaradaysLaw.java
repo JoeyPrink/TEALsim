@@ -306,24 +306,26 @@ public class FaradaysLaw extends SimEM {
 
         // gamification starts
         gamificationPanel = new GamificationAgent();
+        int parentPanelWidth = gamificationPanel.getWidth();
+        System.out.println("parentPanelWidth: " + parentPanelWidth);
         gamificationPanel.setTimerBadge(900);
 
         
         // task 0: multiple choice task
-        task0 = new Task("TASK 1", 440, 40);
-        task0.addDescription("In the explanation page of this simulation, \"total magnetic\n flux\" means: (15 points possible)");
+        task0 = new Task("TASK 1", parentPanelWidth);
+        task0.addDescription("In the explanation page of this simulation, \"total magnetic flux\" means: \n(15 points possible)");
         task0.addHint("Don't ask your Neighbor");
-        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement(5);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet alone.",false);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field associated with the eddy currents in the ring.",false);
-        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet minus that associated with the eddy currents in the ring.",false);
+        MultipleChoiceRequirement reqMC = new MultipleChoiceRequirement(task0, 5, "/images/test.png");
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
+        reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
         reqMC.addAnswer("The flux through the ring due to the magnetic field of the magnet plus that associated with the eddy currents in the ring.",true);
         reqMC.addAnswer("None of the above.",false);
         task0.addRequirement(reqMC);
         gamificationPanel.addTask(task0);
 
         // task 1: total flux task
-        task1 = new Task("TASK 2", 440, 40);
+        task1 = new Task("TASK 2", parentPanelWidth);
         task1.addDescription("Try to keep the total flux between 0.2 and 0.3\n (15 points possible)");
         FluxRequirement reqF = new FluxRequirement();
         reqF.setFluxRange(0.2, 0.3);
@@ -333,7 +335,7 @@ public class FaradaysLaw extends SimEM {
         gamificationPanel.addTask(task1);
         
         // task 2: current task
-        task2 = new Task("TASK 3", 440, 40);
+        task2 = new Task("TASK 3", parentPanelWidth);
         task2.addDescription("Try to keep the current between 0.1 and -0.1\n (15 points possible)");
         CurrentRequirement reqC = new CurrentRequirement();
         reqC.setCurrentValue(-0.1);
@@ -341,6 +343,10 @@ public class FaradaysLaw extends SimEM {
         reqC.addRing(roc);
         task2.addRequirement(reqC);
         gamificationPanel.addTask(task2);
+        
+        int parentPanelHeight = gamificationPanel.getHeight();
+        System.out.println("parentPanelHeight: " + parentPanelHeight);
+        //gamificationPanel.revalidate();
         
         gamification = new ControlGroup();
         gamification.setText("Gamification");
@@ -494,8 +500,7 @@ public class FaradaysLaw extends SimEM {
                 }
             }
         } else if (pce.getSource() == showRingCurrent) {
-               if (pce.getPropertyName().equalsIgnoreCase("value")) {
-           			System.out.println("Got here");         	   
+               if (pce.getPropertyName().equalsIgnoreCase("value")) {       	   
            			Object obj = showRingCurrent.getValue();
            			if( obj instanceof Boolean )
            			{
