@@ -39,6 +39,7 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
     private final int pane_width = 450;
     private final int sub_pane_width = pane_width-10;
     boolean isChecked = false;
+    boolean hasFinished = false;
             
     public GamificationAgent() {
         super();
@@ -139,9 +140,9 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
             }
         } else {
             // ALL TASKS COMPLETED - YAAAAAYYYY!!!
-            if(!isChecked) {
-                long endTimeSecond = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) - startTimeSecond;
-                checkTimerBadge(endTimeSecond);
+            if(!hasFinished) {
+                JOptionPane.showMessageDialog(null, "You did it - CONGRATS!!!!");
+                hasFinished = true;
             }
         }
     }
@@ -165,6 +166,7 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         tasks.removeAll(tasks);
         tasks.addAll(tasks_backup);
         finished = 0;
+        hasFinished = false;
         for (Task task : tasks) {
             task.resetTask();
         }

@@ -327,19 +327,8 @@ public class FaradaysLaw extends SimEM {
         task1.addRequirement(reqF);
         gamificationPanel.addTask(task1);
         
-        // task 2: current task
-        task2 = new Task("TASK 3", parentPanelWidth);
-        String descriptionString = "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        task2.addDescription(descriptionString);
-        CurrentRequirement reqC = new CurrentRequirement();
-        reqC.setCurrentValue(-0.1);
-        reqC.setTimeInTicks(50);
-        reqC.addRing(roc);
-        task2.addRequirement(reqC);
-        gamificationPanel.addTask(task2);
         
-        
+        // important call for layout!
         gamificationPanel.resize();
 
         gamification = new ControlGroup();
@@ -537,7 +526,7 @@ public class FaradaysLaw extends SimEM {
         ta = new TealAction("Level Complete", "Level Complete", this);    //added jwb 7/13/2008
         watch.setAction(ta);                                                //added jwb 7/13/2008
        
-        ta = new TealAction("Start Timer", this);
+        ta = new TealAction("Reset gamification", this);
         addAction("Actions", ta);
         
     }
@@ -553,8 +542,8 @@ public class FaradaysLaw extends SimEM {
             resetGeneratorMode();
         } else if (e.getActionCommand().equalsIgnoreCase("Reset Layout")) {
             //resetLayout();
-        } else if (e.getActionCommand().equalsIgnoreCase("Start Timer")) {
-           gamificationPanel.startTimer();
+        } else if (e.getActionCommand().equalsIgnoreCase("Reset gamification")) {
+           gamificationPanel.reset();
         } else {
             super.actionPerformed(e);
         }
@@ -565,8 +554,6 @@ public class FaradaysLaw extends SimEM {
         if (mSEC.getSimState() == TEngineControl.RUNNING) {
             mSEC.stop();
         }
-        
-        gamificationPanel.reset();
 
         Vector3d roc_position = new Vector3d(0., 0., 0.);
         roc_gizmo.setPosition(roc_position);
