@@ -47,6 +47,7 @@ public class Task extends UIPanel implements ActionListener {
     JTextArea taskNameTextArea = null;
     String taskNameString = null;
     JEditorPane taskDescription = null;
+    Hint myHint = null;
     
      public Task () {
         this.setLayout(new GridBagLayout()); // do 3 panels to account for requirement panel
@@ -206,6 +207,7 @@ public class Task extends UIPanel implements ActionListener {
     
     public void addHint (String hint) {
         this.hintString = hint;
+        myHint = new Hint(hint);
     }
     
     public void addPoints (int points) {
@@ -234,6 +236,8 @@ public class Task extends UIPanel implements ActionListener {
     public boolean checkReq() {
         boolean all_fulfilled = true;
         
+        this.myHint.display();
+        
         for (Requirement req : req_list) {
             if(!req.isFullFilled())
                 all_fulfilled = false;
@@ -260,20 +264,5 @@ public class Task extends UIPanel implements ActionListener {
         taskDescription.setEnabled(true);
         for (Requirement req : req_list)
             req.resetRequirement();
-    }
-    
-    public void setDescriptionSize(int width) {
-        Dimension prefSize = this.getPreferredSize();
-        prefSize.width = width-10;
-        int noOfLines = taskDescription.getText().length()/55 + 1;
-        prefSize.height = noOfLines*20+20;
-        taskDescription.setPreferredSize(prefSize);
-        taskDescription.revalidate();
-    }
-    
-    public Dimension getDescriptionSize() {
-        
-        System.out.println("desc PREF height: " + this.taskDescription.getPreferredSize().height + " width: " + this.taskDescription.getPreferredSize().width);
-        return this.taskDescription.getPreferredSize();
     }
 }

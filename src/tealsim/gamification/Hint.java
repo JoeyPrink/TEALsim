@@ -14,12 +14,19 @@ import javax.swing.JOptionPane;
  */
 public class Hint extends JOptionPane {
     String text;
+    int ticks;
     
     public Hint(String text) {
         this.text = text;
+        this.ticks = 300;
     }
     
     public void display() {
-        JOptionPane.showMessageDialog(null, this.text);
+        this.ticks--;
+        
+        if(this.ticks == 0) {
+            JOptionPane.showMessageDialog(null, this.text);
+            this.ticks = 300;
+        }
     }
 }
