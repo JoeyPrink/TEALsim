@@ -6,10 +6,20 @@
 
 package tealsim.gamification;
 
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Georg
+ * @author Florian Schitter <florian.schitter (at) student.tugraz.at>
  */
-public class Hint {
+public class Hint extends JOptionPane {
+    String text;
     
+    public Hint(String text) {
+        this.text = text;
+    }
+    
+    public void display() {
+        JOptionPane.showMessageDialog(null, this.text);
+    }
 }

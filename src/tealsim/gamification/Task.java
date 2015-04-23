@@ -7,12 +7,10 @@
 package tealsim.gamification;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -71,15 +69,15 @@ public class Task extends UIPanel implements ActionListener {
         taskFinishedCheckBox.setSelected(false);
         taskFinishedCheckBox.addActionListener(this);
         taskFinishedCheckBox.setActionCommand("task checkbox");
-        taskPanelTop.add(taskFinishedCheckBox);//, BorderLayout.WEST);
+        taskPanelTop.add(taskFinishedCheckBox);
         hintButton = new JButton("Hint");
         hintButton.addActionListener(this);
         hintButton.setActionCommand("hint button");
         this.hintString = new String("Sorry, no hint available");
         hintButton.setSize(2,4);
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tealsim/fragezeichen.png")));
-        taskPanelTop.add(hintButton);//, BorderLayout.EAST);
-        this.add(taskPanelTop, c);//, BorderLayout.NORTH);
+        taskPanelTop.add(hintButton);
+        this.add(taskPanelTop, c);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
