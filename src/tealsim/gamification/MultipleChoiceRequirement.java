@@ -213,7 +213,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     
     
     @Override
-    public boolean isFullFilled() {
+    public boolean isFulFilled() {
         return fulfilled;
     }
     

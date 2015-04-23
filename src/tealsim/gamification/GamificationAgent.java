@@ -13,7 +13,6 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import teal.core.TUpdatable;
@@ -30,7 +29,6 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
     
     private ArrayList<Task> tasks;
     private ArrayList<Task> tasks_backup;
-    private final int labelWidth = 200; // to position
     private JProgressBar gamificationProgressBar = null;
     private double sumTasks = 0;
     private long startTimeSecond = 0;

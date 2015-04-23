@@ -51,7 +51,7 @@ public class CurrentRequirement extends Requirement {
     }
     
     @Override
-    public boolean isFullFilled() {
+    public boolean isFulFilled() {
         
         ticks += 1;
 //        System.out.format("total flux: %f\n", roc.getTotalFlux());

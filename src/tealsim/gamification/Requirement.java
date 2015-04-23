@@ -24,7 +24,7 @@ public abstract class Requirement {
         this.enabled = true;
     }
     
-    public abstract boolean isFullFilled();
+    public abstract boolean isFulFilled();
     
     public abstract void setRequirementEnabled(boolean b);
     

@@ -133,7 +133,7 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
     } 
     
     @Override
-    public boolean isFullFilled() {
+    public boolean isFulFilled() {
         return fulfilled;
     }
     

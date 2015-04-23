@@ -57,7 +57,7 @@ import teal.visualization.dlic.DLIC;
 import tealsim.gamification.FluxRequirement;
 import tealsim.gamification.GamificationAgent;
 import tealsim.gamification.CurrentRequirement;
-import tealsim.gamification.MultipleChoiceImageRequirement;
+import tealsim.gamification.StartSimRequirement;
 import tealsim.gamification.Task;
 
 public class FaradaysLaw extends SimEM {
@@ -309,43 +309,13 @@ public class FaradaysLaw extends SimEM {
         
         // task 0: multiple choice task
         task0 = new Task("TASK 1", parentPanelWidth);
-        String descriptionString = "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
-        descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
+        task0.addDescription("start the simulation you retard!");
+        task0.addHint("If you don't manage to do this on your own you should seriously consider dying...");
         
-        System.out.println("FaradaysLaw, task width: " + task0.getPreferredSize().width + " height: " + task0.getPreferredSize().height);
-        task0.addDescription(descriptionString);
-        System.out.println("FaradaysLaw, task width: " + task0.getPreferredSize().width + " height: " + task0.getPreferredSize().height);
+        StartSimRequirement reqS = new StartSimRequirement();
+        task0.addRequirement(reqS);
         
-        task0.addHint("Don't ask your Neighbor");
-        MultipleChoiceImageRequirement reqMC = new MultipleChoiceImageRequirement();
-        
-        reqMC.addImage("/images/test.png",  true);
-        System.out.println("FaradaysLaw, req width: " + reqMC.getReqPanel().getPreferredSize().width + " height: " + reqMC.getReqPanel().getPreferredSize().height);
-        
-        reqMC.addImage("/images/test.png",  true);
-        System.out.println("FaradaysLaw, req width: " + reqMC.getReqPanel().getPreferredSize().width + " height: " + reqMC.getReqPanel().getPreferredSize().height);
-        
-        reqMC.addImage("/images/test.png",  true);
-        System.out.println("FaradaysLaw, req width: " + reqMC.getReqPanel().getPreferredSize().width + " height: " + reqMC.getReqPanel().getPreferredSize().height);
-        
-        reqMC.addImage("/images/test.png",  true);
-        System.out.println("FaradaysLaw, req width: " + reqMC.getReqPanel().getPreferredSize().width + " height: " + reqMC.getReqPanel().getPreferredSize().height);
-        
-        System.out.println("FaradaysLaw, task width: " + task0.getPreferredSize().width + " height: " + task0.getPreferredSize().height);
-        task0.addRequirement(reqMC);
-        System.out.println("FaradaysLaw, task width: " + task0.getPreferredSize().width + " height: " + task0.getPreferredSize().height);
-        
-        System.out.println("FaradaysLaw, gamificationPanel width: " + gamificationPanel.getPreferredSize().width + " height: " + gamificationPanel.getPreferredSize().height);
         gamificationPanel.addTask(task0);
-        System.out.println("FaradaysLaw, gamificationPanel width: " + gamificationPanel.getPreferredSize().width + " height: " + gamificationPanel.getPreferredSize().height);
-        
         
         // task 1: total flux task
         task1 = new Task("TASK 2", parentPanelWidth);
@@ -359,7 +329,7 @@ public class FaradaysLaw extends SimEM {
         
         // task 2: current task
         task2 = new Task("TASK 3", parentPanelWidth);
-        descriptionString = "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
+        String descriptionString = "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
         descriptionString += "Pause the simulation using the “Pause” button. By left clicking and dragging , move the positive (orange) charge to middle ";
         task2.addDescription(descriptionString);
         CurrentRequirement reqC = new CurrentRequirement();

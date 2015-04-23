@@ -59,7 +59,7 @@ public class ZoneRequirement extends Requirement {
     }
     
     @Override
-    public boolean isFullFilled() {
+    public boolean isFulFilled() {
         boolean contains_all = true;
         
         for (PhysicalObject obj: objects) {

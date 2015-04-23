@@ -26,7 +26,7 @@ public class Hint extends JOptionPane {
         
         if(this.ticks == 0) {
             JOptionPane.showMessageDialog(null, this.text);
-            this.ticks = 300;
+            this.ticks = 500;
         }
     }
 }

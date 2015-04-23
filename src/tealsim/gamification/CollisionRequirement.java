@@ -37,7 +37,7 @@ public class CollisionRequirement extends Requirement {
     }
     
     @Override
-    public boolean isFullFilled() {
+    public boolean isFulFilled() {
         
         if(objects != null) {
             boolean all_colliding = true;

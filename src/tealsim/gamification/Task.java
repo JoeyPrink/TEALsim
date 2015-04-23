@@ -239,7 +239,7 @@ public class Task extends UIPanel implements ActionListener {
         this.myHint.display();
         
         for (Requirement req : req_list) {
-            if(!req.isFullFilled())
+            if(!req.isFulFilled())
                 all_fulfilled = false;
         }
         
