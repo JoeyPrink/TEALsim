@@ -7,7 +7,6 @@
 package tealsim.gamification;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -173,6 +172,9 @@ public class MultipleChoiceImageRequirement extends Requirement implements Actio
     {
         // JCheckBoxes are created
         boolean empty_found = false;
+        
+        int pic_width = 420;
+        int pic_height = 110;
         if(imgPath != null)
         {
             for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
@@ -181,7 +183,7 @@ public class MultipleChoiceImageRequirement extends Requirement implements Actio
                     answerN.get(i).setVisible(true);
                     final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imgPath));
                     Image image = imageIcon.getImage();
-                    Image scaledImage = image.getScaledInstance(420/4, 110,  java.awt.Image.SCALE_SMOOTH);
+                    Image scaledImage = image.getScaledInstance(pic_width/4, pic_height,  java.awt.Image.SCALE_SMOOTH);
                     ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
                     answerPicN.get(i).setIcon(scaledImageIcon);
 
@@ -202,7 +204,7 @@ public class MultipleChoiceImageRequirement extends Requirement implements Actio
         } 
     }
     
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
         isComplete = true;
         for(int i = 0 ;i < NUMBER_OF_CHECKBOX; i++) {

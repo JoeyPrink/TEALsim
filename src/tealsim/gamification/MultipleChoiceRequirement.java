@@ -15,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -62,7 +61,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             UIPanel answerPane = new UIPanel();
             answerPane.setLayout(new GridBagLayout());
-            answerPane.setPreferredSize(new Dimension(width-20, 60));
+            answerPane.setPreferredSize(new Dimension(width-20, 20));
             
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -123,7 +122,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             UIPanel answerPane = new UIPanel();
             answerPane.setLayout(new GridBagLayout());
-            answerPane.setPreferredSize(new Dimension(width-20, 60));
+            answerPane.setPreferredSize(new Dimension(width-20, 20));
             
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
@@ -173,6 +172,12 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                 if(answerN.get(i).isVisible() == false) {
                     isRightN[i] = isRight;
                     answerN.get(i).setVisible(true);
+                    
+                    int noOfLines = answer.length()/60 + 1;
+                    Dimension prefSize = this.reqPanel.getPreferredSize();
+                    prefSize.height = prefSize.height + noOfLines*20;
+                    this.reqPanel.setPreferredSize(prefSize);
+                    
                     answerTextN.get(i).setText(answer);
                     empty_found = true;
                     break;
@@ -185,9 +190,10 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     
     public void addImage(String imgPath, int width)
     {
+        int pic_height = 220;
         final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imgPath));
         Image image = imageIcon.getImage();
-        Image scaledImage = image.getScaledInstance(width/2, 220,  java.awt.Image.SCALE_SMOOTH);
+        Image scaledImage = image.getScaledInstance(width/2, pic_height,  java.awt.Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
         picLabel.setIcon(scaledImageIcon);
         
@@ -198,6 +204,10 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                 JOptionPane.showMessageDialog(null, imageIcon, "", JOptionPane.PLAIN_MESSAGE, null);
             }
         });
+        
+        Dimension prefSize = this.reqPanel.getPreferredSize();
+        prefSize.height = prefSize.height + pic_height;
+        this.reqPanel.setPreferredSize(prefSize);
     }
     
     

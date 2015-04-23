@@ -7,6 +7,7 @@
 package tealsim.gamification;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +16,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
@@ -22,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
@@ -35,7 +38,7 @@ public class Task extends UIPanel implements ActionListener {
     ArrayList<Requirement> req_list;
     String  hintString;
     int timer;
-    int points;
+    int points, width;
     UIPanel taskPanelTop = null;
     UIPanel taskPanelCenterFirst = null; 
     UIPanel taskPanelCenterSecond = null;
@@ -81,7 +84,7 @@ public class Task extends UIPanel implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 1;
-        taskDescription = new JEditorPane("DEFAULT - No Description", null);//,4,10);
+        taskDescription = new JTextPane();
         taskDescription.setSize(taskPanelCenterFirst.getWidth(), taskPanelCenterFirst.getHeight());
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
@@ -96,7 +99,9 @@ public class Task extends UIPanel implements ActionListener {
     }
 
     public Task (String tName, int width) {
-        this.setLayout(new GridBagLayout()); // do 3 panels to account for requirement panel
+        //this.setLayout(new GridBagLayout());
+        this.width = width;
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         GridBagConstraints c = new GridBagConstraints();
         
         //this.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -148,20 +153,22 @@ public class Task extends UIPanel implements ActionListener {
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         c.gridx = 0;
         c.gridy = 0;
-        this.add(taskPanelTop, c);
+        this.add(taskPanelTop);
         
 
-        taskDescription = new JEditorPane("DEFAULT - No Description", null);
+        taskDescription = new JTextPane();
         taskDescription.setEnabled(true);
         taskDescription.setEditable(false);
-        this.taskPanelCenterFirst.add(taskDescription);
+        //this.taskPanelCenterFirst.add(taskDescription);
         
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridwidth = 2;
         c.gridy = 1;
 
-        this.add(this.taskPanelCenterFirst, c);
+        this.add(this.taskDescription);
+        
+        System.out.println("task init, width: " + this.getPreferredSize().width + " height: " + this.getPreferredSize().height);
 
         req_list = new ArrayList<Requirement>();
     }
@@ -178,32 +185,24 @@ public class Task extends UIPanel implements ActionListener {
         taskFinishedCheckBox.setName(name);
     }
     
-    // TODO resizing of tasksPane & possible gamificationAgent too!
     public void addRequirement (Requirement req) {
         this.req_list.add(req);
         
         if(req.getReqPanel() != null) {
             this.taskPanelCenterSecond = req.getReqPanel();
-
-            GridBagConstraints c = new GridBagConstraints();
-            c.fill = GridBagConstraints.VERTICAL;
-            c.gridx = 0;
-            c.gridwidth = 2;
-            c.gridy = 2;
-            c.insets = new Insets(20,0,0,0);
-
-            this.add(taskPanelCenterSecond, c);
+            this.add(taskPanelCenterSecond);
+            
             Dimension taskSize = this.getPreferredSize();
-            Dimension reqPanelSize = taskPanelCenterSecond.getPreferredSize();
-            System.out.println("task width: " + taskSize.width + " height: " + taskSize.height);
-            System.out.println("req width: " + reqPanelSize.width + " height: " + reqPanelSize.height);
-            this.setPreferredSize(new Dimension(taskSize.width, taskSize.height + reqPanelSize.height/2));
+            Dimension reqPanelSize = req.getReqPanel().getPreferredSize();
+            this.setPreferredSize(new Dimension(taskSize.width, taskSize.height + reqPanelSize.height));
         }
     }
     
     public void addDescription (String desc) {
-        int noOfLines = desc.length()/55 + 1;
-        this.taskPanelCenterFirst.setPreferredSize(new Dimension(this.taskPanelCenterFirst.getWidth(), noOfLines*20+20));
+        // 60 is the average amount of chars a line can hold within gamification panel
+        int noOfLines = desc.length()/60 + 1;
+        this.taskDescription.setPreferredSize(new Dimension(this.width-20, noOfLines*20));
+        this.setPreferredSize(new Dimension(this.getPreferredSize().width, this.getPreferredSize().height + taskDescription.getPreferredSize().height));
         this.taskDescription.setText(desc);
     }
     
@@ -268,29 +267,15 @@ public class Task extends UIPanel implements ActionListener {
     public void setDescriptionSize(int width) {
         Dimension prefSize = this.getPreferredSize();
         prefSize.width = width-10;
-        prefSize.height = 60;
+        int noOfLines = taskDescription.getText().length()/55 + 1;
+        prefSize.height = noOfLines*20+20;
         taskDescription.setPreferredSize(prefSize);
         taskDescription.revalidate();
     }
+    
+    public Dimension getDescriptionSize() {
+        
+        System.out.println("desc PREF height: " + this.taskDescription.getPreferredSize().height + " width: " + this.taskDescription.getPreferredSize().width);
+        return this.taskDescription.getPreferredSize();
+    }
 }
-    
-    
-//    public void addActions() {
-//        TealAction ta = null;
-//        ta = new TealAction("Faraday's Law", this);
-//        addAction("Help", ta);
-//    }
-//
-//
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().compareToIgnoreCase("Faraday's Law") == 0) {
-//        	if(mFramework instanceof TFramework) {
-//        		((TFramework) mFramework).openBrowser("help/faradayslaw.html");
-//        	}
-//       
-//    }
-//    }
-//
-//    private void addAction(String help, TealAction ta) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }

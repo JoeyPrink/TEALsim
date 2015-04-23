@@ -48,13 +48,6 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         //this.setPreferredSize(new Dimension(pane_width, 200));
         this.setVisible(true); // wenn weiter forgeschritten mit 'false' starten?
         this.setSize(pane_width, 0);
-        /*GridBagConstraints c = new GridBagConstraints();
-        
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weighty = 1;
-        c.anchor = GridBagConstraints.PAGE_START;*/
         
         UIPanel progressBarPane = new UIPanel();
         progressBarPane.setPreferredSize(new Dimension(sub_pane_width, 40));
@@ -64,30 +57,22 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         gamificationProgressBar.setStringPainted(true);
         progressBarPane.add(gamificationProgressBar);
         add(progressBarPane);//,BorderLayout.PAGE_START );
-        /*
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.weighty = 2;
-        c.anchor = GridBagConstraints.PAGE_START;*/
         
         tasksPane = new UIPanel();
         tasksPane.setLayout(new GridBagLayout());
         Dimension prefSize = tasksPane.getPreferredSize();
         prefSize.width = sub_pane_width;
         prefSize.height = 0;
-        System.out.println("tasks pane height: " + prefSize.height);
         tasksPane.setPreferredSize(prefSize);
         add(tasksPane);
-        
         
         tasks = new ArrayList<Task>();
         tasks_backup = new ArrayList<Task>();
     }
     
     public void addTask(Task task) {
-
-        task.setDescriptionSize(this.sub_pane_width-20);
+        
+        //task.setDescriptionSize(this.sub_pane_width-20);        
         Dimension prefSize = task.getPreferredSize();
         prefSize.width = this.sub_pane_width;
         task.setPreferredSize(prefSize);
@@ -101,13 +86,10 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         tasks.add(task);
         tasks_backup.add(task);
 
-        System.out.println("gamifcaition height: " + this.getHeight());
-        System.out.println("task height: " + prefSize.height);
+        Dimension gamiPrefSize = this.getPreferredSize();
         Dimension tasksPrefSize = tasksPane.getPreferredSize();
-        System.out.println("tasks pane width: " + tasksPrefSize.width + " height: " + tasksPrefSize.height);
-        this.setSize(this.pane_width, this.getHeight() + prefSize.height);
-        this.setPreferredSize(new Dimension(this.pane_width, this.getHeight() + prefSize.height));
-        tasksPane.setPreferredSize(new Dimension(tasksPrefSize.width, tasksPrefSize.height + prefSize.height));
+        this.setPreferredSize(new Dimension(this.pane_width, gamiPrefSize.height + prefSize.height));
+        tasksPane.setPreferredSize(new Dimension(tasksPrefSize.width, gamiPrefSize.height + prefSize.height));
     }
     
     public int getSizeOfTaskList() {
@@ -188,6 +170,12 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
         for (Task task : tasks) {
             task.resetTask();
         }
+    }
+    
+    public void resize() {
+        Dimension prefSize = this.getPreferredSize();
+        prefSize.height = prefSize.height + 60;
+        this.setPreferredSize(prefSize);
     }
     
     @Override

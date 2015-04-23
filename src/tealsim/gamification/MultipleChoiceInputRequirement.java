@@ -8,6 +8,7 @@ package tealsim.gamification;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import teal.ui.UIPanel;
 
 /**
@@ -40,7 +42,6 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
      
     public MultipleChoiceInputRequirement(int width) {
          super();
-//        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
@@ -52,25 +53,27 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
         // to have some vertical spacing between components
         this.reqPanel.add(Box.createRigidArea(new Dimension(5,15)));
         
-        questionTextPane = new JEditorPane();
+        questionTextPane = new JTextPane();
         questionTextPane.setEditable(false);
         questionTextPane.setEnabled(true);
         questionTextPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(questionTextPane);
         
-        this.reqPanel.add(Box.createRigidArea(new Dimension(5,10)));
-       
-        answerTextField = new JTextField();
-        answerTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.reqPanel.add(answerTextField);
         
-        this.reqPanel.add(Box.createRigidArea(new Dimension(5,5)));
-  
+        UIPanel answerPane = new UIPanel();
+        answerPane.setLayout(new FlowLayout()); 
+        answerTextField = new JTextField(8);
+        answerPane.add(answerTextField);
+
         doneButton = new JButton("Submit");
         doneButton.addActionListener(this);
-        doneButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.reqPanel.add(doneButton);
+
+        answerPane.add(doneButton);
         isComplete = true;
+        
+        
+        this.reqPanel.add(answerPane);
+        this.reqPanel.setPreferredSize(new Dimension(this.reqPanel.getPreferredSize().width, 140));
     }
     
     public void addAnswer(String answer) {
@@ -78,15 +81,21 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
     }
     
     public void addQuestion(String question) {
+        // 60 is the average amount of chars a line can hold
+        // 20 is the height of one line
+        int noOfLines = question.length()/65 + 1;
+        Dimension prefSize = this.reqPanel.getPreferredSize();
+        prefSize.height = prefSize.height + noOfLines*20;
+        this.reqPanel.setPreferredSize(prefSize);
         this.questionTextPane.setText(question);
-        this.reqPanel.revalidate();
     }
     
     public void addImage(String imgPath, int width)
     {
+        int pic_height = 220;
         final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imgPath));
         Image image = imageIcon.getImage();
-        Image scaledImage = image.getScaledInstance(width/2, 220,  java.awt.Image.SCALE_SMOOTH);
+        Image scaledImage = image.getScaledInstance(width/2, pic_height,  java.awt.Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
         picLabel.setIcon(scaledImageIcon);
         
@@ -98,7 +107,10 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
             }
         });
         
-        this.reqPanel.revalidate();
+      
+        Dimension prefSize = this.reqPanel.getPreferredSize();
+        prefSize.height = prefSize.height + pic_height;
+        this.reqPanel.setPreferredSize(prefSize);
     }
     
     
