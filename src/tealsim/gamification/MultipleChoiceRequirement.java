@@ -8,9 +8,11 @@ package tealsim.gamification;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,9 +22,9 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 import teal.ui.UIPanel;
 
 /**
@@ -35,14 +37,17 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
     private int NUMBER_OF_CHECKBOX = 5; // 5 number of default entries
     String question;
     private ArrayList<JCheckBox> answerN;
-    private ArrayList<JEditorPane> answerTextN;
+    private ArrayList<JTextPane> answerTextN;
+    private ArrayList<UIPanel> answerPaneN;
     private JLabel picLabel;
     private boolean [] isRightN;
     private JButton doneButton;
     boolean isComplete;
+    GamificationAgent gamificationInstance;
   
-    public MultipleChoiceRequirement(int width) {
+    public MultipleChoiceRequirement(GamificationAgent agent, int width) {
         super();
+        this.gamificationInstance = agent;
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
@@ -52,7 +57,8 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.reqPanel.add(picLabel);
        
-        answerTextN = new ArrayList<JEditorPane>();
+        answerPaneN = new ArrayList<UIPanel>();
+        answerTextN = new ArrayList<JTextPane>();
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         
@@ -61,36 +67,39 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             UIPanel answerPane = new UIPanel();
             answerPane.setLayout(new GridBagLayout());
-            answerPane.setPreferredSize(new Dimension(width-20, 20));
+            answerPane.setPreferredSize(new Dimension(width-20, 10));
             
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
             c.gridx = 0;
             c.gridy = i;
-            c.weightx = 0.1;
+            c.weightx = 0;
             c.ipady = 5;
+            c.insets = new Insets(0,15,0,0);
             
             isRightN[i] = false;
             JCheckBox checkbox = new JCheckBox();
             //checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
             checkbox.setVisible(false);
             answerN.add(checkbox);
-            answerPane.add(checkbox, c);
+            answerPane.add(checkbox);
             
             
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
             c.gridx = 1;
             c.gridy = i;
-            c.weightx = 0.9;
+            c.weightx = 1;
+            c.insets = new Insets(0,0,0,0);
             
-            JEditorPane answerText = new JEditorPane();
+            JTextPane answerText = new JTextPane();
             answerText.setEnabled(true);
             answerText.setEditable(false);
             answerTextN.add(answerText);
-            answerPane.add(answerText, c);
+            answerPane.add(answerText);
             
             //answerPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+            answerPaneN.add(answerPane);
             this.reqPanel.add(answerPane);
         }
   
@@ -101,8 +110,9 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         isComplete = true;
     }
     
-    public MultipleChoiceRequirement(int width, int noOfAnswers) {
+    public MultipleChoiceRequirement(GamificationAgent agent, int width, int noOfAnswers) {
         super();
+        this.gamificationInstance = agent;
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
@@ -113,7 +123,8 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         this.reqPanel.add(picLabel);
         
         this.NUMBER_OF_CHECKBOX = noOfAnswers;
-        answerTextN = new ArrayList<JEditorPane>();
+        answerPaneN = new ArrayList<UIPanel>();
+        answerTextN = new ArrayList<JTextPane>();
         answerN = new ArrayList<JCheckBox>();
         isRightN = new boolean[NUMBER_OF_CHECKBOX];
         
@@ -122,18 +133,18 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
         for(int i = 0; i < NUMBER_OF_CHECKBOX; i++) {
             UIPanel answerPane = new UIPanel();
             answerPane.setLayout(new GridBagLayout());
-            answerPane.setPreferredSize(new Dimension(width-20, 20));
+            answerPane.setPreferredSize(new Dimension(width-20, 0));
             
             c.fill = GridBagConstraints.HORIZONTAL;
             c.anchor = GridBagConstraints.FIRST_LINE_START;
             c.gridx = 0;
             c.gridy = i;
-            c.weightx = 0.1;
+            c.weightx = 0;
             c.ipady = 5;
+            c.insets = new Insets(0,15,0,0);
             
             isRightN[i] = false;
             JCheckBox checkbox = new JCheckBox();
-            //checkbox.setAlignmentX(Component.CENTER_ALIGNMENT);
             checkbox.setVisible(false);
             answerN.add(checkbox);
             answerPane.add(checkbox, c);
@@ -143,15 +154,18 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
             c.anchor = GridBagConstraints.FIRST_LINE_START;
             c.gridx = 1;
             c.gridy = i;
-            c.weightx = 0.9;
+            c.weightx = 1;
+            c.ipady = 0;
+            c.insets = new Insets(0,0,0,0);
             
-            JEditorPane answerText = new JEditorPane();
+            JTextPane answerText = new JTextPane();
             answerText.setEnabled(true);
             answerText.setEditable(false);
             answerTextN.add(answerText);
             answerPane.add(answerText, c);
             
             //answerPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+            answerPaneN.add(answerPane);
             this.reqPanel.add(answerPane);
         }
   
@@ -173,10 +187,17 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
                     isRightN[i] = isRight;
                     answerN.get(i).setVisible(true);
                     
-                    int noOfLines = answer.length()/60 + 1;
-                    Dimension prefSize = this.reqPanel.getPreferredSize();
-                    prefSize.height = prefSize.height + noOfLines*20;
-                    this.reqPanel.setPreferredSize(prefSize);
+                    
+                    int noOfLines = answer.length()/50+1;
+                    if(noOfLines > 1) {
+                        Dimension prefSize = this.reqPanel.getPreferredSize();
+                        prefSize.height = prefSize.height + noOfLines*10;
+                        this.reqPanel.setPreferredSize(prefSize);
+                    }
+                   
+                    /*prefSize = answerPaneN.get(i).getPreferredSize();
+                    prefSize.height = noOfLines*10;
+                    answerPaneN.get(i).setPreferredSize(prefSize);*/
                     
                     answerTextN.get(i).setText(answer);
                     empty_found = true;
@@ -261,5 +282,7 @@ public class MultipleChoiceRequirement extends Requirement implements ActionList
             JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
             fulfilled = true;
         }
+        
+        this.gamificationInstance.update();
     }
 }

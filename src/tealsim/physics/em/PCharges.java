@@ -37,9 +37,13 @@ import teal.sim.spatial.RelativeFLine;
 import teal.ui.control.ControlGroup;
 import teal.ui.control.PropertyDouble;
 import teal.visualization.dlic.DLIC;
-import tealsim.gamification.ZoneRequirement;
 import tealsim.gamification.GamificationAgent;
+import tealsim.gamification.MultipleChoiceImageRequirement;
+import tealsim.gamification.MultipleChoiceInputRequirement;
+import tealsim.gamification.MultipleChoiceRequirement;
+import tealsim.gamification.StartSimRequirement;
 import tealsim.gamification.Task;
+import tealsim.gamification.ZoneRequirement;
 
 public class PCharges extends SimEM {
 
@@ -55,7 +59,7 @@ public class PCharges extends SimEM {
     RectangularBox rect_box;
     
     GamificationAgent gamificationPanel;
-    Task task0;
+    Task task0, task1, task2, task3, task4, task5;
 
     public PCharges() {
 
@@ -213,6 +217,140 @@ public class PCharges extends SimEM {
        
         ///// INITIALIZATION OF GUI ELEMENTS /////
         
+        // create new instance of GamificationAgent, which acts as the gamification engine's core
+        gamificationPanel = new GamificationAgent();
+        
+        // the width needs to be fetched to tell the child elements their max width
+        int parentPanelWidth = gamificationPanel.getWidth()-40;
+        System.out.println("panel width: " + parentPanelWidth);
+        
+        // define the first task
+        task0 = new Task("START", parentPanelWidth);
+        
+        // add a description which tells the user what to do
+        task0.addDescription("Start the simulation");
+        
+        // create a requirement object which determines the type of task
+        StartSimRequirement reqS = new StartSimRequirement();
+        
+        // add it to the respective task
+        // the task checks if it is fulfilled
+        task0.addRequirement(reqS);
+        
+        // add the task to the gamification agent, so it can take care of checking
+        // if the task is completed
+        gamificationPanel.addTask(task0);
+
+        
+        // define second task
+        task1 = new Task("QUESTION 1", parentPanelWidth);
+        String taskDescription = "Pause the simulation using the “Pause” button. By left clicking and dragging , ";
+        taskDescription += "move the positive (orange) charge to middle of the top of the frame and the negative ";
+        taskDescription += "(blue) charge to the middle of bottom of the frame. Now click on the “Grass Seeds” button. Which of the ";
+        taskDescription += "four patterns below match the pattern you see when you do click on this button.";
+        task1.addDescription(taskDescription);
+        
+        // create two zone requirements to verify the user really moved the charges to the specified positions
+        ZoneRequirement reqZ1 = new ZoneRequirement();
+        reqZ1.setTargetZone(8, 8, 3, new Vector3d(.0, -4, .0));
+        reqZ1.addObject(pc1);
+        addElements(reqZ1.getTargetZoneWalls());
+        task1.addRequirement(reqZ1);
+        
+        ZoneRequirement reqZ2 = new ZoneRequirement();
+        reqZ2.setTargetZone(8, 8, 3, new Vector3d(.0, 4, .0));
+        reqZ2.addObject(pc2);
+        addElements(reqZ2.getTargetZoneWalls());
+        task1.addRequirement(reqZ2);
+        
+        // this requirement lets you create a multiple choice question with up to 4 images
+        MultipleChoiceImageRequirement reqMCI = new MultipleChoiceImageRequirement(gamificationPanel);
+        reqMCI.addImage("/images/mci1.png", false);
+        reqMCI.addImage("/images/mci2.png", true);
+        reqMCI.addImage("/images/mci3.png", false);
+        reqMCI.addImage("/images/mci4.png", false);
+        task1.addRequirement(reqMCI);
+        gamificationPanel.addTask(task1);
+        
+        // define next task
+        task2 = new Task("QUESTION 2", parentPanelWidth);
+        taskDescription = "We leave the charges in the same position that we put them in above in ";
+        taskDescription += "Question 1, and change the charges on both of the charges using the sliders. ";
+        taskDescription += "Let qTop be the charge on the top charge and qBottom be the sign of the charge on the ";
+        taskDescription += "bottom charge (these charges can be either positive or negative). When we now click on the ";
+        taskDescription += "“Grass Seeds” button, we see the following pattern.";
+        taskDescription += "From this image we can conclude one of the following answers.";
+        task2.addDescription(taskDescription);
+        
+        MultipleChoiceRequirement reqMC1 = new MultipleChoiceRequirement(gamificationPanel, parentPanelWidth, 3);
+        reqMC1.addImage("/images/pc_q2.png", parentPanelWidth);
+        reqMC1.addAnswer("qBottom > qTop", true);
+        reqMC1.addAnswer("qBottom < qTop", false);
+        reqMC1.addAnswer("Cannot say for sure whether if either of the statements above are true", false);
+        task2.addRequirement(reqMC1);
+        gamificationPanel.addTask(task2);
+       
+        // define next task
+        task3 = new Task("QUESTION 3", parentPanelWidth);
+        taskDescription = "We move the two charges closer together but leave them on the vertical axis. ";
+        taskDescription += "We again change the charges on both of the charges using the sliders. Let qTop ";
+        taskDescription += "be the charge on the top charge and qBottom be the sign of the charge on the bottom ";
+        taskDescription += "charge (these charges can be either positive or negative). When we now click on the ";
+        taskDescription += "“Grass Seeds” button, we see the following pattern.";
+        taskDescription += "From this image we can conclude one of the following answers.";
+        task3.addDescription(taskDescription);
+        
+        MultipleChoiceRequirement reqMC2 = new MultipleChoiceRequirement(gamificationPanel, parentPanelWidth, 4);
+        reqMC2.addImage("/images/pc_q3.png", parentPanelWidth);
+        reqMC2.addAnswer("The charges repel each other and the magnitude of the charge on top is larger than the magnitude of the charge on bottom", true);
+        reqMC2.addAnswer("The charges attract each other and the magnitude of the charge on top is larger than the magnitude of the charge on bottom", false);
+        reqMC2.addAnswer("The charges repel each other and the magnitude of the charge on top is smaller than the magnitude of the charge on bottom", false);
+        reqMC2.addAnswer("The charges attract each other and the magnitude of the charge on top is smaller than the magnitude of the charge on bottom", false);
+        task3.addRequirement(reqMC2);
+        gamificationPanel.addTask(task3);
+        
+        // define next task
+        task4 = new Task("QUESTION 4", parentPanelWidth);
+        taskDescription = "We again change the charges on both of the charges using the sliders. ";
+        taskDescription += "Let qTop be the charge on the top charge and qBottom be the sign of the ";
+        taskDescription += "charge on the bottom charge (these charges can be either positive or negative). ";
+        taskDescription += "When we now click on the “Grass Seeds” button, we see the following pattern.";
+        taskDescription += "From this image we can conclude one of the following answers.";
+        task4.addDescription(taskDescription);
+        
+        MultipleChoiceRequirement reqMC3 = new MultipleChoiceRequirement(gamificationPanel, parentPanelWidth, 4);
+        reqMC3.addImage("/images/pc_q4.png", parentPanelWidth);
+        reqMC3.addAnswer("The charges repel each other and the magnitude of the charge on top is larger than the magnitude of the charge on bottom", true);
+        reqMC3.addAnswer("The charges attract each other and the magnitude of the charge on top is larger than the magnitude of the charge on bottom", false);
+        reqMC3.addAnswer("The charges repel each other and the magnitude of the charge on top is smaller than the magnitude of the charge on bottom", false);
+        reqMC3.addAnswer("The charges attract each other and the magnitude of the charge on top is smaller than the magnitude of the charge on bottom", false);
+        task4.addRequirement(reqMC3);
+        gamificationPanel.addTask(task4);
+        
+        // define next task
+        task5 = new Task("QUESTION 5", parentPanelWidth);
+        taskDescription = "We now put a positive charge at the origin and make its charge +3Q. We put ";
+        taskDescription += "a negative charge –Q a distance 1 m horizontally to the right of the positive charge. ";
+        taskDescription += "The “Grass Seeds” image we now get is below.";
+        task5.addDescription(taskDescription);
+        
+        MultipleChoiceInputRequirement reqMCInput = new MultipleChoiceInputRequirement(gamificationPanel);
+        reqMCInput.addImage("/images/pc_q5.png", parentPanelWidth);
+        reqMCInput.addQuestion("At what value of x will the electric field be zero? At what value of x will the electric field be zero? At what value of x will the electric field be zero? At what value of x will the electric field be zero?");
+        reqMCInput.addAnswer("foo");
+        task5.addRequirement(reqMCInput);
+        gamificationPanel.addTask(task5);
+        
+        
+        // this needs to be called right before the gamification agent is added to the sim
+        // to allow for proper resizing of the container element
+        gamificationPanel.resize();
+        
+        gamification = new ControlGroup();
+        gamification.setText("Gamification");
+        gamification.addElement(gamificationPanel);
+        addElement(gamification);
+                
         // Here we create a slider to control the charge on the first PointCharge.
         PropertyDouble slider2 = new PropertyDouble();
         // setMinimum() sets the minimum value of the slider.
@@ -272,25 +410,6 @@ public class PCharges extends SimEM {
         visGroup.setColorPerVertex(false);
         // add the VisualizationControl to the application.
         addElement(visGroup);
-        
-        
-        gamificationPanel = new GamificationAgent();
-        // task 2: current task
-        task0 = new Task("TASK 1", 440);
-        task0.addDescription("Move the positive charge\n (15 points possible)");
-        
-        ZoneRequirement reqZ = new ZoneRequirement();
-        reqZ.setTargetZone(3., 3., 3., new Vector3d(0., -0.75, 0.));
-        reqZ.addObject(pc1);
-        task0.addRequirement(reqZ);
-        gamificationPanel.addTask(task0);
-        
-        gamification = new ControlGroup();
-        gamification.setText("Gamification");
-        gamification.addElement(gamificationPanel);
-        addElement(gamification);
-        
-        addElements(reqZ.getTargetZoneWalls());
 
         // Final initializations
         mSEC.init();
@@ -342,6 +461,7 @@ public class PCharges extends SimEM {
         else {
             super.actionPerformed(e);
         }
+        gamificationPanel.update();
     }
 
 }

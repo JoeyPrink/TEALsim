@@ -174,6 +174,7 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
     
     public void resize() {
         Dimension prefSize = this.getPreferredSize();
+        prefSize.width = prefSize.width + 30;
         prefSize.height = prefSize.height + 60;
         this.setPreferredSize(prefSize);
     }
@@ -182,6 +183,5 @@ public final class GamificationAgent extends UIPanel implements TUpdatable, TSim
     public void update() {
         checkTasks();
         Thread.yield();
-    }
-    
+    }    
 }

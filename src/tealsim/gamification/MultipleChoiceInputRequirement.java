@@ -39,9 +39,11 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
     private JButton doneButton;
     private JLabel picLabel;
     boolean isComplete;
+    GamificationAgent gamificationInstance;
      
-    public MultipleChoiceInputRequirement(int width) {
+    public MultipleChoiceInputRequirement(GamificationAgent agent) {
          super();
+        this.gamificationInstance = agent;
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new BoxLayout(this.reqPanel, BoxLayout.Y_AXIS));
         this.reqPanel.setVisible(true);
@@ -73,7 +75,7 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
         
         
         this.reqPanel.add(answerPane);
-        this.reqPanel.setPreferredSize(new Dimension(this.reqPanel.getPreferredSize().width, 140));
+        this.reqPanel.setPreferredSize(new Dimension(this.reqPanel.getPreferredSize().width, 100));
     }
     
     public void addAnswer(String answer) {
@@ -84,9 +86,11 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
         // 60 is the average amount of chars a line can hold
         // 20 is the height of one line
         int noOfLines = question.length()/65 + 1;
-        Dimension prefSize = this.reqPanel.getPreferredSize();
-        prefSize.height = prefSize.height + noOfLines*20;
-        this.reqPanel.setPreferredSize(prefSize);
+        if(noOfLines > 1) {
+            Dimension prefSize = this.reqPanel.getPreferredSize();
+            prefSize.height = prefSize.height + noOfLines*10;
+            this.reqPanel.setPreferredSize(prefSize);
+        }
         this.questionTextPane.setText(question);
     }
     
@@ -130,6 +134,8 @@ public class MultipleChoiceInputRequirement extends Requirement implements Actio
             JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
             fulfilled = true;
         }
+        
+        this.gamificationInstance.update();
     } 
     
     @Override

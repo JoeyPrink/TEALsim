@@ -38,10 +38,12 @@ public class MultipleChoiceImageRequirement extends Requirement implements Actio
     private boolean [] isRightN;
     private JButton doneButton;
     boolean isComplete;
+    private GamificationAgent gamificationInstance;
      
-    public MultipleChoiceImageRequirement() {
+    public MultipleChoiceImageRequirement(GamificationAgent agent) {
         super();
 //        this.reqPanel.setLayout(new GridLayout(NUMBER_OF_CHECKBOX,0));
+        this.gamificationInstance = agent;
         this.reqPanel = new UIPanel();
         this.reqPanel.setLayout(new GridBagLayout());
         this.reqPanel.setVisible(true);
@@ -221,6 +223,8 @@ public class MultipleChoiceImageRequirement extends Requirement implements Actio
             JOptionPane.showMessageDialog(this.reqPanel, "This is correct!");
             fulfilled = true;
         }
+        
+        this.gamificationInstance.update();
     } 
     
     @Override
